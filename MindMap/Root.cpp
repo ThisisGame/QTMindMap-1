@@ -16,11 +16,9 @@ Root::Root(int id) : Composite(id)
     _type = "Root";
 }
 
-
 Root::~Root()
 {
 }
-
 
 void Root::addParent(Component* parent) //Root¤£¯à¦³Parent
 {

@@ -1,0 +1,10 @@
+#pragma once
+#define ERROR_INPUT_MSG "Error Input!\n\n"
+#define ERROR_ROOT_INSERT_PARENT "Root can't insert parent node\n"
+#define ERROR_ROOT_INSERT_SIBLING "Root can't insert sibling node\n"
+#define ERROR_DO_OPERATION "Can not do this operation.\n"
+#define DISPLAY_MINDMAP  "The mind map Computer is displayed as follows:"
+#define SAVE_FILE_NAME "mindMap.txt"
+#define SAVE_FILE_SUCCESS "Save MindMap Success!\n\n"
+#define ERROR_OPEN_FILE "Can't not open file!\n"
+#define EMPTY_STRING ""

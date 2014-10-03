@@ -1,5 +1,6 @@
 #pragma once
 #include "Composite.h"
+#include "ConstString.h"
 
 class Node :
     public Composite

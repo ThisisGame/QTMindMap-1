@@ -47,7 +47,7 @@ void TextUIView::selectMode() //模式選擇
     cout << "2. Insert a new node" << endl;
     cout << "3. Display mind map" << endl;
     cout << "4. Save mind map" << endl;
-    cout << "5. Exit" << endl << ">";
+    cout << "5. Exit" << endl << PROMPT_STRING;
     _pModel->selectMode(inputChar());
     messangeMode();
     (this->*(_functionList[_pModel->getMode()]))();
@@ -56,7 +56,7 @@ void TextUIView::selectMode() //模式選擇
 void TextUIView::createNewMindMap()  //新建一個MindMap
 {
     string topic;
-    cout << "Please enter the topic :" << endl << ">";
+    cout << "Please enter the topic :" << endl << PROMPT_STRING;
     _model->createMindMap(inputString());
     display();
 }
@@ -65,7 +65,7 @@ void TextUIView::selectInsertMode()  //選擇插入模式
 {
     cout << "a.Insert a parent node" << endl;
     cout << "b.Insert a child node" << endl;
-    cout << "c.Insert a sibling node" << endl << ">";
+    cout << "c.Insert a sibling node" << endl << PROMPT_STRING;
     _pModel->insertMode(inputChar());
     messangeMode();
     (this->*(_functionList[_pModel->getMode()]))();
@@ -90,7 +90,7 @@ void TextUIView::messangeMode() //訊息顯示
 
 void TextUIView::exitMode() //結束程式
 {
-    cout << "Do you want save your mindmap?(Y/N)" << endl << ">";
+    cout << "Do you want save your mindmap?(Y/N)" << endl << PROMPT_STRING;
     _pModel->exitMode(inputChar());
     messangeMode();
     exit(1);
@@ -99,7 +99,7 @@ void TextUIView::exitMode() //結束程式
 void TextUIView::insertNewNode()  //新增Node
 {
     display();
-    cout << "Enter the node ID:" << endl << ">";
+    cout << "Enter the node ID:" << endl << PROMPT_STRING;
     _model->selectComponent(atoi(inputString().c_str()));
     _pModel->updateMode();
     (this->*(_functionList[_pModel->getMode()]))();
@@ -107,7 +107,7 @@ void TextUIView::insertNewNode()  //新增Node
 
 void TextUIView::enterNodeName() //輸入NodeName
 {
-    cout << "Enter the node name:" << endl << ">";
+    cout << "Enter the node name:" << endl << PROMPT_STRING;
     _model->setDescription(inputString());
     display();
 }

@@ -19,7 +19,7 @@ class Component
         virtual void addSibling(Component*) = 0;
         virtual void clearNodeList() = 0;
         virtual void deleteNodeByNode(Component*) = 0;
-        virtual void display(stringstream&, int, bool = false) = 0;
+        virtual void display(stringstream&, string, bool = true) = 0;
         virtual void setParent(Component*) = 0;
         virtual list<Component*> getNodeList() = 0;
     protected:

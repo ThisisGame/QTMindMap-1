@@ -2,17 +2,17 @@
 
 Node::Node()
 {
-    _type = "Node";
+    _type = NODE_TYPE;
 }
 
 Node::Node(string description, int id) : Composite(description, id)
 {
-    _type = "Node";
+    _type = NODE_TYPE;
 }
 
 Node::Node(int id) : Composite(id)
 {
-    _type = "Node";
+    _type = NODE_TYPE;
 }
 
 Node::~Node()

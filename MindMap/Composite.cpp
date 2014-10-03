@@ -25,12 +25,12 @@ void Composite::addChild(Component* node)  //增加Node
     _nodelist.push_back(node);
 }
 
-void Composite::clearNodeList()
+void Composite::clearNodeList() //清除NodeList內所有元素
 {
     _nodelist.clear();
 }
 
-list<Component*> Composite::getNodeList()
+list<Component*> Composite::getNodeList()  //取得NodeList
 {
     return _nodelist;
 }
@@ -40,29 +40,28 @@ void Composite::deleteNodeByNode(Component* component)
     _nodelist.remove(component);
 }
 
-void Composite::display(stringstream& outputstream, int level, bool last)
+void Composite::display(stringstream& outputStream, string levelString, bool last) //處理輸出樹狀
 {
-    outputstream << "+-" + _description + "(" + _type + ", ID: " << _id << ")" << endl;
+    outputStream << "+-" + _description + "(" + _type + ", ID: " << _id << ")" << endl;  //Output Example +-Computer(Root, ID: 0)
+    if (last == true)
+    {
+        levelString += "  ";
+    }
+    else
+    {
+        levelString += "| ";
+    }
     for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
     {
-        for (int j = 0; j <= level; j++)
+        if (i == --_nodelist.end())
         {
-            if (j == 0 || last == true)
-            {
-                outputstream << "  ";
-            }
-            else
-            {
-                outputstream << "| ";
-            }
-        }
-        if (i == --_nodelist.end() && level == 0)
-        {
-            (*i)->display(outputstream, level + 1, true);
+            last = true;
         }
         else
         {
-            (*i)->display(outputstream, level + 1, last);
+            last = false;
         }
+        outputStream << levelString;
+        (*i)->display(outputStream, levelString, last);
     }
 }

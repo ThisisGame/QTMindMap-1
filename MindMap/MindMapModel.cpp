@@ -84,7 +84,7 @@ bool MindMapModel::isSaved() //目前MindMap是否已儲存
 
 bool MindMapModel::isRoot() //判斷目前所選取的Component是否為Root
 {
-    if (_component->getType() == "Root")
+    if (_component->getType() == ROOT_TYPE)
     {
         return true;
     }
@@ -109,8 +109,8 @@ void MindMapModel::display()  //顯示MindMap
     {
         throw ERROR_DO_OPERATION;
     }
-    outputstream << DISPLAY_MINDMAP << endl;
-    _component->display(outputstream, 0);
+    outputstream << THE_MIND_MAP << _component->getDescription() << DISPLAY_MINDMAP << endl;
+    _component->display(outputstream, EMPTY_STRING);
     outputstream << endl;
     _message = outputstream.str();
 }
@@ -118,27 +118,27 @@ void MindMapModel::display()  //顯示MindMap
 void MindMapModel::saveMindMap()  //存檔MindMap
 {
     char filename[] = SAVE_FILE_NAME;
-    fstream fp;
-    fp.open(filename, ios::out);//開啟檔案
+    fstream file;
+    file.open(filename, ios::out);//開啟檔案
     if (_component == NULL)
     {
         throw ERROR_DO_OPERATION;
     }
-    if (!fp) //如果開啟檔案失敗 輸出字串
+    if (!file) //如果開啟檔案失敗 輸出字串
     {
         throw ERROR_OPEN_FILE;
     }
     for (list<Component*>::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)
     {
-        fp << (*node)->getId() << " \"" + (*node)->getDescription() + "\"";
+        file << (*node)->getId() << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getDescription() << DOUBLE_QUOTATION_STRING;
         list<Component*> nodeList = (*node)->getNodeList();
         for (list<Component*>::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)
         {
-            fp << " " << (*childNode)->getId();
+            file << SPACE_STRING << (*childNode)->getId();
         }
-        fp << endl;
+        file << endl;
     }
-    fp.close();						//關閉檔案
+    file.close();						//關閉檔案
     _isSaved = true;
     display();
     _message += SAVE_FILE_SUCCESS;

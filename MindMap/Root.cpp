@@ -1,19 +1,18 @@
 #include "Root.h"
-#include "ConstString.h"
 
 Root::Root()
 {
-    _type = "Root";
+    _type = ROOT_TYPE;
 }
 
 Root::Root(string description, int id) : Composite(description, id)
 {
-    _type = "Root";
+    _type = ROOT_TYPE;
 }
 
 Root::Root(int id) : Composite(id)
 {
-    _type = "Root";
+    _type = ROOT_TYPE;
 }
 
 Root::~Root()

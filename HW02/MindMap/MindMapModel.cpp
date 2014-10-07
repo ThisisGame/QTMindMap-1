@@ -1,8 +1,8 @@
 #include "MindMapModel.h"
+#include "EditComponentCommand.h"
 
 MindMapModel::MindMapModel(void)
 {
-    _idNumber = 0;
     _component = NULL;
     _isSaved = false;
 }
@@ -13,9 +13,11 @@ MindMapModel::~MindMapModel(void)
 
 void MindMapModel::createMindMap(string topic)  //新建一個Mindmap
 {
-    Root* mindMapRoot = new Root(topic, _idNumber++);
+    Component* root = _componentFactory.createComponent(ROOT_TYPE);
     clearList();
-    _nodelist.push_back(mindMapRoot);
+    _componentFactory.countId();
+    root->setDescription(topic);
+    _nodelist.push_back(root);
 }
 
 void MindMapModel::clearList()  //清空已存的Mindmap
@@ -26,9 +28,10 @@ void MindMapModel::clearList()  //清空已存的Mindmap
     }
     _nodelist.clear();
     _component = NULL;
+    _componentFactory.setId(0);
 }
 
-void MindMapModel::insertNode(char mode)  //插入Child
+void MindMapModel::insertNode(char mode)  //插入Node
 {
     if (mode == 'a')
     {
@@ -42,12 +45,13 @@ void MindMapModel::insertNode(char mode)  //插入Child
     {
         _component->addSibling(createNode());
     }
-    _idNumber++;
+    _componentFactory.countId();
+    selectComponent(_componentFactory.getId() - 1);
 }
 
 Component* MindMapModel::createNode() //新建一個Node
 {
-    Component* newNode = new Node(_idNumber);
+    Component* newNode = _componentFactory.createComponent(NODE_TYPE);
     _nodelist.push_back(newNode);
     return newNode;
 }
@@ -55,7 +59,6 @@ Component* MindMapModel::createNode() //新建一個Node
 
 void MindMapModel::setDescription(string description)
 {
-    selectComponent(_idNumber - 1);
     _component->setDescription(description);
 }
 
@@ -65,10 +68,12 @@ void MindMapModel::selectComponent(int id)  //選取Component
     {
         if ((*i)->getId() == id)
         {
+            _selectedComponentId = id;
             _component = *i;
             return;
         }
     }
+    _selectedComponentId = -1;
     _component = NULL;
 }
 
@@ -100,6 +105,21 @@ bool MindMapModel::isSelectedComponent() //判斷目前是否有選取到Component
     return false;
 }
 
+void MindMapModel::changeDescription(string newDescription)
+{
+    _commandManager.execute(new EditComponentCommand(_selectedComponentId, newDescription, _component->getDescription(), this));
+}
+
+void MindMapModel::redo()
+{
+    _commandManager.redo();
+}
+
+void MindMapModel::undo()
+{
+    _commandManager.undo();
+}
+
 void MindMapModel::display()  //顯示MindMap
 {
     string content;
@@ -107,7 +127,7 @@ void MindMapModel::display()  //顯示MindMap
     selectComponent(0);
     if (_component == NULL)
     {
-        throw ERROR_DO_OPERATION;
+        throw ERROR_DISPLAY;
     }
     outputstream << THE_MIND_MAP << _component->getDescription() << DISPLAY_MINDMAP << endl;
     _component->display(outputstream, EMPTY_STRING);
@@ -122,7 +142,7 @@ void MindMapModel::saveMindMap()  //存檔MindMap
     file.open(filename, ios::out);//開啟檔案
     if (_component == NULL)
     {
-        throw ERROR_DO_OPERATION;
+        throw ERROR_SAVE;
     }
     if (!file) //如果開啟檔案失敗 輸出字串
     {
@@ -136,10 +156,56 @@ void MindMapModel::saveMindMap()  //存檔MindMap
         {
             file << SPACE_STRING << (*childNode)->getId();
         }
-        file << endl;
+        file << SPACE_STRING << endl;
     }
     file.close();						//關閉檔案
     _isSaved = true;
     display();
     _message += SAVE_FILE_SUCCESS;
+}
+
+void MindMapModel::loadMindMap()  //讀檔
+{
+    vector<string> components;
+    string inputString;
+    fstream file;
+    clearList();
+    file.open(SAVE_FILE_NAME, ios::in);
+    while (getline(file, inputString, '\"'))
+    {
+        components.push_back(inputString);
+    }
+    components.erase(components.begin());
+    for (unsigned int i = 0; i < components.size() / 2; i++)
+    {
+        if (i == 0)
+        {
+            createMindMap(components[i * 2]);
+        }
+        else
+        {
+            createNode();
+            _componentFactory.countId();
+            selectComponent(i);
+            setDescription(components[i * 2]);
+        }
+    }
+    for (unsigned int i = 0; i < components.size() / 2; i++)
+    {
+        stringstream test(components[i * 2 + 1]);
+        while (getline(test, inputString, ' '))
+        {
+            if (inputString == "" || inputString[0] == '\n')
+            {
+                continue;
+            }
+            else
+            {
+                selectComponent(i);
+                Component* parnet = _component;
+                selectComponent(atoi(inputString.c_str()));
+                parnet->addChild(_component);
+            }
+        }
+    }
 }

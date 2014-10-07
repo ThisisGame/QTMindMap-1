@@ -1,8 +1,11 @@
 #pragma once
 #define ERROR_INPUT_MSG "Error Input!\n\n"
+#define ERROR_INPUT_COMMAND "The command is not found!!\n\n"
 #define ERROR_ROOT_INSERT_PARENT "Root can't insert parent node\n"
 #define ERROR_ROOT_INSERT_SIBLING "Root can't insert sibling node\n"
-#define ERROR_DO_OPERATION "Can not do this operation.\n"
+#define ERROR_DISPLAY "MindMap is Empty, can't display!!!\n"
+#define ERROR_SAVE "MindMap is Empty, can't save!!!\n"
+#define ERROR_NODE_NOTFOUND "The node is not exist!! \n"
 #define THE_MIND_MAP "The mind map "
 #define DISPLAY_MINDMAP " is displayed as follows:"
 #define SAVE_FILE_NAME "mindMap.txt"

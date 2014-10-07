@@ -78,8 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Composite.cpp" />
+    <ClCompile Include="EditComponentCommand.cpp" />
     <ClCompile Include="MindMapModel.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PresentationModel.cpp" />
@@ -88,10 +92,14 @@
     <ClCompile Include="TextUIView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="Composite.h" />
     <ClInclude Include="ConstString.h" />
     <ClInclude Include="ConstVariables.h" />
+    <ClInclude Include="EditComponentCommand.h" />
     <ClInclude Include="MindMapModel.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PresentationModel.h" />

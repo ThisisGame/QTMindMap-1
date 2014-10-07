@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChangeParentCommand.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="TextUIView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChangeParentCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Component.h" />

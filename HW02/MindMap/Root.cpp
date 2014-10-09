@@ -34,3 +34,8 @@ void Root::addSibling(Component* sibling) //Root不能有Sibling
 void Root::setParent(Component* parent) //Root不能設定Parent
 {
 }
+
+Component* Root::getParent()
+{
+    return NULL;
+}

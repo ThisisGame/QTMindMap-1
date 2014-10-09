@@ -23,6 +23,11 @@ int Component::getId()
     return _id;
 }
 
+void Component::setId(int id)
+{
+    _id = id;
+}
+
 string Component::getType()
 {
     return _type;

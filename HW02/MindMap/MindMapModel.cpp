@@ -1,10 +1,11 @@
 #include "MindMapModel.h"
 #include "EditComponentCommand.h"
+#include "ChangeParentCommand.h"
+#include "DeleteComponentCommand.h"
 
 MindMapModel::MindMapModel(void)
 {
     _component = NULL;
-    _isSaved = false;
 }
 
 MindMapModel::~MindMapModel(void)
@@ -46,7 +47,6 @@ void MindMapModel::insertNode(char mode)  //插入Node
         _component->addSibling(createNode());
     }
     _componentFactory.countId();
-    selectComponent(_componentFactory.getId() - 1);
 }
 
 Component* MindMapModel::createNode() //新建一個Node
@@ -56,25 +56,32 @@ Component* MindMapModel::createNode() //新建一個Node
     return newNode;
 }
 
-
 void MindMapModel::setDescription(string description)
 {
-    _component->setDescription(description);
+    int lastID = _componentFactory.getId() - 1;
+    findNodeByID(lastID)->setDescription(description);
 }
 
-void MindMapModel::selectComponent(int id)  //選取Component
+Component* MindMapModel::findNodeByID(int id)  //選取Component
 {
     for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
     {
         if ((*i)->getId() == id)
         {
-            _selectedComponentId = id;
-            _component = *i;
-            return;
+            return *i;
         }
     }
-    _selectedComponentId = -1;
-    _component = NULL;
+    return NULL;
+}
+
+bool MindMapModel::selectComponent(int id)  //選取Component
+{
+    _component = findNodeByID(id);
+    if (_component == NULL)
+    {
+        return false;
+    }
+    return true;
 }
 
 string MindMapModel::getMessage() //取得處理訊息
@@ -82,32 +89,34 @@ string MindMapModel::getMessage() //取得處理訊息
     return _message;
 }
 
-bool MindMapModel::isSaved() //目前MindMap是否已儲存
-{
-    return _isSaved;
-}
-
-bool MindMapModel::isRoot() //判斷目前所選取的Component是否為Root
-{
-    if (_component->getType() == ROOT_TYPE)
-    {
-        return true;
-    }
-    return false;
-}
-
-bool MindMapModel::isSelectedComponent() //判斷目前是否有選取到Component
-{
-    if (_component != NULL)
-    {
-        return true;
-    }
-    return false;
-}
-
 void MindMapModel::changeDescription(string newDescription)
 {
-    _commandManager.execute(new EditComponentCommand(_selectedComponentId, newDescription, _component->getDescription(), this));
+    _commandManager.execute(new EditComponentCommand(newDescription, _component));
+}
+
+void MindMapModel::changeParent(int parentID)
+{
+    _commandManager.execute(new ChangeParentCommand(_component, findNodeByID(parentID)));
+}
+
+void MindMapModel::deleteComponent()
+{
+    _commandManager.execute(new DeleteComponentCommand(_component, this));
+}
+
+void MindMapModel::doDeleteNode(Component* component)
+{
+    _nodelist.remove(component);
+}
+
+void MindMapModel::doAddNodes(list<Component*> components)
+{
+    _nodelist = components;
+}
+
+list<Component*> MindMapModel::getNodeList()
+{
+    return _nodelist;
 }
 
 void MindMapModel::redo()
@@ -124,21 +133,33 @@ void MindMapModel::display()  //顯示MindMap
 {
     string content;
     stringstream outputstream(content);
-    selectComponent(0);
-    if (_component == NULL)
+    Component* root = findNodeByID(0);
+    if (root == NULL)
     {
-        throw ERROR_DISPLAY;
+        _message = ERROR_DISPLAY;
+        return;
     }
-    outputstream << THE_MIND_MAP << _component->getDescription() << DISPLAY_MINDMAP << endl;
-    _component->display(outputstream, EMPTY_STRING);
+    outputstream << THE_MIND_MAP << root->getDescription() << DISPLAY_MINDMAP << endl;
+    root->display(outputstream, EMPTY_STRING);
     outputstream << endl;
     _message = outputstream.str();
+}
+
+void MindMapModel::reNumber()
+{
+    int i = 0;
+    for (auto node : _nodelist)
+    {
+        node->setId(i);
+        i++;
+    }
 }
 
 void MindMapModel::saveMindMap()  //存檔MindMap
 {
     char filename[] = SAVE_FILE_NAME;
     fstream file;
+    reNumber();
     file.open(filename, ios::out);//開啟檔案
     if (_component == NULL)
     {
@@ -159,7 +180,6 @@ void MindMapModel::saveMindMap()  //存檔MindMap
         file << SPACE_STRING << endl;
     }
     file.close();						//關閉檔案
-    _isSaved = true;
     display();
     _message += SAVE_FILE_SUCCESS;
 }
@@ -201,10 +221,9 @@ void MindMapModel::loadMindMap()  //讀檔
             }
             else
             {
-                selectComponent(i);
-                Component* parnet = _component;
-                selectComponent(atoi(inputString.c_str()));
-                parnet->addChild(_component);
+                Component* parnet = findNodeByID(i);
+                int childID = atoi(inputString.c_str());
+                parnet->addChild(findNodeByID(childID));
             }
         }
     }

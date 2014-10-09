@@ -61,8 +61,8 @@ char TextUIView::inputChar()  //¦r¤¸¿é¤J
 void TextUIView::selectId(string outputString)
 {
     cout << outputString << endl << PROMPT_STRING;
-    _model->selectComponent(atoi(inputString().c_str()));
-    _pModel->updateMode();
+    _pModel->selectComponent(inputString());
+    messangeMode();
     (this->*(_functionList[_pModel->getMode()]))();
 }
 

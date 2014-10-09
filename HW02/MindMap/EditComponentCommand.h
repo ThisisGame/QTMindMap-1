@@ -1,19 +1,17 @@
 #pragma once
 #include "Command.h"
-#include "MindMapModel.h"
+#include "Component.h"
 
 class EditComponentCommand :
     public Command
 {
     public:
-        EditComponentCommand(int id, string newDescription, string oldDescription, MindMapModel* model);
-        EditComponentCommand();
+        EditComponentCommand(string, Component*);
         ~EditComponentCommand();
         void execute();
         void unexcute();
     private:
-        MindMapModel* _model;
-        int _id;
+        Component* _component;
         string _oldDescription;
         string _newDescription;
 

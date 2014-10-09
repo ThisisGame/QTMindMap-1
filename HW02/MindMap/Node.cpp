@@ -35,3 +35,8 @@ void Node::setParent(Component* parent) //³]©wParent
 {
     _parent = parent;
 }
+
+Component* Node::getParent()
+{
+    return _parent;
+}

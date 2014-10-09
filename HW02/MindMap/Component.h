@@ -11,6 +11,7 @@ class Component
         Component();
         ~Component();
         int getId();
+        void setId(int);
         void setDescription(string);
         string getType();
         string getDescription();
@@ -21,6 +22,7 @@ class Component
         virtual void deleteNodeByNode(Component*) = 0;
         virtual void display(stringstream&, string, bool = true) = 0;
         virtual void setParent(Component*) = 0;
+        virtual Component* getParent() = 0;
         virtual list<Component*> getNodeList() = 0;
     protected:
         int _id;

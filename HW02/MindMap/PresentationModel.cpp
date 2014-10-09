@@ -122,6 +122,8 @@ void PresentationModel::editMode(char mode)  //選擇編輯Node模式，防呆判斷
     {
         try
         {
+            _model->deleteComponent();
+            display();
         }
         catch (const char* message)
         {
@@ -135,11 +137,17 @@ void PresentationModel::editMode(char mode)  //選擇編輯Node模式，防呆判斷
 }
 
 //選擇NODE時判斷是否有選到
-void PresentationModel::updateMode()  //更新Mode模式，判斷是否已選擇Component
+void PresentationModel::selectComponent(string idString)  //更新Mode模式，判斷是否已選擇Component
 {
-    if (_model->isSelectedComponent() == false)
+    int id = atoi(idString.c_str());
+    char firstchar = idString[0];
+    if (!(firstchar >= '0' && firstchar <= '9'))
     {
-        setMessage(ERROR_NODE_NOTFOUND);
+        setMessage("You can't input the char\n");
+    }
+    else if (_mode != CHANGE_PARENT_MODE && _model->selectComponent(id) == false)
+    {
+        _message = "The node is not exist!!\n";
     }
     else if (_mode == INSERT_NEW_NODE_MODE)
     {
@@ -149,19 +157,16 @@ void PresentationModel::updateMode()  //更新Mode模式，判斷是否已選擇Component
     {
         setMode(SELECT_EDIT_MODE);
     }
+    else if (_mode == CHANGE_PARENT_MODE)
+    {
+        _model->changeParent(id);
+    }
 }
 
 void PresentationModel::display()  //輸出顯示
 {
-    try
-    {
-        _model->display();
-        _message = _model->getMessage();
-    }
-    catch (const char* message)
-    {
-        setMessage(message);
-    }
+    _model->display();
+    _message = _model->getMessage();
 }
 
 void PresentationModel::loadMindMap()  //讀取Mindmap

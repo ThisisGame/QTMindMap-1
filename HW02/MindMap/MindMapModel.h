@@ -18,29 +18,32 @@ class MindMapModel
         MindMapModel(void);
         ~MindMapModel(void);
         void createMindMap(string);
-        void changeDescription(string);
         void display();
         void insertNode(char);
         void loadMindMap();
         void saveMindMap();
         void setDescription(string);
-        void setNodeName(string);
-        void selectComponent(int);
-        bool isRoot();
-        bool isSelectedComponent();
-        bool isSaved();
+        bool selectComponent(int);
         string getMessage();
+
         void redo();
         void undo();
+        void changeDescription(string);
+        void changeParent(int);
+        void deleteComponent();
+        void doDeleteNode(Component*);
+        void doAddNodes(list<Component*>);
+        list<Component*> getNodeList();
     private:
         int _selectedComponentId;
-        bool _isSaved;
         ComponentFactory _componentFactory;
         Component* _component;
         string _message;
         list<Component*> _nodelist;
         void clearList();
+        void reNumber();
         Component* createNode();
         CommandManager _commandManager;
+        Component* findNodeByID(int);
 
 };

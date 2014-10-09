@@ -19,7 +19,7 @@ class PresentationModel
         void loadMindMap();
         void saveMindMap();
         void selectMode(char);
-        void updateMode();
+        void selectComponent(string);
         void exitMode(char);
         void setDescription(string, int);
         void redo();

@@ -13,6 +13,7 @@ class Node :
         void addParent(Component*);
         void addSibling(Component*);
         void setParent(Component*);
+        Component* getParent();
     private:
         Component* _parent;
 };

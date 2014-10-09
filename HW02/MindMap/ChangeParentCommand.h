@@ -1,20 +1,20 @@
 #pragma once
 #include "Command.h"
-#include "MindMapModel.h"
+#include "Component.h"
 
 class ChangeParentCommand :
     public Command
 {
     public:
-        ChangeParentCommand(int, int, int, MindMapModel*);
+        ChangeParentCommand(Component*, Component*);
         ChangeParentCommand();
         ~ChangeParentCommand();
         void execute();
         void unexcute();
     private:
-        MindMapModel* _model;
-        int _id;
-        int _newParent;
-        int _oldParent;
+        Component* _child;
+        Component* _newParent;
+        Component* _oldParent;
+        list<Component*> _oldParentList;
 };
 

@@ -1,31 +1,23 @@
 #include "EditComponentCommand.h"
 
-EditComponentCommand::EditComponentCommand()
+EditComponentCommand::EditComponentCommand(string newDescription, Component* component)
 {
-    _id = 0;
-}
-
-EditComponentCommand::EditComponentCommand(int id, string newDescription, string oldDescription, MindMapModel* model)
-{
-    _id = id;
     _newDescription = newDescription;
-    _oldDescription = oldDescription;
-    _model = model;
+    _oldDescription = component->getDescription();
+    _component = component;
 }
 
 EditComponentCommand::~EditComponentCommand()
 {
-    cout << "delete command" << _id << endl;
+    cout << "delete command edit" << _newDescription << endl;
 }
 
 void EditComponentCommand::execute()
 {
-    _model->selectComponent(_id);
-    _model->setDescription(_newDescription);
+    _component->setDescription(_newDescription);
 }
 
 void EditComponentCommand::unexcute()
 {
-    _model->selectComponent(_id);
-    _model->setDescription(_oldDescription);
+    _component->setDescription(_oldDescription);
 }

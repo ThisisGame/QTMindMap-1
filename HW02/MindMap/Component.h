@@ -22,6 +22,8 @@ class Component
         virtual void deleteNodeByNode(Component*) = 0;
         virtual void display(stringstream&, string, bool = true) = 0;
         virtual void setParent(Component*) = 0;
+        virtual bool isParent(Component*) = 0;
+        virtual void addChilds(list<Component*>) = 0;
         virtual Component* getParent() = 0;
         virtual list<Component*> getNodeList() = 0;
     protected:

@@ -14,6 +14,7 @@ class Composite :
         void clearNodeList();
         void deleteNodeByNode(Component*);
         void display(stringstream&, string, bool);
+        void addChilds(list<Component*>);
         list<Component*> getNodeList();
     protected:
         list<Component*> _nodelist;

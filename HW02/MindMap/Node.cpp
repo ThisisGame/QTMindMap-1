@@ -36,6 +36,18 @@ void Node::setParent(Component* parent) //³]©wParent
     _parent = parent;
 }
 
+bool Node::isParent(Component* parent)
+{
+    if (parent == _parent)
+    {
+        return true;
+    }
+    else
+    {
+        return _parent->isParent(parent);
+    }
+}
+
 Component* Node::getParent()
 {
     return _parent;

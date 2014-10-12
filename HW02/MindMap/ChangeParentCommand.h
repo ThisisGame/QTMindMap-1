@@ -16,5 +16,6 @@ class ChangeParentCommand :
         Component* _newParent;
         Component* _oldParent;
         list<Component*> _oldParentList;
+        bool _isParent;
 };
 

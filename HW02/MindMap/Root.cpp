@@ -35,6 +35,11 @@ void Root::setParent(Component* parent) //Root不能設定Parent
 {
 }
 
+bool Root::isParent(Component* parent)
+{
+    return false;
+}
+
 Component* Root::getParent()
 {
     return NULL;

@@ -116,14 +116,25 @@ void PresentationModel::editMode(char mode)  //選擇編輯Node模式，防呆判斷
     }
     else if (mode == 'b')
     {
+        if (_model->isRoot())
+        {
+            _message = "Root can't be change parent!\n";
+            return;
+        }
         setMode(CHANGE_PARENT_MODE);
     }
     else if (mode == 'c')
     {
         try
         {
+            if (_model->isRoot())
+            {
+                _message = "Root can't be delete!\n";
+                return;
+            }
             _model->deleteComponent();
             display();
+            setMode(MESSANGE_MODE);
         }
         catch (const char* message)
         {
@@ -159,7 +170,16 @@ void PresentationModel::selectComponent(string idString)  //更新Mode模式，判斷是
     }
     else if (_mode == CHANGE_PARENT_MODE)
     {
-        _model->changeParent(id);
+        try
+        {
+            _model->changeParent(id);
+            display();
+            setMode(MESSANGE_MODE);
+        }
+        catch (const char* message)
+        {
+            _message = message;
+        }
     }
 }
 
@@ -174,7 +194,7 @@ void PresentationModel::loadMindMap()  //讀取Mindmap
     try
     {
         _model->loadMindMap();
-        _message = _model->getMessage();
+        display();
     }
     catch (const char* message)
     {

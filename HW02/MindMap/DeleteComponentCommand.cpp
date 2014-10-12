@@ -18,23 +18,14 @@ void DeleteComponentCommand::execute()
 {
     _model->doDeleteNode(_component);
     _parent->deleteNodeByNode(_component);
-    for (auto child : _oldChildList)
-    {
-        _parent->addChild(child);
-    }
+    _parent->addChilds(_oldChildList);
 }
 
 void DeleteComponentCommand::unexcute()
 {
     _parent->clearNodeList();
+    _parent->addChilds(_oldParentList);
     _component->clearNodeList();
-    for (auto child : _oldParentList)
-    {
-        _parent->addChild(child);
-    }
-    for (auto child : _oldChildList)
-    {
-        _component->addChild(child);
-    }
+    _component->addChilds(_oldChildList);
     _model->doAddNodes(_oldNodeList);
 }

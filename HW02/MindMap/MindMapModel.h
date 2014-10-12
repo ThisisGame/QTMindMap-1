@@ -34,6 +34,7 @@ class MindMapModel
         void doDeleteNode(Component*);
         void doAddNodes(list<Component*>);
         list<Component*> getNodeList();
+        bool isRoot();
     private:
         int _selectedComponentId;
         ComponentFactory _componentFactory;

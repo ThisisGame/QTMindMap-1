@@ -13,6 +13,7 @@ class Root :
         void addParent(Component*);
         void addSibling(Component*);
         void setParent(Component*);
+        bool isParent(Component*);
         Component* getParent();
 };
 

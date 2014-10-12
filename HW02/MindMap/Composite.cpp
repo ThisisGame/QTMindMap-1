@@ -22,12 +22,27 @@ Composite::~Composite()
 void Composite::addChild(Component* node)  //增加Node
 {
     node->setParent(this);
+    for (auto child : _nodelist)
+    {
+        if (child == node)
+        {
+            return;
+        }
+    }
     _nodelist.push_back(node);
 }
 
 void Composite::clearNodeList() //清除NodeList內所有元素
 {
     _nodelist.clear();
+}
+
+void Composite::addChilds(list<Component*> nodelist)  //取得NodeList
+{
+    for (auto child : nodelist)
+    {
+        this->addChild(child);
+    }
 }
 
 list<Component*> Composite::getNodeList()  //取得NodeList

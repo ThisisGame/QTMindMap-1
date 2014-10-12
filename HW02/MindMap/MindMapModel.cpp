@@ -96,7 +96,16 @@ void MindMapModel::changeDescription(string newDescription)
 
 void MindMapModel::changeParent(int parentID)
 {
-    _commandManager.execute(new ChangeParentCommand(_component, findNodeByID(parentID)));
+    Component* parent = findNodeByID(parentID);
+    if (parentID == _component->getId())
+    {
+        throw "You can't select itself!!\n";
+    }
+    else if (parent == NULL)
+    {
+        throw "The node is not exist!!\n";
+    }
+    _commandManager.execute(new ChangeParentCommand(_component, parent));
 }
 
 void MindMapModel::deleteComponent()
@@ -127,6 +136,15 @@ void MindMapModel::redo()
 void MindMapModel::undo()
 {
     _commandManager.undo();
+}
+
+bool MindMapModel::isRoot()
+{
+    if (_component->getType() == ROOT_TYPE)
+    {
+        return true;
+    }
+    return false;
 }
 
 void MindMapModel::display()  //顯示MindMap
@@ -191,6 +209,10 @@ void MindMapModel::loadMindMap()  //讀檔
     fstream file;
     clearList();
     file.open(SAVE_FILE_NAME, ios::in);
+    if (!file) //如果開啟檔案失敗 輸出字串
+    {
+        throw ERROR_OPEN_FILE;
+    }
     while (getline(file, inputString, '\"'))
     {
         components.push_back(inputString);

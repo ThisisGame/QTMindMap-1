@@ -20,8 +20,8 @@ class MindMapModel
         void createMindMap(string);
         void display();
         void insertNode(char);
-        void loadMindMap();
-        void saveMindMap();
+        void loadMindMap(string);
+        void saveMindMap(string);
         void setDescription(string);
         bool selectComponent(int);
         string getMessage();

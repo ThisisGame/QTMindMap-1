@@ -16,8 +16,8 @@ class PresentationModel
         void display();
         void insertMode(char);
         void editMode(char);
-        void loadMindMap();
-        void saveMindMap();
+        void loadMindMap(string);
+        void saveMindMap(string);
         void selectMode(char);
         void selectComponent(string);
         void exitMode(char);

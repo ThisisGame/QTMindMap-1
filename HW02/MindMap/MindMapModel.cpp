@@ -173,9 +173,8 @@ void MindMapModel::reNumber()
     }
 }
 
-void MindMapModel::saveMindMap()  //存檔MindMap
+void MindMapModel::saveMindMap(string filename)  //存檔MindMap
 {
-    char filename[] = SAVE_FILE_NAME;
     fstream file;
     reNumber();
     file.open(filename, ios::out);//開啟檔案
@@ -202,13 +201,13 @@ void MindMapModel::saveMindMap()  //存檔MindMap
     _message += SAVE_FILE_SUCCESS;
 }
 
-void MindMapModel::loadMindMap()  //讀檔
+void MindMapModel::loadMindMap(string filename)  //讀檔
 {
     vector<string> components;
     string inputString;
     fstream file;
     clearList();
-    file.open(SAVE_FILE_NAME, ios::in);
+    file.open(filename, ios::in);
     if (!file) //如果開啟檔案失敗 輸出字串
     {
         throw ERROR_OPEN_FILE;

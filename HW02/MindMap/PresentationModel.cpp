@@ -189,11 +189,11 @@ void PresentationModel::display()  //輸出顯示
     _message = _model->getMessage();
 }
 
-void PresentationModel::loadMindMap()  //讀取Mindmap
+void PresentationModel::loadMindMap(string filename)  //讀取Mindmap
 {
     try
     {
-        _model->loadMindMap();
+        _model->loadMindMap(filename);
         display();
     }
     catch (const char* message)
@@ -202,11 +202,11 @@ void PresentationModel::loadMindMap()  //讀取Mindmap
     }
 }
 
-void PresentationModel::saveMindMap()  //儲存Mindmap
+void PresentationModel::saveMindMap(string filename)  //儲存Mindmap
 {
     try
     {
-        _model->saveMindMap();
+        _model->saveMindMap(filename);
         _message = _model->getMessage();
     }
     catch (const char* message)
@@ -252,7 +252,7 @@ void PresentationModel::exitMode(char input)
 {
     if (input == 'y' || input == 'Y')
     {
-        saveMindMap();
+        saveMindMap(SAVE_FILE_NAME);
     }
 }
 

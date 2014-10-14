@@ -155,14 +155,15 @@ void TextUIView::display() //顯示心智圖
 //功能五
 void TextUIView::saveMindMap() //儲存心智圖
 {
-    _pModel->saveMindMap();
+    _pModel->saveMindMap(SAVE_FILE_NAME);
     messangeMode();
 }
 
 //功能六
 void TextUIView::loadMindMap() //讀取心智圖
 {
-    _pModel->loadMindMap();
+    cout << "Please input a file path:";
+    _pModel->loadMindMap(inputString());
     messangeMode();
 }
 

@@ -8,7 +8,7 @@
 #define ERROR_NODE_NOTFOUND "The node is not exist!! \n"
 #define THE_MIND_MAP "The mind map "
 #define DISPLAY_MINDMAP " is displayed as follows:"
-#define SAVE_FILE_NAME "mindMap.txt"
+#define SAVE_FILE_NAME "mindMap.mm"
 #define SAVE_FILE_SUCCESS "Save MindMap Success!\n\n"
 #define ERROR_OPEN_FILE "Can't not open file!\n"
 #define EMPTY_STRING ""

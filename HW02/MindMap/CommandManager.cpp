@@ -1,4 +1,5 @@
 #include "CommandManager.h"
+#include "ConstString.h"
 
 CommandManager::CommandManager()
 {
@@ -23,7 +24,7 @@ void CommandManager::redo()
 {
     if (_redoCommand.empty() == true)
     {
-        throw "Can't redo!\n";
+        throw ERROR_REDO;
     }
     Command* command = _redoCommand.top();
     command->execute();
@@ -35,10 +36,26 @@ void CommandManager::undo()
 {
     if (_undoCommand.empty() == true)
     {
-        throw "Can't undo!\n";
+        throw ERROR_UNDO;
     }
     Command* command = _undoCommand.top();
     command->unexcute();
     _redoCommand.push(command);
     _undoCommand.pop();
+}
+
+void CommandManager::clearAllCommand()   //清除所有Command
+{
+    while (!_redoCommand.empty())
+    {
+        delete _redoCommand.top();
+        _redoCommand.pop();
+    }
+    while (!_undoCommand.empty())
+    {
+        Command* command = _undoCommand.top();
+        command->deleteCommand();
+        delete command;
+        _undoCommand.pop();
+    }
 }

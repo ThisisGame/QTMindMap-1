@@ -11,6 +11,7 @@ class ChangeParentCommand :
         ~ChangeParentCommand();
         void execute();
         void unexcute();
+        void deleteCommand();
     private:
         Component* _child;
         Component* _newParent;

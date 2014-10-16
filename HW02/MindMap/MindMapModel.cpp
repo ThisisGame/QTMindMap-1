@@ -99,11 +99,11 @@ void MindMapModel::changeParent(int parentID)
     Component* parent = findNodeByID(parentID);
     if (parentID == _component->getId())
     {
-        throw "You can't select itself!!\n";
+        throw ERROR_SELECT_ITSELF;
     }
     else if (parent == NULL)
     {
-        throw "The node is not exist!!\n";
+        throw ERROR_SELECT_NODE;
     }
     _commandManager.execute(new ChangeParentCommand(_component, parent));
 }
@@ -177,6 +177,7 @@ void MindMapModel::saveMindMap(string filename)  //存檔MindMap
 {
     fstream file;
     reNumber();
+    _commandManager.clearAllCommand();
     file.open(filename, ios::out);//開啟檔案
     if (_component == NULL)
     {
@@ -217,6 +218,34 @@ void MindMapModel::loadMindMap(string filename)  //讀檔
         components.push_back(inputString);
     }
     components.erase(components.begin());
+    createMindMapByList(components);
+    createNodesConnectionByList(components);
+}
+
+void MindMapModel::createNodesConnectionByList(vector<string> components)  //建立Node之間的關係
+{
+    string childId;
+    for (unsigned int i = 0; i < components.size() / 2; i++)
+    {
+        stringstream childsString(components[i * 2 + 1]);
+        while (getline(childsString, childId, ' '))
+        {
+            if (childId == EMPTY_STRING || childId[0] == '\n')
+            {
+                continue;
+            }
+            else
+            {
+                Component* parnet = findNodeByID(i);
+                int childID = atoi(childId.c_str());
+                parnet->addChild(findNodeByID(childID));
+            }
+        }
+    }
+}
+
+void MindMapModel::createMindMapByList(vector<string> components) //由讀檔後List來加入Node
+{
     for (unsigned int i = 0; i < components.size() / 2; i++)
     {
         if (i == 0)
@@ -229,23 +258,6 @@ void MindMapModel::loadMindMap(string filename)  //讀檔
             _componentFactory.countId();
             selectComponent(i);
             setDescription(components[i * 2]);
-        }
-    }
-    for (unsigned int i = 0; i < components.size() / 2; i++)
-    {
-        stringstream test(components[i * 2 + 1]);
-        while (getline(test, inputString, ' '))
-        {
-            if (inputString == "" || inputString[0] == '\n')
-            {
-                continue;
-            }
-            else
-            {
-                Component* parnet = findNodeByID(i);
-                int childID = atoi(inputString.c_str());
-                parnet->addChild(findNodeByID(childID));
-            }
         }
     }
 }

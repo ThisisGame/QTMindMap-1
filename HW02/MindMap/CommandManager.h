@@ -11,6 +11,7 @@ class CommandManager
         void execute(Command*);
         void redo();
         void undo();
+        void clearAllCommand();
     private:
         stack<Command*> _redoCommand;
         stack<Command*> _undoCommand;

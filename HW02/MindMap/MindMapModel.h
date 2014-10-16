@@ -43,6 +43,8 @@ class MindMapModel
         list<Component*> _nodelist;
         void clearList();
         void reNumber();
+        void createMindMapByList(vector<string>);
+        void createNodesConnectionByList(vector<string>);
         Component* createNode();
         CommandManager _commandManager;
         Component* findNodeByID(int);

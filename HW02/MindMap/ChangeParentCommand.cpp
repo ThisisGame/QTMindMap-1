@@ -16,10 +16,12 @@ ChangeParentCommand::~ChangeParentCommand()
 {
 }
 
+void ChangeParentCommand::deleteCommand()
+{
+}
+
 void ChangeParentCommand::execute()
 {
-    //Case1先將父親list內的資料刪除（記住位置），再加到新的list內
-    //case2將child取出來加進parent的node內，再將node加入欲加的parent內，必須存原本的parent，舊的nodelist要存起來
     if (!_isParent)
     {
         _oldParentList = _oldParent->getNodeList();

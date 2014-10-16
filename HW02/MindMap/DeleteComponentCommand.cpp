@@ -14,6 +14,11 @@ DeleteComponentCommand::~DeleteComponentCommand()
 {
 }
 
+void DeleteComponentCommand::deleteCommand()
+{
+    delete _component;
+}
+
 void DeleteComponentCommand::execute()
 {
     _model->doDeleteNode(_component);

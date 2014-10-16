@@ -118,7 +118,7 @@ void PresentationModel::editMode(char mode)  //¿ï¾Ü½s¿èNode¼Ò¦¡¡A¨¾§b§PÂ_
     {
         if (_model->isRoot())
         {
-            _message = "Root can't be change parent!\n";
+            _message = ERROR_ROOT_CHANGE_PARENT;
             return;
         }
         setMode(CHANGE_PARENT_MODE);
@@ -129,7 +129,7 @@ void PresentationModel::editMode(char mode)  //¿ï¾Ü½s¿èNode¼Ò¦¡¡A¨¾§b§PÂ_
         {
             if (_model->isRoot())
             {
-                _message = "Root can't be delete!\n";
+                _message = ERROR_ROOT_DELETE;
                 return;
             }
             _model->deleteComponent();
@@ -154,11 +154,11 @@ void PresentationModel::selectComponent(string idString)  //§ó·sMode¼Ò¦¡¡A§PÂ_¬O
     char firstchar = idString[0];
     if (!(firstchar >= '0' && firstchar <= '9'))
     {
-        setMessage("You can't input the char\n");
+        setMessage(ERROR_INPUT_CHAR);
     }
     else if (_mode != CHANGE_PARENT_MODE && _model->selectComponent(id) == false)
     {
-        _message = "The node is not exist!!\n";
+        _message = ERROR_SELECT_NODE;
     }
     else if (_mode == INSERT_NEW_NODE_MODE)
     {

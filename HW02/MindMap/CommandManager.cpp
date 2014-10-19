@@ -46,16 +46,15 @@ void CommandManager::undo()
 
 void CommandManager::clearAllCommand()   //清除所有Command
 {
-    while (!_redoCommand.empty())
-    {
-        delete _redoCommand.top();
-        _redoCommand.pop();
-    }
     while (!_undoCommand.empty())
     {
-        Command* command = _undoCommand.top();
+        undo();
+    }
+    while (!_redoCommand.empty())
+    {
+        Command* command = _redoCommand.top();
         command->deleteCommand();
         delete command;
-        _undoCommand.pop();
+        _redoCommand.pop();
     }
 }

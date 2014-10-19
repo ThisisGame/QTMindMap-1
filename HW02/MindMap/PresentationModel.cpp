@@ -103,7 +103,7 @@ void PresentationModel::insertMode(char mode)  //選擇插入Node模式，防呆判斷
     }
     else
     {
-        setMessage(ERROR_INPUT_COMMAND);
+        _message = ERROR_INPUT_COMMAND;
     }
 }
 
@@ -118,32 +118,25 @@ void PresentationModel::editMode(char mode)  //選擇編輯Node模式，防呆判斷
     {
         if (_model->isRoot())
         {
-            _message = ERROR_ROOT_CHANGE_PARENT;
+            setMessage(ERROR_ROOT_CHANGE_PARENT);
             return;
         }
         setMode(CHANGE_PARENT_MODE);
     }
     else if (mode == 'c')
     {
-        try
+        if (_model->isRoot())
         {
-            if (_model->isRoot())
-            {
-                _message = ERROR_ROOT_DELETE;
-                return;
-            }
-            _model->deleteComponent();
-            display();
-            setMode(MESSANGE_MODE);
+            setMessage(ERROR_ROOT_DELETE);
+            return;
         }
-        catch (const char* message)
-        {
-            _message = message;
-        }
+        _model->deleteComponent();
+        display();
+        setMode(MESSANGE_MODE);
     }
     else
     {
-        setMessage(ERROR_INPUT_COMMAND);
+        _message = ERROR_INPUT_COMMAND;
     }
 }
 
@@ -185,8 +178,15 @@ void PresentationModel::selectComponent(string idString)  //更新Mode模式，判斷是
 
 void PresentationModel::display()  //輸出顯示
 {
-    _model->display();
-    _message = _model->getMessage();
+    try
+    {
+        _model->display();
+        _message = _model->getMessage();
+    }
+    catch (const char* message)
+    {
+        setMessage(message);
+    }
 }
 
 void PresentationModel::loadMindMap(string filename)  //讀取Mindmap

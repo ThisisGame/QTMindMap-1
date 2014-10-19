@@ -33,6 +33,8 @@ class MindMapModel
         void deleteComponent();
         void doDeleteNode(Component*);
         void doAddNodes(list<Component*>);
+        void doInsertChild(Component*, Component*);
+        void doDeleteChild(Component*, Component*);
         list<Component*> getNodeList();
         bool isRoot();
     private:
@@ -42,11 +44,12 @@ class MindMapModel
         string _message;
         list<Component*> _nodelist;
         void clearList();
-        void reNumber();
-        void createMindMapByList(vector<string>);
-        void createNodesConnectionByList(vector<string>);
+        void reOrderNumber();
+        void unOrderNumber(vector<int>);
+        void createMindMapByList(vector<vector<string>>);
+        void createNodesConnectionByList(vector<vector<string>>);
         Component* createNode();
         CommandManager _commandManager;
         Component* findNodeByID(int);
-
+        vector<int> getIdList();
 };

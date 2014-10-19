@@ -32,8 +32,8 @@ void ChangeParentCommand::execute()
     {
         _oldParentList = _child->getNodeList();
         _oldParent->deleteNodeByNode(_child);
-        _oldParent->addChilds(_oldParentList);
         _newParent->addChild(_child);
+        _oldParent->addChilds(_oldParentList);
         _child->clearNodeList();
     }
 }

@@ -13,6 +13,7 @@ class ComponentFactory
         int getId();
         void setId(int);
         void countId();
+        void unCountId();
     private:
         int _id;
 };

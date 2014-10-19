@@ -24,6 +24,11 @@ void ComponentFactory::countId()
     _id++;
 }
 
+void ComponentFactory::unCountId()
+{
+    _id--;
+}
+
 Component* ComponentFactory::createComponent(string type)
 {
     if (type == ROOT_TYPE)

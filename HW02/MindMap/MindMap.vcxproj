@@ -88,6 +88,7 @@
     <ClCompile Include="EditComponentCommand.cpp" />
     <ClCompile Include="InsertChildCommand.cpp" />
     <ClCompile Include="InsertParentCommand.cpp" />
+    <ClCompile Include="InsertSiblingCommand.cpp" />
     <ClCompile Include="MindMapModel.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PresentationModel.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="EditComponentCommand.h" />
     <ClInclude Include="InsertChildCommand.h" />
     <ClInclude Include="InsertParentCommand.h" />
+    <ClInclude Include="InsertSiblingCommand.h" />
     <ClInclude Include="MindMapModel.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PresentationModel.h" />

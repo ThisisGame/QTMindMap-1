@@ -11,12 +11,20 @@ CommandManager::~CommandManager()
 
 void CommandManager::execute(Command* command)
 {
-    command->execute();
-    _undoCommand.push(command);
-    while (!_redoCommand.empty())
+    try
     {
-        delete _redoCommand.top();
-        _redoCommand.pop();
+        command->execute();
+        _undoCommand.push(command);
+        while (!_redoCommand.empty())
+        {
+            delete _redoCommand.top();
+            _redoCommand.pop();
+        }
+    }
+    catch (const char* message)
+    {
+        delete command;
+        throw message;
     }
 }
 

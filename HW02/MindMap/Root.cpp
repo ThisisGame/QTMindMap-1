@@ -21,13 +21,11 @@ Root::~Root()
 
 void Root::addParent(Component* parent) //Root不能有Parent
 {
-    delete parent;
     throw ERROR_ROOT_INSERT_PARENT;
 }
 
 void Root::addSibling(Component* sibling) //Root不能有Sibling
 {
-    delete sibling;
     throw ERROR_ROOT_INSERT_SIBLING;
 }
 

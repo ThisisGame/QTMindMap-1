@@ -4,6 +4,7 @@
 #include "DeleteComponentCommand.h"
 #include "InsertChildCommand.h"
 #include "InsertParentCommand.h"
+#include "InsertSiblingCommand.h"
 #include <regex>
 
 MindMapModel::MindMapModel(void)
@@ -49,7 +50,7 @@ void MindMapModel::insertNode(char mode)  //´¡¤JNode
     }
     else if (mode == 'c')
     {
-        _component->addSibling(newNode);
+        _commandManager.execute(new InsertSiblingCommand(_component, newNode, this));
     }
 }
 
@@ -289,8 +290,7 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //¥ÑÅª
     createMindMap(components[0][1]);
     for (unsigned int i = 1; i < components.size(); i++)
     {
-        createNode();
-        _componentFactory.countId();
+        doInsertNode(createNode());
         selectComponent(i);
         setDescription(components[i][1]);
     }

@@ -1,4 +1,5 @@
 #include "ChangeParentCommand.h"
+#include "ConstString.h"
 
 ChangeParentCommand::ChangeParentCommand()
 {
@@ -9,7 +10,6 @@ ChangeParentCommand::ChangeParentCommand(Component* child, Component* newParent)
     _newParent = newParent;
     _child = child;
     _oldParent = child->getParent();
-    _isParent = newParent->isParent(child);
 }
 
 ChangeParentCommand::~ChangeParentCommand()
@@ -22,6 +22,15 @@ void ChangeParentCommand::deleteCommand()
 
 void ChangeParentCommand::execute()
 {
+    if (_child == _newParent)
+    {
+        throw ERROR_SELECT_ITSELF;
+    }
+    else if (_newParent == NULL)
+    {
+        throw ERROR_SELECT_NODE;
+    }
+    _isParent = _newParent->isParent(_child);
     if (!_isParent)
     {
         _oldParentList = _oldParent->getNodeList();
@@ -32,8 +41,8 @@ void ChangeParentCommand::execute()
     {
         _oldParentList = _child->getNodeList();
         _oldParent->deleteNodeByNode(_child);
-        _newParent->addChild(_child);
         _oldParent->addChilds(_oldParentList);
+        _newParent->addChild(_child);
         _child->clearNodeList();
     }
 }

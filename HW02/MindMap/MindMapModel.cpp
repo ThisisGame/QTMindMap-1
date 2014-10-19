@@ -113,14 +113,6 @@ void MindMapModel::changeDescription(string newDescription)
 void MindMapModel::changeParent(int parentID)
 {
     Component* parent = findNodeByID(parentID);
-    if (parentID == _component->getId())
-    {
-        throw ERROR_SELECT_ITSELF;
-    }
-    else if (parent == NULL)
-    {
-        throw ERROR_SELECT_NODE;
-    }
     _commandManager.execute(new ChangeParentCommand(_component, parent));
 }
 

@@ -8,7 +8,7 @@ using namespace std;
 class TextUIView
 {
     public:
-        TextUIView();
+        TextUIView(MindMapModel*);
         ~TextUIView();
         void run();
     private:

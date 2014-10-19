@@ -1,8 +1,8 @@
 #include "TextUIView.h"
 
-TextUIView::TextUIView()  //初始化
+TextUIView::TextUIView(MindMapModel* model)  //初始化
 {
-    _model = new MindMapModel();
+    _model = model;
     _pModel = new PresentationModel(_model);
     _functionList[ROOT_MODE] = &TextUIView::selectMode;
     //功能一-新建MindMap

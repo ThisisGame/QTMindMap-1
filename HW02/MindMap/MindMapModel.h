@@ -33,8 +33,8 @@ class MindMapModel
         void deleteComponent();
         void doDeleteNode(Component*);
         void doAddNodes(list<Component*>);
-        void doInsertChild(Component*, Component*);
-        void doDeleteChild(Component*, Component*);
+        void doInsertNode(Component*);
+        void doUninsertNode(Component*);
         list<Component*> getNodeList();
         bool isRoot();
     private:

@@ -3,6 +3,7 @@
 #include "ChangeParentCommand.h"
 #include "DeleteComponentCommand.h"
 #include "InsertChildCommand.h"
+#include "InsertParentCommand.h"
 #include <regex>
 
 MindMapModel::MindMapModel(void)
@@ -40,7 +41,7 @@ void MindMapModel::insertNode(char mode)  //´¡¤JNode
     Component* newNode = createNode();
     if (mode == 'a')
     {
-        _component->addParent(newNode);
+        _commandManager.execute(new InsertParentCommand(_component, newNode, this));
     }
     else if (mode == 'b')
     {
@@ -52,16 +53,14 @@ void MindMapModel::insertNode(char mode)  //´¡¤JNode
     }
 }
 
-void MindMapModel::doInsertChild(Component* component, Component* child)
+void MindMapModel::doInsertNode(Component* child)
 {
-    _component->addChild(child);
     _nodelist.push_back(child);
     _componentFactory.countId();
 }
 
-void MindMapModel::doDeleteChild(Component* component, Component* child)
+void MindMapModel::doUninsertNode(Component* child)
 {
-    component->deleteNodeByNode(child);
     doDeleteNode(child);
     _componentFactory.unCountId();
 }

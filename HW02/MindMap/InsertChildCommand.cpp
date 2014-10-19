@@ -18,10 +18,12 @@ void InsertChildCommand::deleteCommand()
 
 void InsertChildCommand::execute()
 {
-    _model->doInsertChild(_component, _child);
+    _component->addChild(_child);
+    _model->doInsertNode(_child);
 }
 
 void InsertChildCommand::unexcute()
 {
-    _model->doDeleteChild(_component, _child);
+    _component->deleteNodeByNode(_child);
+    _model->doUninsertNode(_child);
 }

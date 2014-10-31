@@ -6,9 +6,8 @@ class Node :
     public Composite
 {
     public:
-        Node();
+        Node(int, string);
         Node(int);
-        Node(string, int);
         ~Node();
         void addParent(Component*);
         void addSibling(Component*);

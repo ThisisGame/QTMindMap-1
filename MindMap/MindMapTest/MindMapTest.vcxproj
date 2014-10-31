@@ -11,23 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{99EC40E8-1A5F-4E30-916D-DA974F89C7D6}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MindMap</RootNamespace>
+    <ProjectGuid>{01F0B4D9-880C-4906-9B3F-D711BA5D734B}</ProjectGuid>
+    <RootNamespace>MindMapTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -40,84 +39,76 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>../MindMap/;$(IncludePath)</IncludePath>
     <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Binary\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\gtest\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\gtest\lib\gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>$(TargetPath)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ChangeParentCommand.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandManager.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ComponentFactory.cpp" />
-    <ClCompile Include="Composite.cpp" />
-    <ClCompile Include="DeleteComponentCommand.cpp" />
-    <ClCompile Include="EditComponentCommand.cpp" />
-    <ClCompile Include="InsertChildCommand.cpp" />
-    <ClCompile Include="InsertParentCommand.cpp" />
-    <ClCompile Include="InsertSiblingCommand.cpp" />
-    <ClCompile Include="MindMapModel.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="PresentationModel.cpp" />
-    <ClCompile Include="Root.cpp" />
+    <ClCompile Include="..\MindMap\ChangeParentCommand.cpp" />
+    <ClCompile Include="..\MindMap\Command.cpp" />
+    <ClCompile Include="..\MindMap\CommandManager.cpp" />
+    <ClCompile Include="..\MindMap\Component.cpp" />
+    <ClCompile Include="..\MindMap\ComponentFactory.cpp" />
+    <ClCompile Include="..\MindMap\Composite.cpp" />
+    <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp" />
+    <ClCompile Include="..\MindMap\EditComponentCommand.cpp" />
+    <ClCompile Include="..\MindMap\InsertChildCommand.cpp" />
+    <ClCompile Include="..\MindMap\InsertParentCommand.cpp" />
+    <ClCompile Include="..\MindMap\InsertSiblingCommand.cpp" />
+    <ClCompile Include="..\MindMap\MindMapModel.cpp" />
+    <ClCompile Include="..\MindMap\Node.cpp" />
+    <ClCompile Include="..\MindMap\PresentationModel.cpp" />
+    <ClCompile Include="..\MindMap\Root.cpp" />
+    <ClCompile Include="..\MindMap\TextUIView.cpp" />
+    <ClCompile Include="ChangeParentCommandTest.cpp" />
+    <ClCompile Include="CommandManagerTest.cpp" />
+    <ClCompile Include="ComponentFactoryTest.cpp" />
+    <ClCompile Include="ComponentTest.cpp" />
+    <ClCompile Include="CompositeTest.cpp" />
+    <ClCompile Include="DeleteComponentCommandTest.cpp" />
+    <ClCompile Include="EditComponentCommandTest.cpp" />
+    <ClCompile Include="InsertChildCommandTest.cpp" />
+    <ClCompile Include="InsertParentCommandTest.cpp" />
+    <ClCompile Include="InsertSiblingCommandTest.cpp" />
+    <ClCompile Include="IntegrationTest.cpp" />
+    <ClCompile Include="MindMapModelTest.cpp" />
+    <ClCompile Include="NodeTest.cpp" />
+    <ClCompile Include="PresentationModelTest.cpp" />
+    <ClCompile Include="RootTest.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="TextUIView.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ChangeParentCommand.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandManager.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentFactory.h" />
-    <ClInclude Include="Composite.h" />
-    <ClInclude Include="ConstString.h" />
-    <ClInclude Include="ConstVariables.h" />
-    <ClInclude Include="DeleteComponentCommand.h" />
-    <ClInclude Include="EditComponentCommand.h" />
-    <ClInclude Include="InsertChildCommand.h" />
-    <ClInclude Include="InsertParentCommand.h" />
-    <ClInclude Include="InsertSiblingCommand.h" />
-    <ClInclude Include="MindMapModel.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="PresentationModel.h" />
-    <ClInclude Include="Root.h" />
-    <ClInclude Include="TextUIView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

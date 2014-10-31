@@ -248,16 +248,15 @@ void PresentationModel::setMessage(string messange) //³]©w¿ù»~°T®§
     setMode(MESSANGE_MODE);
 }
 
-void PresentationModel::exitMode(char input)
+void PresentationModel::exitMode(char input, string filename)
 {
     if (input == 'y' || input == 'Y')
     {
-        saveMindMap(SAVE_FILE_NAME);
+        saveMindMap(filename);
     }
 }
 
 void PresentationModel::setMode(int mode)
 {
-    _previousMode = _mode;
     _mode = mode;
 }

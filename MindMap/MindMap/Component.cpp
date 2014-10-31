@@ -2,6 +2,7 @@
 
 Component::Component()
 {
+    _type = "Component";
 }
 
 Component::~Component()

@@ -11,7 +11,6 @@ class DeleteComponentCommand :
         ~DeleteComponentCommand();
         void execute();
         void unexcute();
-        void deleteCommand();
     private:
         Component* _component;
         Component* _parent;

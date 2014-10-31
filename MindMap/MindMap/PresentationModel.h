@@ -20,16 +20,15 @@ class PresentationModel
         void saveMindMap(string);
         void selectMode(char);
         void selectComponent(string);
-        void exitMode(char);
+        void exitMode(char, string);
         void setDescription(string, int);
         void redo();
         void undo();
+        void setMode(int);
     private:
         string _message;
         MindMapModel* _model;
         int _mode;
-        int _previousMode;
         void setMessage(string);
-        void setMode(int);
 };
 

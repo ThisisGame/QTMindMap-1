@@ -12,10 +12,6 @@ InsertChildCommand::~InsertChildCommand()
     delete _child;
 }
 
-void InsertChildCommand::deleteCommand()
-{
-}
-
 void InsertChildCommand::execute()
 {
     _component->addChild(_child);

@@ -1,18 +1,14 @@
 #include "Node.h"
 
-Node::Node()
-{
-    _type = NODE_TYPE;
-}
-
-Node::Node(string description, int id) : Composite(description, id)
-{
-    _type = NODE_TYPE;
-}
-
 Node::Node(int id) : Composite(id)
 {
     _type = NODE_TYPE;
+}
+
+Node::Node(int id, string description) : Composite(id)
+{
+    _type = NODE_TYPE;
+    _description = description;
 }
 
 Node::~Node()

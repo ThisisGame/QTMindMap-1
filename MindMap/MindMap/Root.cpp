@@ -1,18 +1,14 @@
 #include "Root.h"
 
-Root::Root()
-{
-    _type = ROOT_TYPE;
-}
-
-Root::Root(string description, int id) : Composite(description, id)
-{
-    _type = ROOT_TYPE;
-}
-
 Root::Root(int id) : Composite(id)
 {
     _type = ROOT_TYPE;
+}
+
+Root::Root(int id, string description) : Composite(id)
+{
+    _type = ROOT_TYPE;
+    _description = description;
 }
 
 Root::~Root()

@@ -23,6 +23,7 @@ class MindMapModel
         void loadMindMap(string);
         void saveMindMap(string);
         void setDescription(string);
+        Component* getSelectComponent();
         bool selectComponent(int);
         string getMessage();
 

@@ -7,6 +7,7 @@ CommandManager::CommandManager()
 
 CommandManager::~CommandManager()
 {
+    clearAllCommand();
 }
 
 void CommandManager::execute(Command* command)
@@ -61,8 +62,17 @@ void CommandManager::clearAllCommand()   //清除所有Command
     while (!_redoCommand.empty())
     {
         Command* command = _redoCommand.top();
-        command->deleteCommand();
         delete command;
         _redoCommand.pop();
     }
+}
+
+stack<Command*> CommandManager::getRedoCommandStack()
+{
+    return _redoCommand;
+}
+
+stack<Command*> CommandManager::getUndoCommandStack()
+{
+    return _undoCommand;
 }

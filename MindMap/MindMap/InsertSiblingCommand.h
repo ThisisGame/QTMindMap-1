@@ -11,7 +11,6 @@ class InsertSiblingCommand :
         ~InsertSiblingCommand();
         void execute();
         void unexcute();
-        void deleteCommand();
     private:
         Component* _component;
         Component* _sibling;

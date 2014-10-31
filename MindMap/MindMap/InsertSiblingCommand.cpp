@@ -13,10 +13,6 @@ InsertSiblingCommand::~InsertSiblingCommand()
     delete _sibling;
 }
 
-void InsertSiblingCommand::deleteCommand()
-{
-}
-
 void InsertSiblingCommand::execute()
 {
     _component->addSibling(_sibling);

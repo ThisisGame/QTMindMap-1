@@ -9,13 +9,7 @@ EditComponentCommand::EditComponentCommand(string newDescription, Component* com
 
 EditComponentCommand::~EditComponentCommand()
 {
-    cout << "delete command edit" << _newDescription << endl;
 }
-
-void EditComponentCommand::deleteCommand()
-{
-}
-
 
 void EditComponentCommand::execute()
 {

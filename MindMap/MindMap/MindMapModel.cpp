@@ -14,6 +14,11 @@ MindMapModel::MindMapModel(void)
 
 MindMapModel::~MindMapModel(void)
 {
+    _commandManager.clearAllCommand();
+    for (list <Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
+    {
+        delete *i;
+    }
 }
 
 void MindMapModel::createMindMap(string topic)  //新建一個Mindmap
@@ -129,6 +134,7 @@ void MindMapModel::doDeleteNode(Component* component)
 void MindMapModel::doAddNodes(list<Component*> components)
 {
     _nodelist = components;
+    _componentFactory.setId(_nodelist.size());
 }
 
 list<Component*> MindMapModel::getNodeList()
@@ -155,6 +161,11 @@ bool MindMapModel::isRoot()
     return false;
 }
 
+Component* MindMapModel::getSelectComponent()
+{
+    return _component;
+}
+
 void MindMapModel::display()  //顯示MindMap
 {
     string content;
@@ -163,12 +174,41 @@ void MindMapModel::display()  //顯示MindMap
     if (root == NULL)
     {
         throw ERROR_DISPLAY;
-        return;
     }
     outputstream << THE_MIND_MAP << root->getDescription() << DISPLAY_MINDMAP << endl;
     root->display(outputstream, EMPTY_STRING);
     outputstream << endl;
     _message = outputstream.str();
+}
+
+void MindMapModel::saveMindMap(string filename)  //存檔MindMap
+{
+    fstream file;
+    vector<int> oldIdList = getIdList();
+    reOrderNumber();
+    file.open(filename, ios::out);//開啟檔案
+    if (_nodelist.size() == 0)
+    {
+        throw ERROR_SAVE;
+    }
+    if (!file) //如果開啟檔案失敗 輸出字串
+    {
+        throw ERROR_OPEN_FILE;
+    }
+    for (list<Component*>::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)
+    {
+        file << (*node)->getId() << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getDescription() << DOUBLE_QUOTATION_STRING;
+        list<Component*> nodeList = (*node)->getNodeList();
+        for (list<Component*>::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)
+        {
+            file << SPACE_STRING << (*childNode)->getId();
+        }
+        file << SPACE_STRING << endl;
+    }
+    file.close();						//關閉檔案
+    unOrderNumber(oldIdList);
+    display();
+    _message += SAVE_FILE_SUCCESS;
 }
 
 void MindMapModel::reOrderNumber()
@@ -201,47 +241,17 @@ vector<int> MindMapModel::getIdList()
     return oldIdList;
 }
 
-void MindMapModel::saveMindMap(string filename)  //存檔MindMap
-{
-    fstream file;
-    vector<int> oldIdList = getIdList();
-    reOrderNumber();
-    file.open(filename, ios::out);//開啟檔案
-    if (_component == NULL)
-    {
-        throw ERROR_SAVE;
-    }
-    if (!file) //如果開啟檔案失敗 輸出字串
-    {
-        throw ERROR_OPEN_FILE;
-    }
-    for (list<Component*>::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)
-    {
-        file << (*node)->getId() << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getDescription() << DOUBLE_QUOTATION_STRING;
-        list<Component*> nodeList = (*node)->getNodeList();
-        for (list<Component*>::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)
-        {
-            file << SPACE_STRING << (*childNode)->getId();
-        }
-        file << SPACE_STRING << endl;
-    }
-    file.close();						//關閉檔案
-    unOrderNumber(oldIdList);
-    display();
-    _message += SAVE_FILE_SUCCESS;
-}
-
 void MindMapModel::loadMindMap(string filename)  //讀檔
 {
     vector<vector<string>> components;
     string inputString;
     fstream file;
-    clearList();
     file.open(filename, ios::in);
     if (!file) //如果開啟檔案失敗 輸出字串
     {
         throw ERROR_OPEN_FILE;
     }
+    clearList();
     while (getline(file, inputString))
     {
         regex regA("( \")|(\" )");

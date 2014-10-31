@@ -6,9 +6,8 @@ class Root :
     public Composite
 {
     public:
-        Root();
+        Root(int, string);
         Root(int);
-        Root(string, int);
         ~Root();
         void addParent(Component*);
         void addSibling(Component*);

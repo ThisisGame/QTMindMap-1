@@ -1,10 +1,6 @@
 #include "ChangeParentCommand.h"
 #include "ConstString.h"
 
-ChangeParentCommand::ChangeParentCommand()
-{
-}
-
 ChangeParentCommand::ChangeParentCommand(Component* child, Component* newParent)
 {
     _newParent = newParent;
@@ -13,10 +9,6 @@ ChangeParentCommand::ChangeParentCommand(Component* child, Component* newParent)
 }
 
 ChangeParentCommand::~ChangeParentCommand()
-{
-}
-
-void ChangeParentCommand::deleteCommand()
 {
 }
 
@@ -39,9 +31,10 @@ void ChangeParentCommand::execute()
     }
     else
     {
-        _oldParentList = _child->getNodeList();
+        _childrenList = _child->getNodeList();
+        _oldParentList = _oldParent->getNodeList();
         _oldParent->deleteNodeByNode(_child);
-        _oldParent->addChilds(_oldParentList);
+        _oldParent->addChilds(_childrenList);
         _newParent->addChild(_child);
         _child->clearNodeList();
     }
@@ -57,10 +50,9 @@ void ChangeParentCommand::unexcute()
     }
     else
     {
-        for (auto child : _oldParentList)
-        {
-            child->addParent(_child);
-        }
+        _child->addChilds(_childrenList);
+        _oldParent->clearNodeList();
+        _oldParent->addChilds(_oldParentList);
         _newParent->deleteNodeByNode(_child);
     }
 }

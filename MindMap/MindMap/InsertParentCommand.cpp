@@ -13,10 +13,6 @@ InsertParentCommand::~InsertParentCommand()
     delete _newParent;
 }
 
-void InsertParentCommand::deleteCommand()
-{
-}
-
 void InsertParentCommand::execute()
 {
     _component->addParent(_newParent);

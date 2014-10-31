@@ -1,15 +1,5 @@
 #include "Composite.h"
 
-Composite::Composite()
-{
-}
-
-Composite::Composite(string description, int id)
-{
-    _description = description;
-    _id = id;
-}
-
 Composite::Composite(int id)
 {
     _id = id;

@@ -185,7 +185,7 @@ void TextUIView::undo()
 void TextUIView::exitMode() //µ²§ôµ{¦¡
 {
     cout << "Do you want save your mindMap?(Y/N)" << endl << PROMPT_STRING;
-    _pModel->exitMode(inputChar());
+    _pModel->exitMode(inputChar(), SAVE_FILE_NAME);
     messangeMode();
     exit(1);
 }

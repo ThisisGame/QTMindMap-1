@@ -10,7 +10,6 @@ class EditComponentCommand :
         ~EditComponentCommand();
         void execute();
         void unexcute();
-        void deleteCommand();
     private:
         Component* _component;
         string _oldDescription;

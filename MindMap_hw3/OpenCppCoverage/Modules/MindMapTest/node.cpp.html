@@ -1,0 +1,62 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		node.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Node.h"
+
+Node::Node(int id) : Composite(id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _type = NODE_TYPE;</span>
+<span style = "background-color:#dfd">}</span>
+
+Node::Node(int id, string description) : Composite(id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _type = NODE_TYPE;</span>
+<span style = "background-color:#dfd">    _description = description;</span>
+<span style = "background-color:#dfd">}</span>
+
+Node::~Node()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::addParent(Component* parent)  //Parent
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(this);</span>
+<span style = "background-color:#dfd">    _parent-&gt;addChild(parent);</span>
+<span style = "background-color:#dfd">    parent-&gt;addChild(this);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::addSibling(Component* sibling) //Sibling
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;addChild(sibling);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::setParent(Component* parent) //³]©wParent
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent = parent;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Node::isParent(Component* parent)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (parent == _parent)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#dfd">        return _parent-&gt;isParent(parent);</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+Component* Node::getParent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _parent;</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

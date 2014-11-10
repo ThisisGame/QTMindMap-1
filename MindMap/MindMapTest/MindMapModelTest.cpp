@@ -10,8 +10,7 @@ namespace MindMapTest
         protected:
             virtual void SetUp()
             {
-                char szDirName[] = "testData";
-                CreateDirectory(szDirName, NULL);
+                CreateDirectory(L"testData", NULL);
                 _model = new MindMapModel();
                 _rootComputer = new Root(0, "Computer");
                 _nodeNetwork = new Node(1, "Network");
@@ -57,9 +56,8 @@ namespace MindMapTest
             virtual void TearDown()
             {
                 delete _model;
-                char szDirName[] = "testData";
                 remove("testData\\test_file1.mm");
-                RemoveDirectory(szDirName);
+                RemoveDirectory(L"testData");
             }
             Root* _rootComputer;
             Node* _nodeNetwork;

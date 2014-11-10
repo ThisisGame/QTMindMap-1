@@ -3,6 +3,7 @@
 Component::Component()
 {
     _type = "Component";
+    _selected = false;
 }
 
 Component::~Component()
@@ -32,5 +33,15 @@ void Component::setId(int id)
 string Component::getType()
 {
     return _type;
+}
+
+void Component::setSelected(bool selected)
+{
+    _selected = selected;
+}
+
+bool Component::getSelected()
+{
+    return _selected;
 }
 

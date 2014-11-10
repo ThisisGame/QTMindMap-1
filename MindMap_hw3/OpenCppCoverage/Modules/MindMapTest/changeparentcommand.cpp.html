@@ -1,0 +1,70 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		changeparentcommand.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "ChangeParentCommand.h"
+#include "ConstString.h"
+
+ChangeParentCommand::ChangeParentCommand(Component* child, Component* newParent)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _newParent = newParent;</span>
+<span style = "background-color:#dfd">    _child = child;</span>
+<span style = "background-color:#dfd">    _oldParent = child-&gt;getParent();</span>
+<span style = "background-color:#dfd">}</span>
+
+ChangeParentCommand::~ChangeParentCommand()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void ChangeParentCommand::execute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_child == _newParent)</span>
+    {
+<span style = "background-color:#dfd">        throw ERROR_SELECT_ITSELF;</span>
+    }
+<span style = "background-color:#dfd">    else if (_newParent == NULL)</span>
+    {
+<span style = "background-color:#dfd">        throw ERROR_SELECT_NODE;</span>
+    }
+<span style = "background-color:#dfd">    _isParent = _newParent-&gt;isParent(_child);</span>
+<span style = "background-color:#dfd">    if (!_isParent)</span>
+    {
+<span style = "background-color:#dfd">        _oldParentList = _oldParent-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;deleteNodeByNode(_child);</span>
+<span style = "background-color:#dfd">        _newParent-&gt;addChild(_child);</span>
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        _childrenList = _child-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">        _oldParentList = _oldParent-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;deleteNodeByNode(_child);</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;addChilds(_childrenList);</span>
+<span style = "background-color:#dfd">        _newParent-&gt;addChild(_child);</span>
+<span style = "background-color:#dfd">        _child-&gt;clearNodeList();</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void ChangeParentCommand::unexcute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (!_isParent)</span>
+    {
+<span style = "background-color:#dfd">        _newParent-&gt;deleteNodeByNode(_child);</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;addChilds(_oldParentList);</span>
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        _child-&gt;addChilds(_childrenList);</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">        _oldParent-&gt;addChilds(_oldParentList);</span>
+<span style = "background-color:#dfd">        _newParent-&gt;deleteNodeByNode(_child);</span>
+    }
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

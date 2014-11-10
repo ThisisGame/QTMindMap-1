@@ -97,11 +97,13 @@ Component* MindMapModel::findNodeByID(int id)  //選取Component
 
 bool MindMapModel::selectComponent(int id)  //選取Component
 {
+    disableSelected();
     _component = findNodeByID(id);
     if (_component == NULL)
     {
         return false;
     }
+    _component->setSelected(true);
     return true;
 }
 
@@ -267,6 +269,7 @@ void MindMapModel::loadMindMap(string filename)  //讀檔
     }
     createMindMapByList(components);
     createNodesConnectionByList(components);
+    disableSelected();
 }
 
 void MindMapModel::createNodesConnectionByList(vector<vector<string>> components)  //建立Node之間的關係
@@ -295,5 +298,24 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀
         doInsertNode(createNode());
         selectComponent(i);
         setDescription(components[i][1]);
+    }
+}
+
+void MindMapModel::draw(MindMapGUIScene* scene)  //繪出MindMap
+{
+    Component* root = findNodeByID(0);
+    if (root == NULL)
+    {
+        return;
+    }
+    vector<int> position;
+    root->draw(position, 0, scene);
+}
+
+void MindMapModel::disableSelected()
+{
+    for (auto item : _nodelist)
+    {
+        item->setSelected(false);
     }
 }

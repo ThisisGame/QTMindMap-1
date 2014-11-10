@@ -3,7 +3,7 @@
 TextUIView::TextUIView(MindMapModel* model)  //初始化
 {
     _model = model;
-    _pModel = new PresentationModel(_model);
+    _pModel = new TextUIPresentationModel(_model);
     _functionList[ROOT_MODE] = &TextUIView::selectMode;
     //功能一-新建MindMap
     _functionList[CREATE_NEW_MINDMAP_MODE] = &TextUIView::createNewMindMap;

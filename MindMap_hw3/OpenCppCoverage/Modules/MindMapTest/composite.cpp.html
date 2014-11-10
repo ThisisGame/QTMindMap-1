@@ -1,0 +1,84 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		composite.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Composite.h"
+
+Composite::Composite(int id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id = id;</span>
+<span style = "background-color:#dfd">}</span>
+
+Composite::~Composite()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::addChild(Component* node)  //¼W¥[Node
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    node-&gt;setParent(this);</span>
+<span style = "background-color:#dfd">    for (auto child : _nodelist)</span>
+    {
+<span style = "background-color:#dfd">        if (child == node)</span>
+        {
+<span style = "background-color:#dfd">            return;</span>
+<span style = "background-color:#dfd">        }</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    _nodelist.push_back(node);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::clearNodeList() //²M°£NodeList¤º©Ò¦³¤¸¯À
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _nodelist.clear();</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::addChilds(list&lt;Component*&gt; nodelist)  //¨ú±oNodeList
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (auto child : nodelist)</span>
+    {
+<span style = "background-color:#dfd">        this-&gt;addChild(child);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+list&lt;Component*&gt; Composite::getNodeList()  //¨ú±oNodeList
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _nodelist;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::deleteNodeByNode(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _nodelist.remove(component);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::display(stringstream&amp; outputStream, string levelString, bool last) //³B²z¿é¥X¾ðª¬
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    outputStream &lt;&lt; "+-" + _description + "(" + _type + ", ID: " &lt;&lt; _id &lt;&lt; ")" &lt;&lt; endl;  //Output Example +-Computer(Root, ID: 0)</span>
+<span style = "background-color:#dfd">    if (last == true)</span>
+    {
+<span style = "background-color:#dfd">        levelString += "  ";</span>
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        levelString += "| ";</span>
+    }
+<span style = "background-color:#dfd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#dfd">        if (i == --_nodelist.end())</span>
+        {
+<span style = "background-color:#dfd">            last = true;</span>
+        }
+<span style = "background-color:#dfd">        else</span>
+        {
+<span style = "background-color:#dfd">            last = false;</span>
+        }
+<span style = "background-color:#dfd">        outputStream &lt;&lt; levelString;</span>
+<span style = "background-color:#dfd">        (*i)-&gt;display(outputStream, levelString, last);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

@@ -3,7 +3,11 @@
 #include <list>
 #include <sstream>
 #include <iostream>
+#include <vector>
+
 using namespace std;
+
+class MindMapGUIScene;
 
 class Component
 {
@@ -15,6 +19,8 @@ class Component
         void setDescription(string);
         string getType();
         string getDescription();
+        void setSelected(bool);
+        bool getSelected();
         virtual void addChild(Component*) = 0;
         virtual void addParent(Component*) = 0;
         virtual void addSibling(Component*) = 0;
@@ -26,8 +32,10 @@ class Component
         virtual void addChilds(list<Component*>) = 0;
         virtual Component* getParent() = 0;
         virtual list<Component*> getNodeList() = 0;
+        virtual void draw(vector<int>&, int, MindMapGUIScene*) = 0;
     protected:
         int _id;
+        bool _selected;
         string _description;
         string _type;
 };

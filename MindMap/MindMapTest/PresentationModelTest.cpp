@@ -2,7 +2,7 @@
 #include <fstream>
 #include "MindMapModel.h"
 #include <windows.h>
-#include "PresentationModel.h"
+#include "TextUIPresentationModel.h"
 #include "ConstVariables.h"
 
 namespace MindMapTest
@@ -12,10 +12,9 @@ namespace MindMapTest
         protected:
             virtual void SetUp()
             {
-                char szDirName[] = "testData";
-                CreateDirectory(szDirName, NULL);
+                CreateDirectory(L"testData", NULL);
                 _model = new MindMapModel();
-                _pModel = new PresentationModel(_model);
+                _pModel = new TextUIPresentationModel(_model);
                 _rootComputer = new Root(0, "Computer");
                 _nodeNetwork = new Node(1, "Network");
                 _nodeIPV4 = new Node(2, "IPV4");
@@ -47,9 +46,8 @@ namespace MindMapTest
             {
                 delete _model;
                 delete _pModel;
-                char szDirName[] = "testData";
                 remove("testData\\test_file1.mm");
-                RemoveDirectory(szDirName);
+                RemoveDirectory(L"testData");
             }
             Root* _rootComputer;
             Node* _nodeNetwork;
@@ -61,7 +59,7 @@ namespace MindMapTest
             Node* _nodeWin8;
             Node* _nodeOSX;
             MindMapModel* _model;
-            PresentationModel* _pModel;
+            TextUIPresentationModel* _pModel;
     };
 
     TEST_F(PresentationModelTest, testSelectMode)
@@ -156,7 +154,7 @@ namespace MindMapTest
     TEST_F(PresentationModelTest, testDisplay)
     {
         MindMapModel model;
-        PresentationModel pModel(&model);
+        TextUIPresentationModel pModel(&model);
         string correctOutput;
         stringstream correntDisplay(correctOutput);
         correntDisplay << "The mind map Computer is displayed as follows:" << endl;
@@ -178,7 +176,7 @@ namespace MindMapTest
     TEST_F(PresentationModelTest, testSaveAndLoadMindMap)
     {
         MindMapModel model;
-        PresentationModel pModel(&model);
+        TextUIPresentationModel pModel(&model);
         pModel.saveMindMap("testData\\test_file1.mm");
         ASSERT_STREQ(ERROR_SAVE, pModel.getMessage().c_str());
         _pModel->saveMindMap("");
@@ -231,7 +229,7 @@ namespace MindMapTest
     TEST_F(PresentationModelTest, testExitMode)
     {
         MindMapModel model;
-        PresentationModel pModel(&model);
+        TextUIPresentationModel pModel(&model);
         _pModel->exitMode('a', "testData\\test_file1.mm");
         _pModel->loadMindMap("testData\\test_file1.mm");
         ASSERT_STREQ(ERROR_OPEN_FILE, _pModel->getMessage().c_str());

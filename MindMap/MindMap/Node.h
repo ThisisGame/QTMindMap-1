@@ -14,6 +14,7 @@ class Node :
         void setParent(Component*);
         bool isParent(Component*);
         Component* getParent();
+        void draw(vector<int>&, int, MindMapGUIScene*);
     private:
         Component* _parent;
 };

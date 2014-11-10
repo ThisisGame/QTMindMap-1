@@ -13,6 +13,7 @@ class Root :
         void addSibling(Component*);
         void setParent(Component*);
         bool isParent(Component*);
+        void draw(vector<int>&, int, MindMapGUIScene*);
         Component* getParent();
 };
 

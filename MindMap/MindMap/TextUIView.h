@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "ConstVariables.h"
-#include "PresentationModel.h"
+#include "TextUIPresentationModel.h"
 #include "MindMapModel.h"
 using namespace std;
 
@@ -13,7 +13,7 @@ class TextUIView
         void run();
     private:
         MindMapModel* _model;
-        PresentationModel* _pModel;
+        TextUIPresentationModel* _pModel;
         map <int, void (TextUIView::*)()> _functionList;
         void selectMode();
         //功能一-新增MindMap

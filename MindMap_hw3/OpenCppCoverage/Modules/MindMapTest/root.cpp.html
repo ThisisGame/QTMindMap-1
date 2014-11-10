@@ -1,0 +1,52 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		root.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Root.h"
+
+Root::Root(int id) : Composite(id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _type = ROOT_TYPE;</span>
+<span style = "background-color:#dfd">}</span>
+
+Root::Root(int id, string description) : Composite(id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _type = ROOT_TYPE;</span>
+<span style = "background-color:#dfd">    _description = description;</span>
+<span style = "background-color:#dfd">}</span>
+
+Root::~Root()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Root::addParent(Component* parent) //Root¤£¯à¦³Parent
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    throw ERROR_ROOT_INSERT_PARENT;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Root::addSibling(Component* sibling) //Root¤£¯à¦³Sibling
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    throw ERROR_ROOT_INSERT_SIBLING;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Root::setParent(Component* parent) //Root¤£¯à³]©wParent
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Root::isParent(Component* parent)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+Component* Root::getParent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return NULL;</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

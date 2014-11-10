@@ -10,7 +10,10 @@
 #include "Component.h"
 #include "ComponentFactory.h"
 #include "CommandManager.h"
+#include "Subject.h"
 using namespace std;
+
+class MindMapGUIScene;
 
 class MindMapModel
 {
@@ -38,6 +41,9 @@ class MindMapModel
         void doUninsertNode(Component*);
         list<Component*> getNodeList();
         bool isRoot();
+
+        void draw(MindMapGUIScene*);
+        void disableSelected();
     private:
         int _selectedComponentId;
         ComponentFactory _componentFactory;

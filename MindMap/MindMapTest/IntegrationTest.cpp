@@ -2,7 +2,7 @@
 #include <fstream>
 #include "MindMapModel.h"
 #include <windows.h>
-#include "PresentationModel.h"
+#include "TextUIPresentationModel.h"
 #include "ConstVariables.h"
 
 namespace MindMapTest
@@ -13,25 +13,23 @@ namespace MindMapTest
             virtual void SetUp()
             {
                 fstream outFile;
-                char szDirName[] = "testData";
-                CreateDirectory(szDirName, NULL);
+                CreateDirectory(L"testData", NULL);
                 outFile.open("testData\\test_file1.mm", ios::out);
                 string data = "0 \"Computer\" 2 7 \n1 \"windows\" 5 6 \n2 \"OS\" 1 3 4 \n3 \"IOS\" \n4 \"Linux\" \n5 \"DirectX\" \n6 \"Microsoft Office\" \n7 \"Network\" 8 9 \n8 \"Wireless\" \n9 \"Cable\" \n";
                 outFile << data;
                 outFile.close();
                 _model = new MindMapModel();
-                _pModel = new PresentationModel(_model);
+                _pModel = new TextUIPresentationModel(_model);
             }
             virtual void TearDown()
             {
-                char szDirName[] = "testData";
                 remove("testData\\test_file1.mm");
-                RemoveDirectory(szDirName);
+                RemoveDirectory(L"testData");
                 delete _model;
                 delete _pModel;
             }
             MindMapModel* _model;
-            PresentationModel* _pModel;
+            TextUIPresentationModel* _pModel;
     };
 
     TEST_F(IntegrationTest, testLoadFileNotExist)

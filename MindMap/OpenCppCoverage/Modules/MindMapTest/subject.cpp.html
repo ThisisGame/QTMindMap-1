@@ -1,0 +1,58 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		subject.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Subject.h"
+
+Subject::Subject()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+Subject::~Subject()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Subject::attach(Observer* observer)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (observer != NULL &amp;&amp; !hasAttach(observer))</span>
+<span style = "background-color:#dfd">        _observers.push_back(observer);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Subject::detach(Observer* observer)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (int i = 0; i &lt; _observers.size(); i++)</span>
+    {
+<span style = "background-color:#dfd">        if (_observers.at(i) == observer)</span>
+<span style = "background-color:#dfd">            _observers.erase(_observers.begin() + i);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void Subject::notifyUpdateView()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (int i = 0; i &lt; _observers.size(); i++)</span>
+<span style = "background-color:#dfd">        _observers.at(i)-&gt;updateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void Subject::notifyUpdateError()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (int i = 0; i &lt; _observers.size(); i++)</span>
+<span style = "background-color:#dfd">        _observers.at(i)-&gt;updateError();</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Subject::hasAttach(Observer* observer)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (int i = 0; i &lt; _observers.size(); i++)</span>
+    {
+<span style = "background-color:#dfd">        if (_observers.at(i) == observer)</span>
+<span style = "background-color:#dfd">            return true;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

@@ -39,6 +39,7 @@ class MindMapGUIView : public QMainWindow, public Observer
         void insertParent();
         void insertChild();
         void saveFile();
+        void aboutActionClick();
     protected:
         virtual void mousePressEvent(QMouseEvent*);
         virtual void mouseDoubleClickEvent(QMouseEvent*);
@@ -60,7 +61,23 @@ class MindMapGUIView : public QMainWindow, public Observer
         QAction* _insertSiblingAction;
         QAction* _insertParentAction;
         QAction* _aboutAction;
+        void setupString();
+        void setupMenu();
+        void setupToolbar();
+        void setupView();
         void createActions();
-
+        void connectEvents();
+        void insertNode(char, QString);
+        QString INSERT_CHILD_STRING;
+        QString INSERT_SIBLING_STRING;
+        QString INSERT_PARENT_STRING;
+        QString EDIT_STRING;
+        QString DELETE_STRING;
+        QString OPEN_MINDMAP_STRING;
+        QString SAVE_MINEMAP_STRING;
+        QString CREATE_MINDMAP_STRING;
+        QString ABOUT_STRING;
+        QString INIT_FILEPATH_STRING;
+        QString DEFAULT_FILE_TYPE_STRIGN;
 };
 

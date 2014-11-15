@@ -6,12 +6,25 @@ using namespace std;
 
 MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWindow(parent)
 {
-    _pModel = new GUIPresentationModel(model);
-    _pModel->attach(this);
     this->setWindowTitle("MindMap");
     this->resize(600, 400);
-    //Actions
+    _pModel = new GUIPresentationModel(model);
+    _pModel->attach(this);
+    //setup
+    setupString();
     createActions();
+    setupMenu();
+    setupToolbar();
+    setupView();
+    connectEvents();
+}
+
+MindMapGUIView::~MindMapGUIView()
+{
+}
+
+void MindMapGUIView::setupMenu()
+{
     //MenuBar
     _menuBar = new QMenuBar(this);
     _fileMenuBar = _menuBar->addMenu("File");
@@ -31,6 +44,10 @@ MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWind
     _editMenuBar->addAction(_insertParentAction);
     //helpMenu
     _helpMenuBar->addAction(_aboutAction);
+}
+
+void MindMapGUIView::setupToolbar()
+{
     //ToolBar
     _mainToolBar = new QToolBar(this);
     this->addToolBar(_mainToolBar);
@@ -44,10 +61,33 @@ MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWind
     _mainToolBar->addAction(_insertChildAction);
     _mainToolBar->addAction(_insertSiblingAction);
     _mainToolBar->addAction(_insertParentAction);
+}
+
+void MindMapGUIView::setupView()
+{
     //view
     _scene = new MindMapGUIScene(_pModel, this);
     _view = new QGraphicsView(_scene);
     this->setCentralWidget(_view);
+}
+
+void MindMapGUIView::setupString()
+{
+    INSERT_CHILD_STRING = "Insert a Child";
+    INSERT_SIBLING_STRING = "Insert a Sibling";
+    INSERT_PARENT_STRING = "Insert a Parent";
+    EDIT_STRING = "Edit";
+    DELETE_STRING = "Delete";
+    OPEN_MINDMAP_STRING = "Open a mind map";
+    SAVE_MINEMAP_STRING = "Save a mind map";
+    CREATE_MINDMAP_STRING = "Create a new mind map";
+    ABOUT_STRING = "About";
+    INIT_FILEPATH_STRING = ".\\";
+    DEFAULT_FILE_TYPE_STRIGN = "MindMap Files (*.mm)";
+}
+
+void MindMapGUIView::connectEvents()
+{
     //connectEven
     connect(_openMindMapAction, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(_editNodeAction, SIGNAL(triggered()), this, SLOT(editDescription()));
@@ -57,24 +97,20 @@ MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWind
     connect(_insertChildAction, SIGNAL(triggered()), this, SLOT(insertChild()));
     connect(_insertSiblingAction, SIGNAL(triggered()), this, SLOT(insertSibling()));
     connect(_saveMindMapAction, SIGNAL(triggered()), this, SLOT(saveFile()));
-}
-
-
-MindMapGUIView::~MindMapGUIView()
-{
+    connect(_aboutAction, SIGNAL(triggered()), this, SLOT(aboutActionClick()));
 }
 
 void MindMapGUIView::createActions()
 {
-    _createNewMindMapAction = new QAction(QIcon("icons/createNewMindMap.png"), "Create a new mind map", this);
-    _openMindMapAction = new QAction(QIcon("icons/openMindMap.png"), "Open a mind map", this);
-    _saveMindMapAction = new QAction(QIcon("icons/saveMindMap.png"), "Save a mind map", this);
-    _editNodeAction = new QAction(QIcon("icons/editNode.png"), "Edit", this);
-    _deleteNodeAction = new QAction(QIcon("icons/deleteNode.png"), "Delete", this);
-    _insertChildAction = new QAction(QIcon("icons/insertChild.png"), "Insert a Child", this);
-    _insertSiblingAction = new QAction(QIcon("icons/insertSibling.png"), "Insert a Sibling", this);
-    _insertParentAction = new QAction(QIcon("icons/insertParent.png"), "Insert a Parent", this);
-    _aboutAction = new QAction(QIcon("icons/about.png"), "About", this);
+    _createNewMindMapAction = new QAction(QIcon("icons/createNewMindMap.png"), CREATE_MINDMAP_STRING, this);
+    _openMindMapAction = new QAction(QIcon("icons/openMindMap.png"), OPEN_MINDMAP_STRING, this);
+    _saveMindMapAction = new QAction(QIcon("icons/saveMindMap.png"), SAVE_MINEMAP_STRING, this);
+    _editNodeAction = new QAction(QIcon("icons/editNode.png"), EDIT_STRING, this);
+    _deleteNodeAction = new QAction(QIcon("icons/deleteNode.png"), DELETE_STRING, this);
+    _insertChildAction = new QAction(QIcon("icons/insertChild.png"), INSERT_CHILD_STRING, this);
+    _insertSiblingAction = new QAction(QIcon("icons/insertSibling.png"), INSERT_SIBLING_STRING, this);
+    _insertParentAction = new QAction(QIcon("icons/insertParent.png"), INSERT_PARENT_STRING, this);
+    _aboutAction = new QAction(QIcon("icons/about.png"), ABOUT_STRING, this);
     updateActions();
 }
 
@@ -99,48 +135,59 @@ void MindMapGUIView::updateActions()
     _insertParentAction->setEnabled(_pModel->getInsertParentActionEnable());
 }
 
+void MindMapGUIView::aboutActionClick()
+{
+    QMessageBox::about(NULL, "About", "<center><h2>2014POSD</h2>103598002<br>Kuan-Ting Chen</center>");
+}
+
 void MindMapGUIView::openFile()
 {
     QString filePath;
-    filePath = QFileDialog::getOpenFileName(this, "Open File", "C:\\", "MindMap Files (*.mm)");
+    filePath = QFileDialog::getOpenFileName(this, OPEN_MINDMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRIGN);
     _pModel->loadMindMap(filePath.toStdString());
 }
 
 void MindMapGUIView::saveFile()
 {
     QString filePath;
-    filePath = QFileDialog::getSaveFileName(this, "Save File", ".\\", "MindMap Files (*.mm)");
-    //_pModel->save(filePath.toStdString());
+    filePath = QFileDialog::getSaveFileName(this, SAVE_MINEMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRIGN);
+    _pModel->saveMindMap(filePath.toStdString());
 }
 
 void MindMapGUIView::editDescription()
 {
-    QString text = QInputDialog::getText(this, "Input", "Please input your description", QLineEdit::Normal);
-    _pModel->editDescription(text.toStdString());
+    bool result;
+    QString text = QInputDialog::getText(this, EDIT_STRING, "Please input your description", QLineEdit::Normal, QString::null, &result);
+    _pModel->editDescription(text.toStdString(), result);
 }
 
 void MindMapGUIView::createMindMap()
 {
-    QString text = QInputDialog::getText(this, "Input", "Please input your topic", QLineEdit::Normal);
-    _pModel->createMindMap(text.toStdString());
+    bool result;
+    QString text = QInputDialog::getText(this, "New MindMap", "Please input your topic", QLineEdit::Normal, QString::null, &result);
+    _pModel->createMindMap(text.toStdString(), result);
 }
 
 void MindMapGUIView::insertParent()
 {
-    QString text = QInputDialog::getText(this, "Input", "Please input your description", QLineEdit::Normal);
-    _pModel->insertNode('a', text.toStdString());
+    insertNode('a', INSERT_PARENT_STRING);
 }
 
 void MindMapGUIView::insertChild()
 {
-    QString text = QInputDialog::getText(this, "Input", "Please input your description", QLineEdit::Normal);
-    _pModel->insertNode('b', text.toStdString());
+    insertNode('b', INSERT_CHILD_STRING);
 }
 
 void MindMapGUIView::insertSibling()
 {
-    QString text = QInputDialog::getText(this, "Input", "Please input your description", QLineEdit::Normal);
-    _pModel->insertNode('c', text.toStdString());
+    insertNode('c', INSERT_SIBLING_STRING);
+}
+
+void MindMapGUIView::insertNode(char mode, QString title)
+{
+    bool result;
+    QString text = QInputDialog::getText(this, title, "Please input your description", QLineEdit::Normal, QString::null, &result);
+    _pModel->insertNode(mode, text.toStdString(), result);
 }
 
 void MindMapGUIView::deleteComponent()

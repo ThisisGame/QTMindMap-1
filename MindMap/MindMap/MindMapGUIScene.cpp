@@ -23,6 +23,7 @@ void MindMapGUIScene::draw()
 {
     this->clear();
     _pModel->draw(this);
+    this->setSceneRect(this->itemsBoundingRect());
 }
 
 /*

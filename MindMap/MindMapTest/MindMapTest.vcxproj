@@ -39,7 +39,6 @@
     <ClCompile Include="..\MindMap\Root.cpp" />
     <ClCompile Include="..\MindMap\Subject.cpp" />
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp" />
-    <ClCompile Include="..\MindMap\TextUIView.cpp" />
     <ClCompile Include="ChangeParentCommandTest.cpp" />
     <ClCompile Include="CommandManagerTest.cpp" />
     <ClCompile Include="ComponentFactoryTest.cpp" />
@@ -63,13 +62,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GUIPresentationModelTest.cpp" />
     <ClCompile Include="InsertChildCommandTest.cpp" />
     <ClCompile Include="InsertParentCommandTest.cpp" />
     <ClCompile Include="InsertSiblingCommandTest.cpp" />
     <ClCompile Include="IntegrationTest.cpp" />
     <ClCompile Include="MindMapModelTest.cpp" />
     <ClCompile Include="NodeTest.cpp" />
-    <ClCompile Include="PresentationModelTest.cpp" />
+    <ClCompile Include="SubjectTest.cpp" />
+    <ClCompile Include="TextUIPresentationModelTest.cpp" />
     <ClCompile Include="RootTest.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>

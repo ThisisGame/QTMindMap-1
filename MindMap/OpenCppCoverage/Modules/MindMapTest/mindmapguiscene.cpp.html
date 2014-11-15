@@ -1,0 +1,51 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		mindmapguiscene.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "MindMapGUIScene.h"
+#include "GraphicComponentItem.h"
+#include &lt;QtWidgets/QGraphicsView&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+MindMapGUIScene::MindMapGUIScene(GUIPresentationModel* pModel, QObject* parent) : QGraphicsScene(parent)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _pModel = pModel;</span>
+<span style = "background-color:#fdd">}</span>
+
+
+MindMapGUIScene::~MindMapGUIScene()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+GUIPresentationModel* MindMapGUIScene::getPModel()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _pModel;</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::draw()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    this-&gt;clear();</span>
+<span style = "background-color:#fdd">    _pModel-&gt;draw(this);</span>
+<span style = "background-color:#fdd">    this-&gt;setSceneRect(this-&gt;itemsBoundingRect());</span>
+<span style = "background-color:#fdd">}</span>
+
+/*
+void MindMapGUIScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    //QGraphicsScene::mousePressEvent(event);
+}
+
+void MindMapGUIScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+    //QGraphicsScene::mouseDoubleClickEvent(event);
+}
+*/
+</pre>
+	</body>
+</html>

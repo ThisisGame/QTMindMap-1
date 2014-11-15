@@ -143,9 +143,9 @@ namespace MindMapTest
         _model->createMindMap("Computer");
         _model->selectComponent(0);
         _model->insertNode('b');
-        _model->setDescription("Network");
+        _model->setDescription("IPV4");
         _model->selectComponent(1);
-        ASSERT_STREQ("Network", _model->getSelectComponent()->getDescription().c_str());
+        ASSERT_STREQ("IPV4", _model->getSelectComponent()->getDescription().c_str());
         _model->changeDescription("IPV6");
         ASSERT_STREQ("IPV6", _model->getSelectComponent()->getDescription().c_str());
         deleteComponents();
@@ -274,5 +274,15 @@ namespace MindMapTest
         correntDisplay << "    | +-Win8(Node, ID: 7)" << endl;
         correntDisplay << "    +-OSX(Node, ID: 8)" << endl << endl;
         ASSERT_STREQ(correntDisplay.str().c_str(), model.getMessage().c_str());
+    }
+
+
+    TEST_F(MindMapModelTest, testDisableSelected)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_TRUE(_model->selectComponent(0));
+        ASSERT_TRUE(_model->getSelectComponent()->getSelected());
+        _model->disableSelected();
+        ASSERT_FALSE(_model->getSelectComponent()->getSelected());
     }
 }

@@ -1,0 +1,58 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		componentfactory.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "ComponentFactory.h"
+
+ComponentFactory::ComponentFactory()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id = 0;</span>
+<span style = "background-color:#dfd">}</span>
+
+ComponentFactory::~ComponentFactory()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+int ComponentFactory::getId()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _id;</span>
+<span style = "background-color:#dfd">}</span>
+
+void ComponentFactory::setId(int id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id = id;</span>
+<span style = "background-color:#dfd">}</span>
+
+void ComponentFactory::countId()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id++;</span>
+<span style = "background-color:#dfd">}</span>
+
+void ComponentFactory::unCountId()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id--;</span>
+<span style = "background-color:#dfd">}</span>
+
+Component* ComponentFactory::createComponent(string type)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (type == ROOT_TYPE)</span>
+    {
+<span style = "background-color:#dfd">        return new Root(_id);</span>
+    }
+<span style = "background-color:#dfd">    else if (type == NODE_TYPE)</span>
+    {
+<span style = "background-color:#dfd">        return new Node(_id);</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#dfd">        throw "Can't create Component!";</span>
+    }
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

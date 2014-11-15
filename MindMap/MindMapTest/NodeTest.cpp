@@ -65,4 +65,12 @@ namespace MindMapTest
     {
         ASSERT_EQ(_root, _node->getParent());
     }
+
+    TEST_F(NodeTest, testSetSelected)
+    {
+        _node->setSelected(true);
+        ASSERT_TRUE(_node->getSelected());
+        _node->setSelected(false);
+        ASSERT_FALSE(_node->getSelected());
+    }
 }

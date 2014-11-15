@@ -1,0 +1,59 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		component.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Component.h"
+
+Component::Component()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _type = "Component";</span>
+<span style = "background-color:#dfd">    _selected = false;</span>
+<span style = "background-color:#dfd">}</span>
+
+Component::~Component()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Component::setDescription(string topic)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _description = topic;</span>
+<span style = "background-color:#dfd">}</span>
+
+string Component::getDescription()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _description;</span>
+<span style = "background-color:#dfd">}</span>
+
+int Component::getId()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _id;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Component::setId(int id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id = id;</span>
+<span style = "background-color:#dfd">}</span>
+
+string Component::getType()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _type;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Component::setSelected(bool selected)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _selected = selected;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Component::getSelected()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _selected;</span>
+<span style = "background-color:#dfd">}</span>
+
+</pre>
+	</body>
+</html>

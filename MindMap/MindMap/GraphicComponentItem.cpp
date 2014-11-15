@@ -1,5 +1,6 @@
 #include "GraphicComponentItem.h"
 #include <QPen>
+#include <QtWidgets/QInputDialog>
 
 GraphicComponentItem::GraphicComponentItem(string description, int posX, int posY, int id, GUIPresentationModel* pModel)
 {
@@ -23,6 +24,8 @@ GraphicComponentItem::~GraphicComponentItem()
 
 void GraphicComponentItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+    QPointF point = event->pos();
+    cout << point.x() << "," << point.y() << endl;
     _timer->start(20);
 }
 
@@ -33,22 +36,22 @@ void GraphicComponentItem::setPresentationModel(GUIPresentationModel* pModel)
 
 void GraphicComponentItem::setBorder(Qt::GlobalColor temp)
 {
-    _borderItem->setPen(QPen(temp));
+    int BORDER_WIDTH = 3;
+    QPen pen(temp);
+    pen.setWidth(BORDER_WIDTH);
+    _borderItem->setPen(pen);
 }
 
 void GraphicComponentItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-    //QGraphicsItem::mouseDoubleClickEvent(event);
+    bool result;
     _timer->stop();
-    QPointF pos = event->pos();
-    cout << "Click on item: (" << pos.x() << "," << pos.y() << ")" << endl;
-    //QString text = QInputDialog::getText(this, "Input", "Please input your description", QLineEdit::Normal);
-    //_pModel->editDescription(text.toStdString());
+    QString text = QInputDialog::getText(NULL, "Edit", "Please input your description", QLineEdit::Normal, QString::null, &result);
+    _pModel->editDescription(text.toStdString(), result);
 }
 
 void GraphicComponentItem::mouseClickEvent()
 {
-    cout << "Single" << endl;
     _pModel->selectComponent(_id);
 }
 

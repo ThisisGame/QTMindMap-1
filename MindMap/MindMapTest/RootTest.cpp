@@ -50,4 +50,12 @@ namespace MindMapTest
     {
         ASSERT_EQ(NULL, _root->getParent());
     }
+
+    TEST_F(RootTest, testSetSelected)
+    {
+        _root->setSelected(true);
+        ASSERT_TRUE(_root->getSelected());
+        _root->setSelected(false);
+        ASSERT_FALSE(_root->getSelected());
+    }
 }

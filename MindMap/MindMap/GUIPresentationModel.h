@@ -12,10 +12,10 @@ class GUIPresentationModel : public Subject
         void loadMindMap(string);
         void selectComponent(int);
         void disableSelected();
-        void editDescription(string);
-        void createMindMap(string);
+        void editDescription(string, bool);
+        void createMindMap(string, bool);
         void deleteComponent();
-        void insertNode(char, string);
+        void insertNode(char, string, bool);
         void saveMindMap(string);
         void draw(MindMapGUIScene*);
         string getMessage();
@@ -36,5 +36,6 @@ class GUIPresentationModel : public Subject
         bool _insertSiblingActionEnable;
         bool _insertParentActionEnable;
         void disableAction();
+        bool checkString(string, bool);
 };
 

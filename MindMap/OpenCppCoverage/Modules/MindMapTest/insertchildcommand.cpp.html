@@ -1,0 +1,37 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		insertchildcommand.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "InsertChildCommand.h"
+
+InsertChildCommand::InsertChildCommand(Component* component, Component* child, MindMapModel* model)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _child = child;</span>
+<span style = "background-color:#dfd">    _model = model;</span>
+<span style = "background-color:#dfd">}</span>
+
+InsertChildCommand::~InsertChildCommand()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    delete _child;</span>
+<span style = "background-color:#dfd">}</span>
+
+void InsertChildCommand::execute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _component-&gt;addChild(_child);</span>
+<span style = "background-color:#dfd">    _model-&gt;doInsertNode(_child);</span>
+<span style = "background-color:#dfd">}</span>
+
+void InsertChildCommand::unexcute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _component-&gt;deleteNodeByNode(_child);</span>
+<span style = "background-color:#dfd">    _model-&gt;doUninsertNode(_child);</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

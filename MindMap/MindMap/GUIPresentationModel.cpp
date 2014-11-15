@@ -55,6 +55,7 @@ void GUIPresentationModel::loadMindMap(string filename)  //讀取Mindmap
         _model->loadMindMap(filename);
         _model->display();
         _message = _model->getMessage();
+        disableAction();
         _saveMindMapActionEnable = true;
         notifyUpdateView();
     }
@@ -64,11 +65,18 @@ void GUIPresentationModel::loadMindMap(string filename)  //讀取Mindmap
     }
 }
 
-void GUIPresentationModel::saveMindMap(string filename)  //讀取Mindmap
+void GUIPresentationModel::saveMindMap(string filename)  //儲存Mindmap
 {
     try
     {
-        _model->saveMindMap(filename);
+        if (filename != "")
+        {
+            _model->saveMindMap(filename);
+        }
+        else
+        {
+            _message = ERROR_OPEN_FILE;
+        }
     }
     catch (const char* message)
     {
@@ -104,35 +112,6 @@ void GUIPresentationModel::selectComponent(int id)
     notifyUpdateView();
 }
 
-void GUIPresentationModel::editDescription(string description)
-{
-    if (description == "")
-    {
-        _message = "You Inputed Empty String!";
-        notifyUpdateError();
-    }
-    else
-    {
-        _model->changeDescription(description);
-        notifyUpdateView();
-    }
-}
-
-void GUIPresentationModel::createMindMap(string topic)
-{
-    if (topic == "")
-    {
-        _message = "You Inputed Empty String!";
-        notifyUpdateError();
-    }
-    else
-    {
-        _model->createMindMap(topic);
-        _saveMindMapActionEnable = true;
-        notifyUpdateView();
-    }
-}
-
 void GUIPresentationModel::deleteComponent()
 {
     _model->deleteComponent();
@@ -140,14 +119,44 @@ void GUIPresentationModel::deleteComponent()
     notifyUpdateView();
 }
 
-void GUIPresentationModel::insertNode(char mode, string description)
+bool GUIPresentationModel::checkString(string description, bool cancel)
 {
-    if (description == "")
+    bool result = true;
+    if (cancel == false)
+    {
+        result = false;
+    }
+    else if (description == "")
     {
         _message = "You Inputed Empty String!";
         notifyUpdateError();
+        result = false;
     }
-    else
+    return result;
+}
+
+void GUIPresentationModel::editDescription(string description, bool cancel)
+{
+    if (checkString(description, cancel))
+    {
+        _model->changeDescription(description);
+        notifyUpdateView();
+    }
+}
+
+void GUIPresentationModel::createMindMap(string topic, bool cancel)
+{
+    if (checkString(topic, cancel))
+    {
+        _model->createMindMap(topic);
+        _saveMindMapActionEnable = true;
+        notifyUpdateView();
+    }
+}
+
+void GUIPresentationModel::insertNode(char mode, string description, bool cancel)
+{
+    if(checkString(description, cancel))
     {
         _model->insertNode(mode);
         _model->setDescription(description);

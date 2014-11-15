@@ -7,7 +7,7 @@
 
 namespace MindMapTest
 {
-    class PresentationModelTest : public testing::Test
+    class TextUIPresentationModelTest : public testing::Test
     {
         protected:
             virtual void SetUp()
@@ -62,7 +62,7 @@ namespace MindMapTest
             TextUIPresentationModel* _pModel;
     };
 
-    TEST_F(PresentationModelTest, testSelectMode)
+    TEST_F(TextUIPresentationModelTest, testSelectMode)
     {
         _pModel->selectMode('1');
         ASSERT_EQ(CREATE_NEW_MINDMAP_MODE, _pModel->getMode());
@@ -86,7 +86,7 @@ namespace MindMapTest
         ASSERT_STREQ(ERROR_INPUT_COMMAND, _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testInsertMode)
+    TEST_F(TextUIPresentationModelTest, testInsertMode)
     {
         _model->selectComponent(0);
         _pModel->insertMode('a');
@@ -98,7 +98,7 @@ namespace MindMapTest
         ASSERT_STREQ(ERROR_INPUT_COMMAND, _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testSetDescription)
+    TEST_F(TextUIPresentationModelTest, testSetDescription)
     {
         _pModel->setDescription("iOS", ENTER_NODE_NAME_MODE);
         _model->selectComponent(8);
@@ -110,7 +110,7 @@ namespace MindMapTest
         ASSERT_STREQ("Network", _model->getSelectComponent()->getDescription().c_str());
     }
 
-    TEST_F(PresentationModelTest, testEditMode)
+    TEST_F(TextUIPresentationModelTest, testEditMode)
     {
         _model->selectComponent(0);
         _pModel->editMode('b');
@@ -128,7 +128,7 @@ namespace MindMapTest
         ASSERT_STREQ(ERROR_INPUT_COMMAND, _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testSelectComponent)
+    TEST_F(TextUIPresentationModelTest, testSelectComponent)
     {
         _pModel->selectComponent("a");
         ASSERT_STREQ(ERROR_INPUT_CHAR, _pModel->getMessage().c_str());
@@ -151,7 +151,7 @@ namespace MindMapTest
         ASSERT_STREQ(ERROR_SELECT_NODE, _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testDisplay)
+    TEST_F(TextUIPresentationModelTest, testDisplay)
     {
         MindMapModel model;
         TextUIPresentationModel pModel(&model);
@@ -173,7 +173,7 @@ namespace MindMapTest
         ASSERT_STREQ(correntDisplay.str().c_str(), _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testSaveAndLoadMindMap)
+    TEST_F(TextUIPresentationModelTest, testSaveAndLoadMindMap)
     {
         MindMapModel model;
         TextUIPresentationModel pModel(&model);
@@ -200,7 +200,7 @@ namespace MindMapTest
         ASSERT_STREQ(correntDisplay.str().c_str(), _pModel->getMessage().c_str());
     }
 
-    TEST_F(PresentationModelTest, testRedo)
+    TEST_F(TextUIPresentationModelTest, testRedo)
     {
         _pModel->redo();
         ASSERT_STREQ(ERROR_REDO, _pModel->getMessage().c_str());
@@ -214,7 +214,7 @@ namespace MindMapTest
         ASSERT_STREQ("ComputerScience", _model->getSelectComponent()->getDescription().c_str());
     }
 
-    TEST_F(PresentationModelTest, testUndo)
+    TEST_F(TextUIPresentationModelTest, testUndo)
     {
         _pModel->undo();
         ASSERT_STREQ(ERROR_UNDO, _pModel->getMessage().c_str());
@@ -226,7 +226,7 @@ namespace MindMapTest
         ASSERT_STREQ("Computer", _model->getSelectComponent()->getDescription().c_str());
     }
 
-    TEST_F(PresentationModelTest, testExitMode)
+    TEST_F(TextUIPresentationModelTest, testExitMode)
     {
         MindMapModel model;
         TextUIPresentationModel pModel(&model);

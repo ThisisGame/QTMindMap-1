@@ -1,0 +1,193 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		guipresentationmodel.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "GUIPresentationModel.h"
+
+
+GUIPresentationModel::GUIPresentationModel(MindMapModel* model)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model = model;</span>
+<span style = "background-color:#dfd">    _saveMindMapActionEnable = false;</span>
+<span style = "background-color:#dfd">    disableAction();</span>
+<span style = "background-color:#dfd">}</span>
+
+GUIPresentationModel::~GUIPresentationModel()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getSaveMindMapActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _saveMindMapActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getEditNodeActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _editNodeActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getDeleteNodeActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _deleteNodeActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getInsertChildActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _insertChildActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getInsertSiblingActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _insertSiblingActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getInsertParentActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _insertParentActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+Subject* GUIPresentationModel::getSubject()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return this;</span>
+<span style = "background-color:#fdd">}</span>
+
+
+void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
+<span style = "background-color:#dfd">{</span>
+    try
+    {
+<span style = "background-color:#dfd">        _model-&gt;loadMindMap(filename);</span>
+<span style = "background-color:#dfd">        _model-&gt;display();</span>
+<span style = "background-color:#dfd">        _message = _model-&gt;getMessage();</span>
+<span style = "background-color:#dfd">        disableAction();</span>
+<span style = "background-color:#dfd">        _saveMindMapActionEnable = true;</span>
+<span style = "background-color:#dfd">        notifyUpdateView();</span>
+    }
+<span style = "background-color:#dfd">    catch (const char* message)</span>
+    {
+<span style = "background-color:#dfd">        _message = message;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::saveMindMap(string filename)  //Àx¦sMindmap
+<span style = "background-color:#dfd">{</span>
+    try
+    {
+<span style = "background-color:#dfd">        if (filename != "")</span>
+        {
+<span style = "background-color:#dfd">            _model-&gt;saveMindMap(filename);</span>
+        }
+<span style = "background-color:#dfd">        else</span>
+        {
+<span style = "background-color:#dfd">            _message = ERROR_OPEN_FILE;</span>
+        }
+    }
+<span style = "background-color:#dfd">    catch (const char* message)</span>
+    {
+<span style = "background-color:#dfd">        _message = message;</span>
+<span style = "background-color:#dfd">        notifyUpdateError();</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+string GUIPresentationModel::getMessage() //¨ú±o¦r¦ê°T®§
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    string message = _message;</span>
+<span style = "background-color:#dfd">    _message = EMPTY_STRING;</span>
+<span style = "background-color:#dfd">    return message;</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::draw(MindMapGUIScene* scene)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _model-&gt;draw(scene);</span>
+<span style = "background-color:#fdd">}</span>
+
+void GUIPresentationModel::selectComponent(int id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;selectComponent(id);</span>
+<span style = "background-color:#dfd">    disableAction();</span>
+<span style = "background-color:#dfd">    _insertChildActionEnable = true;</span>
+<span style = "background-color:#dfd">    _editNodeActionEnable = true;</span>
+<span style = "background-color:#dfd">    if (!_model-&gt;isRoot())</span>
+    {
+<span style = "background-color:#dfd">        _deleteNodeActionEnable = true;</span>
+<span style = "background-color:#dfd">        _insertSiblingActionEnable = true;</span>
+<span style = "background-color:#dfd">        _insertParentActionEnable = true;</span>
+    }
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::deleteComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;deleteComponent();</span>
+<span style = "background-color:#dfd">    disableAction();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::checkString(string description, bool cancel)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    bool result = true;</span>
+<span style = "background-color:#dfd">    if (cancel == false)</span>
+    {
+<span style = "background-color:#dfd">        result = false;</span>
+    }
+<span style = "background-color:#dfd">    else if (description == "")</span>
+    {
+<span style = "background-color:#dfd">        _message = "You Inputed Empty String!";</span>
+<span style = "background-color:#dfd">        notifyUpdateError();</span>
+<span style = "background-color:#dfd">        result = false;</span>
+    }
+<span style = "background-color:#dfd">    return result;</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::editDescription(string description, bool cancel)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (checkString(description, cancel))</span>
+    {
+<span style = "background-color:#dfd">        _model-&gt;changeDescription(description);</span>
+<span style = "background-color:#dfd">        notifyUpdateView();</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::createMindMap(string topic, bool cancel)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (checkString(topic, cancel))</span>
+    {
+<span style = "background-color:#dfd">        _model-&gt;createMindMap(topic);</span>
+<span style = "background-color:#dfd">        _saveMindMapActionEnable = true;</span>
+<span style = "background-color:#dfd">        notifyUpdateView();</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::insertNode(char mode, string description, bool cancel)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if(checkString(description, cancel))</span>
+    {
+<span style = "background-color:#dfd">        _model-&gt;insertNode(mode);</span>
+<span style = "background-color:#dfd">        _model-&gt;setDescription(description);</span>
+<span style = "background-color:#dfd">        notifyUpdateView();</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::disableSelected()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;disableSelected();</span>
+<span style = "background-color:#dfd">    disableAction();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::disableAction()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _editNodeActionEnable = false;</span>
+<span style = "background-color:#dfd">    _deleteNodeActionEnable = false;</span>
+<span style = "background-color:#dfd">    _insertChildActionEnable = false;</span>
+<span style = "background-color:#dfd">    _insertSiblingActionEnable = false;</span>
+<span style = "background-color:#dfd">    _insertParentActionEnable = false;</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

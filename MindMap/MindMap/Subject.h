@@ -2,8 +2,15 @@
 #include <vector>
 #include "Observer.h"
 using namespace std;
+
+namespace MindMapTest
+{
+    class SubjectTest;
+}
+
 class Subject
 {
+        friend class MindMapTest::SubjectTest;
     public:
         Subject();
         virtual ~Subject();

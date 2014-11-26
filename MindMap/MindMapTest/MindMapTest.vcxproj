@@ -25,6 +25,7 @@
     <ClCompile Include="..\MindMap\Component.cpp" />
     <ClCompile Include="..\MindMap\ComponentFactory.cpp" />
     <ClCompile Include="..\MindMap\Composite.cpp" />
+    <ClCompile Include="..\MindMap\CutNodeCommand.cpp" />
     <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp" />
     <ClCompile Include="..\MindMap\EditComponentCommand.cpp" />
     <ClCompile Include="..\MindMap\GraphicComponentItem.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\MindMap\MindMapModel.cpp" />
     <ClCompile Include="..\MindMap\Node.cpp" />
     <ClCompile Include="..\MindMap\Observer.cpp" />
+    <ClCompile Include="..\MindMap\PasteNodeCommand.cpp" />
     <ClCompile Include="..\MindMap\Root.cpp" />
     <ClCompile Include="..\MindMap\Subject.cpp" />
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp" />
@@ -44,6 +46,7 @@
     <ClCompile Include="ComponentFactoryTest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="CompositeTest.cpp" />
+    <ClCompile Include="CutNodeCommandTest.cpp" />
     <ClCompile Include="DeleteComponentCommandTest.cpp" />
     <ClCompile Include="EditComponentCommandTest.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GraphicComponentItem.cpp">
@@ -69,6 +72,7 @@
     <ClCompile Include="IntegrationTest.cpp" />
     <ClCompile Include="MindMapModelTest.cpp" />
     <ClCompile Include="NodeTest.cpp" />
+    <ClCompile Include="PasteNodeCommandTest.cpp" />
     <ClCompile Include="SubjectTest.cpp" />
     <ClCompile Include="TextUIPresentationModelTest.cpp" />
     <ClCompile Include="RootTest.cpp" />

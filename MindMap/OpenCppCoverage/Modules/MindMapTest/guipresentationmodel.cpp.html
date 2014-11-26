@@ -14,6 +14,7 @@ GUIPresentationModel::GUIPresentationModel(MindMapModel* model)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _model = model;</span>
 <span style = "background-color:#dfd">    _saveMindMapActionEnable = false;</span>
+<span style = "background-color:#dfd">    _pasteActionEnable = false;</span>
 <span style = "background-color:#dfd">    disableAction();</span>
 <span style = "background-color:#dfd">}</span>
 
@@ -51,6 +52,22 @@ bool GUIPresentationModel::getInsertParentActionEnable()
 <span style = "background-color:#dfd">    return _insertParentActionEnable;</span>
 <span style = "background-color:#dfd">}</span>
 
+bool GUIPresentationModel::getCopyActionEnbale()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _copyActionEnbale;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getCutActionEnbale()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _cutActionEnbale;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getPasteActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _pasteActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
+
+
 Subject* GUIPresentationModel::getSubject()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    return this;</span>
@@ -65,6 +82,7 @@ void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
 <span style = "background-color:#dfd">        _model-&gt;display();</span>
 <span style = "background-color:#dfd">        _message = _model-&gt;getMessage();</span>
 <span style = "background-color:#dfd">        disableAction();</span>
+<span style = "background-color:#dfd">        _pasteActionEnable = false;</span>
 <span style = "background-color:#dfd">        _saveMindMapActionEnable = true;</span>
 <span style = "background-color:#dfd">        notifyUpdateView();</span>
     }
@@ -117,6 +135,8 @@ void GUIPresentationModel::selectComponent(int id)
 <span style = "background-color:#dfd">        _deleteNodeActionEnable = true;</span>
 <span style = "background-color:#dfd">        _insertSiblingActionEnable = true;</span>
 <span style = "background-color:#dfd">        _insertParentActionEnable = true;</span>
+<span style = "background-color:#dfd">        _cutActionEnbale = true;</span>
+<span style = "background-color:#dfd">        _copyActionEnbale = true;</span>
     }
 <span style = "background-color:#dfd">    notifyUpdateView();</span>
 <span style = "background-color:#dfd">}</span>
@@ -158,6 +178,7 @@ void GUIPresentationModel::createMindMap(string topic, bool cancel)
 <span style = "background-color:#dfd">    if (checkString(topic, cancel))</span>
     {
 <span style = "background-color:#dfd">        _model-&gt;createMindMap(topic);</span>
+<span style = "background-color:#dfd">        _pasteActionEnable = false;</span>
 <span style = "background-color:#dfd">        _saveMindMapActionEnable = true;</span>
 <span style = "background-color:#dfd">        notifyUpdateView();</span>
     }
@@ -187,6 +208,28 @@ void GUIPresentationModel::disableAction()
 <span style = "background-color:#dfd">    _insertChildActionEnable = false;</span>
 <span style = "background-color:#dfd">    _insertSiblingActionEnable = false;</span>
 <span style = "background-color:#dfd">    _insertParentActionEnable = false;</span>
+<span style = "background-color:#dfd">    _copyActionEnbale = false;</span>
+<span style = "background-color:#dfd">    _cutActionEnbale = false;</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::copyComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;cloneItem();</span>
+<span style = "background-color:#dfd">    _pasteActionEnable = true;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::cutComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;cutComponent();</span>
+<span style = "background-color:#dfd">    _pasteActionEnable = true;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::pasteComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;pasteComponent();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

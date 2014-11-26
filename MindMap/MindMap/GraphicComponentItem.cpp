@@ -9,7 +9,7 @@ GraphicComponentItem::GraphicComponentItem(string description, int posX, int pos
     this->setHandlesChildEvents(false);
     _textItem = new QGraphicsTextItem(QString::fromStdString(description));
     _textItem->setObjectName(QString::fromStdString(description));
-    _borderItem = new QGraphicsRectItem(_textItem->boundingRect().adjusted(-5, -5 , +5, +5));
+    _borderItem = new QGraphicsRectItem(_textItem->boundingRect().adjusted(-5, -5, +5, +5));
     this->addToGroup(_borderItem);
     this->addToGroup(_textItem);
     this->setPos(posX, posY);
@@ -24,8 +24,6 @@ GraphicComponentItem::~GraphicComponentItem()
 
 void GraphicComponentItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    QPointF point = event->pos();
-    cout << point.x() << "," << point.y() << endl;
     _timer->start(20);
 }
 
@@ -53,5 +51,21 @@ void GraphicComponentItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event
 void GraphicComponentItem::mouseClickEvent()
 {
     _pModel->selectComponent(_id);
+}
+
+vector<int> GraphicComponentItem::getBoundLeft()
+{
+    vector<int> point;
+    point.push_back(boundingRect().center().x() - boundingRect().width() / 2);
+    point.push_back(boundingRect().center().y());
+    return point;
+}
+
+vector<int> GraphicComponentItem::getBoundRight()
+{
+    vector<int> point;
+    point.push_back(boundingRect().center().x() + boundingRect().width() / 2);
+    point.push_back(boundingRect().center().y());
+    return point;
 }
 

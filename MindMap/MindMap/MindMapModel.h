@@ -13,10 +13,16 @@
 #include "Subject.h"
 using namespace std;
 
+namespace MindMapTest
+{
+    class MindMapModelTest;
+}
+
 class MindMapGUIScene;
 
 class MindMapModel
 {
+        friend class MindMapTest::MindMapModelTest;
     public:
         MindMapModel(void);
         ~MindMapModel(void);
@@ -41,6 +47,11 @@ class MindMapModel
         void doUninsertNode(Component*);
         list<Component*> getNodeList();
         bool isRoot();
+        void cloneItem();
+        void doCutNodes(Component*);
+        void doPasteNodes(Component*);
+        void cutComponent();
+        void pasteComponent();
 
         void draw(MindMapGUIScene*);
         void disableSelected();
@@ -59,4 +70,5 @@ class MindMapModel
         CommandManager _commandManager;
         Component* findNodeByID(int);
         vector<int> getIdList();
+        Component* _cloneItem;
 };

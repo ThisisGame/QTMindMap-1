@@ -2,11 +2,11 @@
 #include "Command.h"
 #include "MindMapModel.h"
 
-class DeleteComponentCommand : public Command
+class CutNodeCommand :	public Command
 {
     public:
-        DeleteComponentCommand(Component*, MindMapModel*);
-        ~DeleteComponentCommand();
+        CutNodeCommand(Component*, MindMapModel*);
+        ~CutNodeCommand();
         void execute();
         void unexcute();
     private:
@@ -14,7 +14,6 @@ class DeleteComponentCommand : public Command
         Component* _parent;
         MindMapModel* _model;
         list<Component*> _oldNodeList;
-        list<Component*> _oldChildList;
         list<Component*> _oldParentList;
 };
 

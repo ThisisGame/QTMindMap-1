@@ -19,8 +19,6 @@ namespace MindMapTest
             virtual void TearDown()
             {
                 delete _root;
-                delete _node;
-                delete _newNode;
             }
             void init()
             {
@@ -76,24 +74,24 @@ namespace MindMapTest
         string correctOutput;
         stringstream outputstream(content);
         stringstream correntDisplay(correctOutput);
-        Root rootComputer(0, "Computer");
-        Node nodeNetwork(1, "Network");
-        Node nodeIPV4(2, "IPV4");
-        Node nodeIPV6(3, "IPV6");
-        Node nodeOS(4, "OS");
-        Node nodeMicrosoft(5, "Microsoft");
-        Node nodeWin7(6, "Win7");
-        Node nodeWin8(7, "Win8");
-        Node nodeOSX(8, "OSX");
-        rootComputer.addChild(&nodeNetwork);
-        rootComputer.addChild(&nodeOS);
-        nodeNetwork.addChild(&nodeIPV4);
-        nodeNetwork.addChild(&nodeIPV6);
-        nodeOS.addChild(&nodeMicrosoft);
-        nodeOS.addChild(&nodeOSX);
-        nodeMicrosoft.addChild(&nodeWin7);
-        nodeMicrosoft.addChild(&nodeWin8);
-        rootComputer.display(outputstream, "", true);
+        Root* rootComputer = new Root(0, "Computer");
+        Node* nodeNetwork = new Node(1, "Network");
+        Node* nodeIPV4 = new Node(2, "IPV4");
+        Node* nodeIPV6 = new Node(3, "IPV6");
+        Node* nodeOS = new Node(4, "OS");
+        Node* nodeMicrosoft = new Node(5, "Microsoft");
+        Node* nodeWin7 = new Node(6, "Win7");
+        Node* nodeWin8 = new Node(7, "Win8");
+        Node* nodeOSX = new Node(8, "OSX");
+        rootComputer->addChild(nodeNetwork);
+        rootComputer->addChild(nodeOS);
+        nodeNetwork->addChild(nodeIPV4);
+        nodeNetwork->addChild(nodeIPV6);
+        nodeOS->addChild(nodeMicrosoft);
+        nodeOS->addChild(nodeOSX);
+        nodeMicrosoft->addChild(nodeWin7);
+        nodeMicrosoft->addChild(nodeWin8);
+        rootComputer->display(outputstream, "", true);
         correntDisplay << "+-Computer(Root, ID: 0)" << endl;
         correntDisplay << "  +-Network(Node, ID: 1)" << endl;
         correntDisplay << "  | +-IPV4(Node, ID: 2)" << endl;
@@ -104,5 +102,16 @@ namespace MindMapTest
         correntDisplay << "    | +-Win8(Node, ID: 7)" << endl;
         correntDisplay << "    +-OSX(Node, ID: 8)" << endl;
         ASSERT_STREQ(correntDisplay.str().c_str(), outputstream.str().c_str());
+        delete rootComputer;
+    }
+
+    TEST_F(CompositeTest, testSetGetPoint)
+    {
+        _root->setPoint(10, 20);
+        ASSERT_EQ(10, _root->getPoint()[0]);
+        ASSERT_EQ(20, _root->getPoint()[1]);
+        _root->setPoint(60, 5);
+        ASSERT_EQ(60, _root->getPoint()[0]);
+        ASSERT_EQ(5, _root->getPoint()[1]);
     }
 }

@@ -18,7 +18,7 @@ GraphicComponentItem::GraphicComponentItem(string description, int posX, int pos
 <span style = "background-color:#fdd">    this-&gt;setHandlesChildEvents(false);</span>
 <span style = "background-color:#fdd">    _textItem = new QGraphicsTextItem(QString::fromStdString(description));</span>
 <span style = "background-color:#fdd">    _textItem-&gt;setObjectName(QString::fromStdString(description));</span>
-<span style = "background-color:#fdd">    _borderItem = new QGraphicsRectItem(_textItem-&gt;boundingRect().adjusted(-5, -5 , +5, +5));</span>
+<span style = "background-color:#fdd">    _borderItem = new QGraphicsRectItem(_textItem-&gt;boundingRect().adjusted(-5, -5, +5, +5));</span>
 <span style = "background-color:#fdd">    this-&gt;addToGroup(_borderItem);</span>
 <span style = "background-color:#fdd">    this-&gt;addToGroup(_textItem);</span>
 <span style = "background-color:#fdd">    this-&gt;setPos(posX, posY);</span>
@@ -33,8 +33,6 @@ GraphicComponentItem::~GraphicComponentItem()
 
 void GraphicComponentItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    QPointF point = event-&gt;pos();</span>
-<span style = "background-color:#fdd">    cout &lt;&lt; point.x() &lt;&lt; "," &lt;&lt; point.y() &lt;&lt; endl;</span>
 <span style = "background-color:#fdd">    _timer-&gt;start(20);</span>
 <span style = "background-color:#fdd">}</span>
 
@@ -62,6 +60,22 @@ void GraphicComponentItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event
 void GraphicComponentItem::mouseClickEvent()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    _pModel-&gt;selectComponent(_id);</span>
+<span style = "background-color:#fdd">}</span>
+
+vector&lt;int&gt; GraphicComponentItem::getBoundLeft()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    vector&lt;int&gt; point;</span>
+<span style = "background-color:#fdd">    point.push_back(boundingRect().center().x() - boundingRect().width() / 2);</span>
+<span style = "background-color:#fdd">    point.push_back(boundingRect().center().y());</span>
+<span style = "background-color:#fdd">    return point;</span>
+<span style = "background-color:#fdd">}</span>
+
+vector&lt;int&gt; GraphicComponentItem::getBoundRight()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    vector&lt;int&gt; point;</span>
+<span style = "background-color:#fdd">    point.push_back(boundingRect().center().x() + boundingRect().width() / 2);</span>
+<span style = "background-color:#fdd">    point.push_back(boundingRect().center().y());</span>
+<span style = "background-color:#fdd">    return point;</span>
 <span style = "background-color:#fdd">}</span>
 
 </pre>

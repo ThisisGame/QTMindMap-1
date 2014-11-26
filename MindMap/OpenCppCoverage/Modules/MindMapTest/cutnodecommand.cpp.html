@@ -1,0 +1,39 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		cutnodecommand.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "CutNodeCommand.h"
+
+CutNodeCommand::CutNodeCommand(Component* component, MindMapModel* model)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _model = model;</span>
+<span style = "background-color:#dfd">    _parent = component-&gt;getParent();</span>
+<span style = "background-color:#dfd">    _oldNodeList = _model-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">    _oldParentList = _parent-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">}</span>
+
+CutNodeCommand::~CutNodeCommand()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void CutNodeCommand::execute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;doCutNodes(_component);</span>
+<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(_component);</span>
+<span style = "background-color:#dfd">}</span>
+
+void CutNodeCommand::unexcute()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">    _parent-&gt;addChilds(_oldParentList);</span>
+<span style = "background-color:#dfd">    _model-&gt;doAddNodes(_oldNodeList);</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

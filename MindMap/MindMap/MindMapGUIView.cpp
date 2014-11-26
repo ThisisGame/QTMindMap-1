@@ -42,6 +42,10 @@ void MindMapGUIView::setupMenu()
     _editMenuBar->addAction(_insertChildAction);
     _editMenuBar->addAction(_insertSiblingAction);
     _editMenuBar->addAction(_insertParentAction);
+    _editMenuBar->addSeparator();
+    _editMenuBar->addAction(_cutAction);
+    _editMenuBar->addAction(_copyAction);
+    _editMenuBar->addAction(_pasteAction);
     //helpMenu
     _helpMenuBar->addAction(_aboutAction);
 }
@@ -54,6 +58,10 @@ void MindMapGUIView::setupToolbar()
     _mainToolBar->addAction(_createNewMindMapAction);
     _mainToolBar->addAction(_openMindMapAction);
     _mainToolBar->addAction(_saveMindMapAction);
+    _mainToolBar->addSeparator();
+    _mainToolBar->addAction(_cutAction);
+    _mainToolBar->addAction(_copyAction);
+    _mainToolBar->addAction(_pasteAction);
     _mainToolBar->addSeparator();
     _mainToolBar->addAction(_editNodeAction);
     _mainToolBar->addAction(_deleteNodeAction);
@@ -83,7 +91,10 @@ void MindMapGUIView::setupString()
     CREATE_MINDMAP_STRING = "Create a new mind map";
     ABOUT_STRING = "About";
     INIT_FILEPATH_STRING = ".\\";
-    DEFAULT_FILE_TYPE_STRIGN = "MindMap Files (*.mm)";
+    DEFAULT_FILE_TYPE_STRING = "MindMap Files (*.mm)";
+    CUT_STRING = "Cut";
+    COPY_STRING = "Copy";
+    PASTE_STRING = "Paste";
 }
 
 void MindMapGUIView::connectEvents()
@@ -98,6 +109,9 @@ void MindMapGUIView::connectEvents()
     connect(_insertSiblingAction, SIGNAL(triggered()), this, SLOT(insertSibling()));
     connect(_saveMindMapAction, SIGNAL(triggered()), this, SLOT(saveFile()));
     connect(_aboutAction, SIGNAL(triggered()), this, SLOT(aboutActionClick()));
+    connect(_copyAction, SIGNAL(triggered()), this, SLOT(copyComponent()));
+    connect(_cutAction, SIGNAL(triggered()), this, SLOT(cutComponent()));
+    connect(_pasteAction, SIGNAL(triggered()), this, SLOT(pasteComponent()));
 }
 
 void MindMapGUIView::createActions()
@@ -111,6 +125,9 @@ void MindMapGUIView::createActions()
     _insertSiblingAction = new QAction(QIcon("icons/insertSibling.png"), INSERT_SIBLING_STRING, this);
     _insertParentAction = new QAction(QIcon("icons/insertParent.png"), INSERT_PARENT_STRING, this);
     _aboutAction = new QAction(QIcon("icons/about.png"), ABOUT_STRING, this);
+    _cutAction = new QAction(QIcon("icons/cut.png"), CUT_STRING, this);
+    _copyAction = new QAction(QIcon("icons/copy.png"), COPY_STRING, this);
+    _pasteAction = new QAction(QIcon("icons/paste.png"), PASTE_STRING, this);
     updateActions();
 }
 
@@ -133,6 +150,9 @@ void MindMapGUIView::updateActions()
     _insertChildAction->setEnabled(_pModel->getInsertChildActionEnable());
     _insertSiblingAction->setEnabled(_pModel->getInsertSiblingActionEnable());
     _insertParentAction->setEnabled(_pModel->getInsertParentActionEnable());
+    _copyAction->setEnabled(_pModel->getCopyActionEnbale());
+    _cutAction->setEnabled(_pModel->getCutActionEnbale());
+    _pasteAction->setEnabled(_pModel->getPasteActionEnable());
 }
 
 void MindMapGUIView::aboutActionClick()
@@ -143,14 +163,14 @@ void MindMapGUIView::aboutActionClick()
 void MindMapGUIView::openFile()
 {
     QString filePath;
-    filePath = QFileDialog::getOpenFileName(this, OPEN_MINDMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRIGN);
+    filePath = QFileDialog::getOpenFileName(this, OPEN_MINDMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRING);
     _pModel->loadMindMap(filePath.toStdString());
 }
 
 void MindMapGUIView::saveFile()
 {
     QString filePath;
-    filePath = QFileDialog::getSaveFileName(this, SAVE_MINEMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRIGN);
+    filePath = QFileDialog::getSaveFileName(this, SAVE_MINEMAP_STRING, INIT_FILEPATH_STRING, DEFAULT_FILE_TYPE_STRING);
     _pModel->saveMindMap(filePath.toStdString());
 }
 
@@ -204,4 +224,19 @@ void MindMapGUIView::mousePressEvent(QMouseEvent* event)
 void MindMapGUIView::mouseDoubleClickEvent(QMouseEvent* event)
 {
     QMainWindow::mouseDoubleClickEvent(event);
+}
+
+void MindMapGUIView::copyComponent()
+{
+    _pModel->copyComponent();
+}
+
+void MindMapGUIView::cutComponent()
+{
+    _pModel->cutComponent();
+}
+
+void MindMapGUIView::pasteComponent()
+{
+    _pModel->pasteComponent();
 }

@@ -25,11 +25,6 @@ namespace MindMapTest
             virtual void TearDown()
             {
                 delete _rootComputer;
-                delete _nodeNetwork;
-                delete _nodeIPV4;
-                delete _nodeIPV6;
-                delete _nodeOS;
-                delete _nodeMicrosoft;
             }
             Root* _rootComputer;
             Node* _nodeNetwork;

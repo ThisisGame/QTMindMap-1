@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
-#include "DeleteComponentCommand.h"
+#include "CutNodeCommand.h"
 #include "MindMapModel.h"
 #include "Root.h"
 #include "Node.h"
 
 namespace MindMapTest
 {
-    class DeleteComponentCommandTest : public testing::Test
+    class CutNodeCommandTest : public testing::Test
     {
         protected:
             virtual void SetUp()
@@ -32,7 +32,7 @@ namespace MindMapTest
             }
             virtual void TearDown()
             {
-                delete _rootComputer;
+                delete _model;
             }
             Root* _rootComputer;
             Node* _nodeNetwork;
@@ -43,19 +43,20 @@ namespace MindMapTest
             MindMapModel* _model;
     };
 
-    TEST_F(DeleteComponentCommandTest, testExecute)
+    TEST_F(CutNodeCommandTest, testExecute)
     {
-        DeleteComponentCommand command(_nodeNetwork, _model);
+        CutNodeCommand command(_nodeNetwork, _model);
         ASSERT_EQ(2, _rootComputer->getNodeList().size());
         ASSERT_EQ(6, _model->getNodeList().size());
         command.execute();
-        ASSERT_EQ(3, _rootComputer->getNodeList().size());
-        ASSERT_EQ(5, _model->getNodeList().size());
+        ASSERT_EQ(1, _rootComputer->getNodeList().size());
+        ASSERT_EQ(3, _model->getNodeList().size());
+        delete _nodeNetwork;
     }
 
-    TEST_F(DeleteComponentCommandTest, testUnexecute)
+    TEST_F(CutNodeCommandTest, testUnexecute)
     {
-        DeleteComponentCommand command(_nodeNetwork, _model);
+        CutNodeCommand command(_nodeNetwork, _model);
         ASSERT_EQ(2, _rootComputer->getNodeList().size());
         ASSERT_EQ(6, _model->getNodeList().size());
         command.execute();

@@ -40,6 +40,9 @@ class MindMapGUIView : public QMainWindow, public Observer
         void insertChild();
         void saveFile();
         void aboutActionClick();
+        void copyComponent();
+        void cutComponent();
+        void pasteComponent();
     protected:
         virtual void mousePressEvent(QMouseEvent*);
         virtual void mouseDoubleClickEvent(QMouseEvent*);
@@ -61,6 +64,9 @@ class MindMapGUIView : public QMainWindow, public Observer
         QAction* _insertSiblingAction;
         QAction* _insertParentAction;
         QAction* _aboutAction;
+        QAction* _cutAction;
+        QAction* _copyAction;
+        QAction* _pasteAction;
         void setupString();
         void setupMenu();
         void setupToolbar();
@@ -78,6 +84,9 @@ class MindMapGUIView : public QMainWindow, public Observer
         QString CREATE_MINDMAP_STRING;
         QString ABOUT_STRING;
         QString INIT_FILEPATH_STRING;
-        QString DEFAULT_FILE_TYPE_STRIGN;
+        QString DEFAULT_FILE_TYPE_STRING;
+        QString COPY_STRING;
+        QString CUT_STRING;
+        QString PASTE_STRING;
 };
 

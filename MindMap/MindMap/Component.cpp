@@ -45,3 +45,15 @@ bool Component::getSelected()
     return _selected;
 }
 
+vector<int> Component::getPoint()
+{
+    return _point;
+}
+
+void Component::setPoint(int x, int y)
+{
+    _point.clear();
+    _point.push_back(x);
+    _point.push_back(y);
+}
+

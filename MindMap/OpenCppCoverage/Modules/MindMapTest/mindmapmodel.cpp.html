@@ -14,20 +14,19 @@
 #include "InsertChildCommand.h"
 #include "InsertParentCommand.h"
 #include "InsertSiblingCommand.h"
+#include "CutNodeCommand.h"
+#include "PasteNodeCommand.h"
 #include &lt;regex&gt;
 
 MindMapModel::MindMapModel(void)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _component = NULL;</span>
+<span style = "background-color:#dfd">    _cloneItem = NULL;</span>
 <span style = "background-color:#dfd">}</span>
 
 MindMapModel::~MindMapModel(void)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _commandManager.clearAllCommand();</span>
-<span style = "background-color:#dfd">    for (list &lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
-    {
-<span style = "background-color:#dfd">        delete *i;</span>
-<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    clearList();</span>
 <span style = "background-color:#dfd">}</span>
 
 void MindMapModel::createMindMap(string topic)  //·s«Ø¤@­ÓMindmap
@@ -42,10 +41,7 @@ void MindMapModel::createMindMap(string topic)  //·s«Ø¤@­ÓMindmap
 void MindMapModel::clearList()  //²MªÅ¤w¦sªºMindmap
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _commandManager.clearAllCommand();</span>
-<span style = "background-color:#dfd">    for (list &lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
-    {
-<span style = "background-color:#dfd">        delete *i;</span>
-<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    delete findNodeByID(0);</span>
 <span style = "background-color:#dfd">    _nodelist.clear();</span>
 <span style = "background-color:#dfd">    _component = NULL;</span>
 <span style = "background-color:#dfd">    _componentFactory.setId(0);</span>
@@ -135,6 +131,18 @@ void MindMapModel::changeParent(int parentID)
 void MindMapModel::deleteComponent()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _commandManager.execute(new DeleteComponentCommand(_component, this));</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::cutComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    delete _cloneItem;</span>
+<span style = "background-color:#dfd">    _cloneItem = _component-&gt;clone();</span>
+<span style = "background-color:#dfd">    _commandManager.execute(new CutNodeCommand(_component, this));</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::pasteComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _commandManager.execute(new PasteNodeCommand(_cloneItem-&gt;clone(), this));</span>
 <span style = "background-color:#dfd">}</span>
 
 void MindMapModel::doDeleteNode(Component* component)
@@ -317,15 +325,41 @@ void MindMapModel::draw(MindMapGUIScene* scene)  //Ã¸¥XMindMap
     {
 <span style = "background-color:#fdd">        return;</span>
     }
-<span style = "background-color:#fdd">    vector&lt;int&gt; position;</span>
+<span style = "background-color:#fdd">    int position = 0;</span>
 <span style = "background-color:#fdd">    root-&gt;draw(position, 0, scene);</span>
 <span style = "background-color:#fdd">}</span>
 
-void MindMapModel::disableSelected()
+void MindMapModel::disableSelected() //¨ú®ø¿ï¾Ü
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    for (auto item : _nodelist)</span>
     {
 <span style = "background-color:#dfd">        item-&gt;setSelected(false);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::cloneItem()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    delete _cloneItem;</span>
+<span style = "background-color:#dfd">    _cloneItem = _component-&gt;clone();</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::doCutNodes(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _nodelist.remove(component);</span>
+<span style = "background-color:#dfd">    for (auto item : component-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#dfd">        doCutNodes(item);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::doPasteNodes(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    component-&gt;setId(_componentFactory.getId());</span>
+<span style = "background-color:#dfd">    _nodelist.push_back(component);</span>
+<span style = "background-color:#dfd">    _componentFactory.countId();</span>
+<span style = "background-color:#dfd">    for (auto item : component-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#dfd">        doPasteNodes(item);</span>
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 </pre>

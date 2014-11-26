@@ -14,6 +14,8 @@ class GraphicComponentItem : public QObject, public QGraphicsItemGroup
         ~GraphicComponentItem();
         void setPresentationModel(GUIPresentationModel*);
         void setBorder(Qt::GlobalColor);
+        vector<int> getBoundRight();
+        vector<int> getBoundLeft();
     private slots:
         void mouseClickEvent();
     protected:

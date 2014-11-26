@@ -18,6 +18,9 @@ class GUIPresentationModel : public Subject
         void insertNode(char, string, bool);
         void saveMindMap(string);
         void draw(MindMapGUIScene*);
+        void copyComponent();
+        void cutComponent();
+        void pasteComponent();
         string getMessage();
         bool getSaveMindMapActionEnable();
         bool getEditNodeActionEnable();
@@ -25,6 +28,9 @@ class GUIPresentationModel : public Subject
         bool getInsertChildActionEnable();
         bool getInsertSiblingActionEnable();
         bool getInsertParentActionEnable();
+        bool getCopyActionEnbale();
+        bool getCutActionEnbale();
+        bool getPasteActionEnable();
         Subject* getSubject();
     private:
         MindMapModel* _model;
@@ -35,6 +41,9 @@ class GUIPresentationModel : public Subject
         bool _insertChildActionEnable;
         bool _insertSiblingActionEnable;
         bool _insertParentActionEnable;
+        bool _copyActionEnbale;
+        bool _cutActionEnbale;
+        bool _pasteActionEnable;
         void disableAction();
         bool checkString(string, bool);
 };

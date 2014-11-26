@@ -54,6 +54,18 @@ bool Component::getSelected()
 <span style = "background-color:#dfd">    return _selected;</span>
 <span style = "background-color:#dfd">}</span>
 
+vector&lt;int&gt; Component::getPoint()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _point;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Component::setPoint(int x, int y)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _point.clear();</span>
+<span style = "background-color:#dfd">    _point.push_back(x);</span>
+<span style = "background-color:#dfd">    _point.push_back(y);</span>
+<span style = "background-color:#dfd">}</span>
+
 </pre>
 	</body>
 </html>

@@ -58,4 +58,9 @@ namespace MindMapTest
         _root->setSelected(false);
         ASSERT_FALSE(_root->getSelected());
     }
+
+    TEST_F(RootTest, testClone)
+    {
+        ASSERT_EQ(NULL, _root->clone());
+    }
 }

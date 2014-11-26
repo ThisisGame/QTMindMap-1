@@ -92,6 +92,21 @@ namespace MindMapTest
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
     }
 
+    TEST_F(GUIPresentationModelTest, testGetCopyActionEnbale)
+    {
+        ASSERT_FALSE(_pModel->getCopyActionEnbale());
+    }
+
+    TEST_F(GUIPresentationModelTest, testGetCutActionEnbale)
+    {
+        ASSERT_FALSE(_pModel->getCutActionEnbale());
+    }
+
+    TEST_F(GUIPresentationModelTest, testGetPasteActionEnable)
+    {
+        ASSERT_FALSE(_pModel->getPasteActionEnable());
+    }
+
     TEST_F(GUIPresentationModelTest, testSaveAndLoadMindMap)
     {
         MindMapModel model;
@@ -105,6 +120,7 @@ namespace MindMapTest
         ASSERT_STREQ(ERROR_OPEN_FILE, _pModel->getMessage().c_str());
         _pModel->loadMindMap("testData\\test_file1.mm");
         ASSERT_TRUE(_pModel->getSaveMindMapActionEnable());
+        ASSERT_FALSE(_pModel->getPasteActionEnable());
     }
 
     TEST_F(GUIPresentationModelTest, testSelectComponent)
@@ -115,12 +131,18 @@ namespace MindMapTest
         ASSERT_TRUE(_pModel->getInsertChildActionEnable());
         ASSERT_FALSE(_pModel->getInsertSiblingActionEnable());
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
+        ASSERT_FALSE(_pModel->getPasteActionEnable());
+        ASSERT_FALSE(_pModel->getCutActionEnbale());
+        ASSERT_FALSE(_pModel->getCopyActionEnbale());
         _pModel->selectComponent(1);
         ASSERT_TRUE(_pModel->getEditNodeActionEnable());
         ASSERT_TRUE(_pModel->getDeleteNodeActionEnable());
         ASSERT_TRUE(_pModel->getInsertChildActionEnable());
         ASSERT_TRUE(_pModel->getInsertSiblingActionEnable());
         ASSERT_TRUE(_pModel->getInsertParentActionEnable());
+        ASSERT_FALSE(_pModel->getPasteActionEnable());
+        ASSERT_TRUE(_pModel->getCutActionEnbale());
+        ASSERT_TRUE(_pModel->getCopyActionEnbale());
     }
 
     TEST_F(GUIPresentationModelTest, testDeleteComponent)
@@ -185,5 +207,29 @@ namespace MindMapTest
         ASSERT_FALSE(_pModel->getInsertChildActionEnable());
         ASSERT_FALSE(_pModel->getInsertSiblingActionEnable());
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
+        ASSERT_FALSE(_pModel->getCutActionEnbale());
+        ASSERT_FALSE(_pModel->getCopyActionEnbale());
+    }
+
+    TEST_F(GUIPresentationModelTest, testCopyComponent)
+    {
+        _pModel->selectComponent(1);
+        _pModel->copyComponent();
+        ASSERT_TRUE(_pModel->getPasteActionEnable());
+    }
+
+    TEST_F(GUIPresentationModelTest, testCutComponent)
+    {
+        _pModel->selectComponent(2);
+        _pModel->cutComponent();
+        ASSERT_TRUE(_pModel->getPasteActionEnable());;
+    }
+
+    TEST_F(GUIPresentationModelTest, testPasteComponent)
+    {
+        _pModel->selectComponent(3);
+        _pModel->copyComponent();
+        _pModel->pasteComponent();
+        ASSERT_TRUE(_pModel->getPasteActionEnable());
     }
 }

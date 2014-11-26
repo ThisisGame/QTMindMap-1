@@ -8,8 +8,6 @@
 	</title>
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "Node.h"
-#include "GraphicComponentItem.h"
-#include "MindMapGUIScene.h"
 
 Node::Node(int id) : Composite(id)
 <span style = "background-color:#dfd">{</span>
@@ -60,25 +58,16 @@ Component* Node::getParent()
 <span style = "background-color:#dfd">    return _parent;</span>
 <span style = "background-color:#dfd">}</span>
 
-void Node::draw(vector&lt;int&gt;&amp; position, int level, MindMapGUIScene* scene)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (position.size() &lt; (level + 1))</span>
+Component* Node::clone()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    Component* cloneItem = new Node(_id, _description);</span>
+<span style = "background-color:#dfd">    for (auto item : _nodelist)</span>
     {
-<span style = "background-color:#fdd">        position.push_back(0);</span>
-    }
-<span style = "background-color:#fdd">    GraphicComponentItem* item = new GraphicComponentItem(_description, (level + 1) * 100, position[level], _id, scene-&gt;getPModel());</span>
-<span style = "background-color:#fdd">    if (_selected)</span>
-    {
-<span style = "background-color:#fdd">        item-&gt;setBorder(Qt::red);</span>
-    }
-<span style = "background-color:#fdd">    scene-&gt;addItem(item);</span>
-<span style = "background-color:#fdd">    scene-&gt;addLine((level + 1) * 100 - 5, position[level] - 5, level * 100 - 5, position[level - 1] - 55);</span>
-<span style = "background-color:#fdd">    position[level] += 50;</span>
-<span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
-    {
-<span style = "background-color:#fdd">        child-&gt;draw(position, level + 1, scene);</span>
-<span style = "background-color:#fdd">    }</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">        Component* child = item-&gt;clone();</span>
+<span style = "background-color:#dfd">        cloneItem-&gt;addChild(child);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    return cloneItem;</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

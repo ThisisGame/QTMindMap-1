@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
-#include "DeleteComponentCommand.h"
+#include "PasteNodeCommand.h"
 #include "MindMapModel.h"
 #include "Root.h"
 #include "Node.h"
 
 namespace MindMapTest
 {
-    class DeleteComponentCommandTest : public testing::Test
+    class PasteNodeCommandTest : public testing::Test
     {
         protected:
             virtual void SetUp()
@@ -18,21 +18,17 @@ namespace MindMapTest
                 _nodeOS = new Node(4, "OS");
                 _nodeMicrosoft = new Node(5, "Microsoft");
                 _model = new MindMapModel();
-                _rootComputer->addChild(_nodeNetwork);
                 _rootComputer->addChild(_nodeOS);
                 _nodeNetwork->addChild(_nodeIPV4);
                 _nodeNetwork->addChild(_nodeIPV6);
                 _nodeOS->addChild(_nodeMicrosoft);
                 _model->doInsertNode(_rootComputer);
-                _model->doInsertNode(_nodeNetwork);
-                _model->doInsertNode(_nodeIPV4);
-                _model->doInsertNode(_nodeIPV6);
                 _model->doInsertNode(_nodeOS);
                 _model->doInsertNode(_nodeMicrosoft);
             }
             virtual void TearDown()
             {
-                delete _rootComputer;
+                delete _model;
             }
             Root* _rootComputer;
             Node* _nodeNetwork;
@@ -43,24 +39,26 @@ namespace MindMapTest
             MindMapModel* _model;
     };
 
-    TEST_F(DeleteComponentCommandTest, testExecute)
+    TEST_F(PasteNodeCommandTest, testExecute)
     {
-        DeleteComponentCommand command(_nodeNetwork, _model);
+        _model->selectComponent(0);
+        PasteNodeCommand* command = new PasteNodeCommand(_nodeNetwork, _model);
+        ASSERT_EQ(1, _rootComputer->getNodeList().size());
+        ASSERT_EQ(3, _model->getNodeList().size());
+        command->execute();
         ASSERT_EQ(2, _rootComputer->getNodeList().size());
         ASSERT_EQ(6, _model->getNodeList().size());
-        command.execute();
-        ASSERT_EQ(3, _rootComputer->getNodeList().size());
-        ASSERT_EQ(5, _model->getNodeList().size());
     }
 
-    TEST_F(DeleteComponentCommandTest, testUnexecute)
+    TEST_F(PasteNodeCommandTest, testUnexecute)
     {
-        DeleteComponentCommand command(_nodeNetwork, _model);
-        ASSERT_EQ(2, _rootComputer->getNodeList().size());
-        ASSERT_EQ(6, _model->getNodeList().size());
-        command.execute();
-        command.unexcute();
-        ASSERT_EQ(2, _rootComputer->getNodeList().size());
-        ASSERT_EQ(6, _model->getNodeList().size());
+        _model->selectComponent(0);
+        PasteNodeCommand* command = new PasteNodeCommand(_nodeNetwork, _model);
+        ASSERT_EQ(1, _rootComputer->getNodeList().size());
+        ASSERT_EQ(3, _model->getNodeList().size());
+        command->execute();
+        command->unexcute();
+        ASSERT_EQ(1, _rootComputer->getNodeList().size());
+        ASSERT_EQ(3, _model->getNodeList().size());
     }
 }

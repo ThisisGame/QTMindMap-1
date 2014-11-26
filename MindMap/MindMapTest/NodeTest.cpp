@@ -18,8 +18,6 @@ namespace MindMapTest
             virtual void TearDown()
             {
                 delete _root;
-                delete _node;
-                delete _newNode;
             }
             Root* _root;
             Node* _node;
@@ -72,5 +70,15 @@ namespace MindMapTest
         ASSERT_TRUE(_node->getSelected());
         _node->setSelected(false);
         ASSERT_FALSE(_node->getSelected());
+    }
+
+    TEST_F(NodeTest, testClone)
+    {
+        _node->addChild(_newNode);
+        Component* cloneItem = _node->clone();
+        ASSERT_NE(_node, cloneItem);
+        ASSERT_STREQ(cloneItem->getDescription().c_str(), _node->getDescription().c_str());
+        ASSERT_EQ(cloneItem->getId(), _node->getId());
+        ASSERT_EQ(cloneItem->getNodeList().size(), _node->getNodeList().size());
     }
 }

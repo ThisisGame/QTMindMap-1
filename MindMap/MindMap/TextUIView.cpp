@@ -34,6 +34,7 @@ TextUIView::TextUIView(MindMapModel* model)  //ªì©l¤Æ
 
 TextUIView::~TextUIView()
 {
+    delete _pModel;
 }
 
 void TextUIView::run() //TextMode

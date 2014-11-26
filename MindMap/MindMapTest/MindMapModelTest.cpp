@@ -43,14 +43,11 @@ namespace MindMapTest
             void deleteComponents()
             {
                 delete _rootComputer;
-                delete _nodeNetwork;
-                delete _nodeIPV4;
-                delete _nodeIPV6;
-                delete _nodeOS;
-                delete _nodeMicrosoft;
-                delete _nodeWin7;
-                delete _nodeWin8;
-                delete _nodeOSX;
+            }
+
+            Component* getCloneItem()
+            {
+                return _model->_cloneItem;
             }
 
             virtual void TearDown()
@@ -276,7 +273,6 @@ namespace MindMapTest
         ASSERT_STREQ(correntDisplay.str().c_str(), model.getMessage().c_str());
     }
 
-
     TEST_F(MindMapModelTest, testDisableSelected)
     {
         _model->doAddNodes(_components);
@@ -284,5 +280,57 @@ namespace MindMapTest
         ASSERT_TRUE(_model->getSelectComponent()->getSelected());
         _model->disableSelected();
         ASSERT_FALSE(_model->getSelectComponent()->getSelected());
+    }
+
+    TEST_F(MindMapModelTest, testCutComponent)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->cutComponent();
+        ASSERT_STREQ(getCloneItem()->getDescription().c_str(), _model->getSelectComponent()->getDescription().c_str());
+        ASSERT_EQ(6, _model->getNodeList().size());
+        ASSERT_NE(getCloneItem(), _model->getSelectComponent());
+    }
+
+    TEST_F(MindMapModelTest, testPasteComponent)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->cutComponent();
+        _model->pasteComponent();
+        ASSERT_EQ(9, _model->getNodeList().size());
+    }
+
+    TEST_F(MindMapModelTest, testCloneItem)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->cloneItem();
+        ASSERT_STREQ("Microsoft", getCloneItem()->getDescription().c_str());
+        ASSERT_EQ(9, _model->getNodeList().size());
+        ASSERT_NE(getCloneItem(), _model->getSelectComponent());
+    }
+
+    TEST_F(MindMapModelTest, testDoCutNodes)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->doCutNodes(_model->getSelectComponent());
+        ASSERT_EQ(6, _model->getNodeList().size());
+        delete _nodeMicrosoft;
+    }
+
+    TEST_F(MindMapModelTest, testPasteNodes)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->cloneItem();
+        _model->doPasteNodes(getCloneItem());
+        ASSERT_EQ(12, _model->getNodeList().size());
     }
 }

@@ -142,6 +142,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_GraphicComponentItem.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="CutNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="PasteNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstString.h">
@@ -203,6 +209,15 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CutNodeCommand.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PasteNodeCommand.h">
+      <Filter>Header Files\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

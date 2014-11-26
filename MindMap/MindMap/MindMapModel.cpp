@@ -5,20 +5,19 @@
 #include "InsertChildCommand.h"
 #include "InsertParentCommand.h"
 #include "InsertSiblingCommand.h"
+#include "CutNodeCommand.h"
+#include "PasteNodeCommand.h"
 #include <regex>
 
 MindMapModel::MindMapModel(void)
 {
     _component = NULL;
+    _cloneItem = NULL;
 }
 
 MindMapModel::~MindMapModel(void)
 {
-    _commandManager.clearAllCommand();
-    for (list <Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
-    {
-        delete *i;
-    }
+    clearList();
 }
 
 void MindMapModel::createMindMap(string topic)  //新建一個Mindmap
@@ -33,10 +32,7 @@ void MindMapModel::createMindMap(string topic)  //新建一個Mindmap
 void MindMapModel::clearList()  //清空已存的Mindmap
 {
     _commandManager.clearAllCommand();
-    for (list <Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
-    {
-        delete *i;
-    }
+    delete findNodeByID(0);
     _nodelist.clear();
     _component = NULL;
     _componentFactory.setId(0);
@@ -126,6 +122,18 @@ void MindMapModel::changeParent(int parentID)
 void MindMapModel::deleteComponent()
 {
     _commandManager.execute(new DeleteComponentCommand(_component, this));
+}
+
+void MindMapModel::cutComponent()
+{
+    delete _cloneItem;
+    _cloneItem = _component->clone();
+    _commandManager.execute(new CutNodeCommand(_component, this));
+}
+
+void MindMapModel::pasteComponent()
+{
+    _commandManager.execute(new PasteNodeCommand(_cloneItem->clone(), this));
 }
 
 void MindMapModel::doDeleteNode(Component* component)
@@ -308,14 +316,40 @@ void MindMapModel::draw(MindMapGUIScene* scene)  //繪出MindMap
     {
         return;
     }
-    vector<int> position;
+    int position = 0;
     root->draw(position, 0, scene);
 }
 
-void MindMapModel::disableSelected()
+void MindMapModel::disableSelected() //取消選擇
 {
     for (auto item : _nodelist)
     {
         item->setSelected(false);
+    }
+}
+
+void MindMapModel::cloneItem()
+{
+    delete _cloneItem;
+    _cloneItem = _component->clone();
+}
+
+void MindMapModel::doCutNodes(Component* component)
+{
+    _nodelist.remove(component);
+    for (auto item : component->getNodeList())
+    {
+        doCutNodes(item);
+    }
+}
+
+void MindMapModel::doPasteNodes(Component* component)
+{
+    component->setId(_componentFactory.getId());
+    _nodelist.push_back(component);
+    _componentFactory.countId();
+    for (auto item : component->getNodeList())
+    {
+        doPasteNodes(item);
     }
 }

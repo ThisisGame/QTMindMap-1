@@ -5,6 +5,7 @@ GUIPresentationModel::GUIPresentationModel(MindMapModel* model)
 {
     _model = model;
     _saveMindMapActionEnable = false;
+    _pasteActionEnable = false;
     disableAction();
 }
 
@@ -42,6 +43,22 @@ bool GUIPresentationModel::getInsertParentActionEnable()
     return _insertParentActionEnable;
 }
 
+bool GUIPresentationModel::getCopyActionEnbale()
+{
+    return _copyActionEnbale;
+}
+
+bool GUIPresentationModel::getCutActionEnbale()
+{
+    return _cutActionEnbale;
+}
+
+bool GUIPresentationModel::getPasteActionEnable()
+{
+    return _pasteActionEnable;
+}
+
+
 Subject* GUIPresentationModel::getSubject()
 {
     return this;
@@ -56,6 +73,7 @@ void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
         _model->display();
         _message = _model->getMessage();
         disableAction();
+        _pasteActionEnable = false;
         _saveMindMapActionEnable = true;
         notifyUpdateView();
     }
@@ -108,6 +126,8 @@ void GUIPresentationModel::selectComponent(int id)
         _deleteNodeActionEnable = true;
         _insertSiblingActionEnable = true;
         _insertParentActionEnable = true;
+        _cutActionEnbale = true;
+        _copyActionEnbale = true;
     }
     notifyUpdateView();
 }
@@ -149,6 +169,7 @@ void GUIPresentationModel::createMindMap(string topic, bool cancel)
     if (checkString(topic, cancel))
     {
         _model->createMindMap(topic);
+        _pasteActionEnable = false;
         _saveMindMapActionEnable = true;
         notifyUpdateView();
     }
@@ -178,4 +199,26 @@ void GUIPresentationModel::disableAction()
     _insertChildActionEnable = false;
     _insertSiblingActionEnable = false;
     _insertParentActionEnable = false;
+    _copyActionEnbale = false;
+    _cutActionEnbale = false;
+}
+
+void GUIPresentationModel::copyComponent()
+{
+    _model->cloneItem();
+    _pasteActionEnable = true;
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::cutComponent()
+{
+    _model->cutComponent();
+    _pasteActionEnable = true;
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::pasteComponent()
+{
+    _model->pasteComponent();
+    notifyUpdateView();
 }

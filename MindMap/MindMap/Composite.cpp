@@ -79,22 +79,25 @@ void Composite::display(stringstream& outputStream, string levelString, bool las
 
 void Composite::draw(int& position, int level, MindMapGUIScene* scene)
 {
-    //AutoLayout計算區塊
-    int x = level * 150;
+    int NODE_DIST = 50;
+    int x = level;
     int y = position;
+    GraphicComponentItem* item = new GraphicComponentItem(_description, _id, scene->getPModel());
+    //AutoLayout計算區塊
+    level = level + item->getWidth() + NODE_DIST;
     for (auto child : _nodelist)
     {
-        child->draw(position, level + 1, scene);
+        child->draw(position, level, scene);
     }
     int height = position - y;
     if (height != 0)
     {
-        y = y + (height - 50) / 2;
-        position -= 50;
+        y = y + (height - NODE_DIST) / 2;
+        position -= NODE_DIST;
     }
     //繪圖物件區塊
-    GraphicComponentItem* item = new GraphicComponentItem(_description, x, y, _id, scene->getPModel());
-    setPoint(x + item->getBoundLeft()[0], y + item->getBoundLeft()[1]);
+    item->setPoint(x, y);
+    setPoint(x, y + item->getHeight() / 2);
     if (_selected)
     {
         item->setBorder(Qt::red);
@@ -102,7 +105,7 @@ void Composite::draw(int& position, int level, MindMapGUIScene* scene)
     scene->addItem(item);
     for (auto child : _nodelist)
     {
-        scene->addLine(x + item->getBoundRight()[0], y + item->getBoundRight()[1], child->getPoint()[0], child->getPoint()[1]);
+        scene->addLine(x + item->getWidth(), y + item->getHeight() / 2, child->getPoint()[0], child->getPoint()[1]);
     }
-    position += 50;
+    position += NODE_DIST;
 }

@@ -353,3 +353,21 @@ void MindMapModel::doPasteNodes(Component* component)
         doPasteNodes(item);
     }
 }
+
+bool MindMapModel::IsCanRedo()
+{
+    if (_commandManager.getRedoCommandStack().size() != 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MindMapModel::IsCanUedo()
+{
+    if (_commandManager.getUndoCommandStack().size() != 0)
+    {
+        return true;
+    }
+    return false;
+}

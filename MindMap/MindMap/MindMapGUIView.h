@@ -43,6 +43,8 @@ class MindMapGUIView : public QMainWindow, public Observer
         void copyComponent();
         void cutComponent();
         void pasteComponent();
+        void redo();
+        void undo();
     protected:
         virtual void mousePressEvent(QMouseEvent*);
         virtual void mouseDoubleClickEvent(QMouseEvent*);
@@ -67,6 +69,8 @@ class MindMapGUIView : public QMainWindow, public Observer
         QAction* _cutAction;
         QAction* _copyAction;
         QAction* _pasteAction;
+        QAction* _redoAction;
+        QAction* _undoAction;
         void setupString();
         void setupMenu();
         void setupToolbar();
@@ -88,5 +92,7 @@ class MindMapGUIView : public QMainWindow, public Observer
         QString COPY_STRING;
         QString CUT_STRING;
         QString PASTE_STRING;
+        QString REDO_STRING;
+        QString UNDO_STRING;
 };
 

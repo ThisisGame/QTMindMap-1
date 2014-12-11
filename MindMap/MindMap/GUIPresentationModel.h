@@ -31,7 +31,11 @@ class GUIPresentationModel : public Subject
         bool getCopyActionEnbale();
         bool getCutActionEnbale();
         bool getPasteActionEnable();
+        bool getUndoActionEnable();
+        bool getRedoActionEnable();
         Subject* getSubject();
+        void undo();
+        void redo();
     private:
         MindMapModel* _model;
         string _message;

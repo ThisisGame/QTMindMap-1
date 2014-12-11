@@ -69,6 +69,9 @@ void MindMapGUIView::setupToolbar()
     _mainToolBar->addAction(_insertChildAction);
     _mainToolBar->addAction(_insertSiblingAction);
     _mainToolBar->addAction(_insertParentAction);
+    _mainToolBar->addSeparator();
+    _mainToolBar->addAction(_undoAction);
+    _mainToolBar->addAction(_redoAction);
 }
 
 void MindMapGUIView::setupView()
@@ -95,6 +98,8 @@ void MindMapGUIView::setupString()
     CUT_STRING = "Cut";
     COPY_STRING = "Copy";
     PASTE_STRING = "Paste";
+    REDO_STRING = "Redo";
+    UNDO_STRING = "Undo";
 }
 
 void MindMapGUIView::connectEvents()
@@ -112,6 +117,8 @@ void MindMapGUIView::connectEvents()
     connect(_copyAction, SIGNAL(triggered()), this, SLOT(copyComponent()));
     connect(_cutAction, SIGNAL(triggered()), this, SLOT(cutComponent()));
     connect(_pasteAction, SIGNAL(triggered()), this, SLOT(pasteComponent()));
+    connect(_undoAction, SIGNAL(triggered()), this, SLOT(undo()));
+    connect(_redoAction, SIGNAL(triggered()), this, SLOT(redo()));
 }
 
 void MindMapGUIView::createActions()
@@ -128,6 +135,8 @@ void MindMapGUIView::createActions()
     _cutAction = new QAction(QIcon("icons/cut.png"), CUT_STRING, this);
     _copyAction = new QAction(QIcon("icons/copy.png"), COPY_STRING, this);
     _pasteAction = new QAction(QIcon("icons/paste.png"), PASTE_STRING, this);
+    _undoAction = new QAction(QIcon("icons/undo.png"), UNDO_STRING, this);
+    _redoAction = new QAction(QIcon("icons/redo.png"), REDO_STRING, this);
     updateActions();
 }
 
@@ -153,6 +162,8 @@ void MindMapGUIView::updateActions()
     _copyAction->setEnabled(_pModel->getCopyActionEnbale());
     _cutAction->setEnabled(_pModel->getCutActionEnbale());
     _pasteAction->setEnabled(_pModel->getPasteActionEnable());
+    _undoAction->setEnabled(_pModel->getUndoActionEnable());
+    _redoAction->setEnabled(_pModel->getRedoActionEnable());
 }
 
 void MindMapGUIView::aboutActionClick()
@@ -239,4 +250,14 @@ void MindMapGUIView::cutComponent()
 void MindMapGUIView::pasteComponent()
 {
     _pModel->pasteComponent();
+}
+
+void MindMapGUIView::redo()
+{
+    _pModel->redo();
+}
+
+void MindMapGUIView::undo()
+{
+    _pModel->undo();
 }

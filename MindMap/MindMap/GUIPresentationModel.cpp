@@ -58,12 +58,20 @@ bool GUIPresentationModel::getPasteActionEnable()
     return _pasteActionEnable;
 }
 
+bool GUIPresentationModel::getRedoActionEnable()
+{
+    return _model->IsCanRedo();
+}
+
+bool GUIPresentationModel::getUndoActionEnable()
+{
+    return _model->IsCanUedo();
+}
 
 Subject* GUIPresentationModel::getSubject()
 {
     return this;
 }
-
 
 void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
 {
@@ -220,5 +228,19 @@ void GUIPresentationModel::cutComponent()
 void GUIPresentationModel::pasteComponent()
 {
     _model->pasteComponent();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::redo()
+{
+    _model->redo();
+    disableSelected();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::undo()
+{
+    _model->undo();
+    disableSelected();
     notifyUpdateView();
 }

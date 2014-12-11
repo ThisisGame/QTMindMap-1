@@ -2,17 +2,17 @@
 #include <QPen>
 #include <QtWidgets/QInputDialog>
 
-GraphicComponentItem::GraphicComponentItem(string description, int posX, int posY, int id, GUIPresentationModel* pModel)
+GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresentationModel* pModel)
 {
+    BOUNDING_RECT = 5;
     _id = id;
     _pModel = pModel;
     this->setHandlesChildEvents(false);
     _textItem = new QGraphicsTextItem(QString::fromStdString(description));
     _textItem->setObjectName(QString::fromStdString(description));
-    _borderItem = new QGraphicsRectItem(_textItem->boundingRect().adjusted(-5, -5, +5, +5));
-    this->addToGroup(_borderItem);
     this->addToGroup(_textItem);
-    this->setPos(posX, posY);
+    _borderItem = new QGraphicsRectItem(_textItem->boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT));
+    this->addToGroup(_borderItem);
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(mouseClickEvent()));
 }
@@ -53,19 +53,18 @@ void GraphicComponentItem::mouseClickEvent()
     _pModel->selectComponent(_id);
 }
 
-vector<int> GraphicComponentItem::getBoundLeft()
+int GraphicComponentItem::getWidth()
 {
-    vector<int> point;
-    point.push_back(boundingRect().center().x() - boundingRect().width() / 2);
-    point.push_back(boundingRect().center().y());
-    return point;
+    return boundingRect().width();
 }
 
-vector<int> GraphicComponentItem::getBoundRight()
+int GraphicComponentItem::getHeight()
 {
-    vector<int> point;
-    point.push_back(boundingRect().center().x() + boundingRect().width() / 2);
-    point.push_back(boundingRect().center().y());
-    return point;
+    return boundingRect().height();
+}
+
+void GraphicComponentItem::setPoint(int x, int y)
+{
+    this->setPos(x + BOUNDING_RECT, y);
 }
 

@@ -10,12 +10,13 @@ class GraphicComponentItem : public QObject, public QGraphicsItemGroup
         Q_OBJECT
 
     public:
-        GraphicComponentItem(string, int, int, int, GUIPresentationModel*);
+        GraphicComponentItem(string, int, GUIPresentationModel*);
         ~GraphicComponentItem();
         void setPresentationModel(GUIPresentationModel*);
         void setBorder(Qt::GlobalColor);
-        vector<int> getBoundRight();
-        vector<int> getBoundLeft();
+        int getHeight();
+        int getWidth();
+        void setPoint(int, int);
     private slots:
         void mouseClickEvent();
     protected:
@@ -27,5 +28,6 @@ class GraphicComponentItem : public QObject, public QGraphicsItemGroup
         QGraphicsTextItem* _textItem;
         QTimer* _timer;
         int _id;
+        int BOUNDING_RECT;
 };
 

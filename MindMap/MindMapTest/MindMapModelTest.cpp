@@ -333,4 +333,25 @@ namespace MindMapTest
         _model->doPasteNodes(getCloneItem());
         ASSERT_EQ(12, _model->getNodeList().size());
     }
+
+    TEST_F(MindMapModelTest, testIsCanRedo)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_FALSE(_model->isCanRedo());
+        _model->selectComponent(0);
+        _model->changeDescription("ComputerScience");
+        ASSERT_FALSE(_model->isCanRedo());
+        _model->undo();
+        ASSERT_TRUE(_model->isCanRedo());
+        _model->redo();
+    }
+
+    TEST_F(MindMapModelTest, testIsCanUedo)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_FALSE(_model->isCanUedo());
+        _model->selectComponent(0);
+        _model->changeDescription("ComputerScience");
+        ASSERT_TRUE(_model->isCanUedo());
+    }
 }

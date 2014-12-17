@@ -88,22 +88,25 @@ void Composite::display(stringstream&amp; outputStream, string levelString, bool
 
 void Composite::draw(int&amp; position, int level, MindMapGUIScene* scene)
 <span style = "background-color:#fdd">{</span>
-    //AutoLayout­pºâ°Ï¶ô
-<span style = "background-color:#fdd">    int x = level * 150;</span>
+<span style = "background-color:#fdd">    int NODE_DIST = 50;</span>
+<span style = "background-color:#fdd">    int x = level;</span>
 <span style = "background-color:#fdd">    int y = position;</span>
+<span style = "background-color:#fdd">    GraphicComponentItem* item = new GraphicComponentItem(_description, _id, scene-&gt;getPModel());</span>
+    //AutoLayout­pºâ°Ï¶ô
+<span style = "background-color:#fdd">    level = level + item-&gt;getWidth() + NODE_DIST;</span>
 <span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
     {
-<span style = "background-color:#fdd">        child-&gt;draw(position, level + 1, scene);</span>
+<span style = "background-color:#fdd">        child-&gt;draw(position, level, scene);</span>
 <span style = "background-color:#fdd">    }</span>
 <span style = "background-color:#fdd">    int height = position - y;</span>
 <span style = "background-color:#fdd">    if (height != 0)</span>
     {
-<span style = "background-color:#fdd">        y = y + (height - 50) / 2;</span>
-<span style = "background-color:#fdd">        position -= 50;</span>
+<span style = "background-color:#fdd">        y = y + (height - NODE_DIST) / 2;</span>
+<span style = "background-color:#fdd">        position -= NODE_DIST;</span>
     }
     //Ã¸¹Ïª«¥ó°Ï¶ô
-<span style = "background-color:#fdd">    GraphicComponentItem* item = new GraphicComponentItem(_description, x, y, _id, scene-&gt;getPModel());</span>
-<span style = "background-color:#fdd">    setPoint(x + item-&gt;getBoundLeft()[0], y + item-&gt;getBoundLeft()[1]);</span>
+<span style = "background-color:#fdd">    item-&gt;setPoint(x, y);</span>
+<span style = "background-color:#fdd">    setPoint(x, y + item-&gt;getHeight() / 2);</span>
 <span style = "background-color:#fdd">    if (_selected)</span>
     {
 <span style = "background-color:#fdd">        item-&gt;setBorder(Qt::red);</span>
@@ -111,9 +114,9 @@ void Composite::draw(int&amp; position, int level, MindMapGUIScene* scene)
 <span style = "background-color:#fdd">    scene-&gt;addItem(item);</span>
 <span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
     {
-<span style = "background-color:#fdd">        scene-&gt;addLine(x + item-&gt;getBoundRight()[0], y + item-&gt;getBoundRight()[1], child-&gt;getPoint()[0], child-&gt;getPoint()[1]);</span>
+<span style = "background-color:#fdd">        scene-&gt;addLine(x + item-&gt;getWidth(), y + item-&gt;getHeight() / 2, child-&gt;getPoint()[0], child-&gt;getPoint()[1]);</span>
 <span style = "background-color:#fdd">    }</span>
-<span style = "background-color:#fdd">    position += 50;</span>
+<span style = "background-color:#fdd">    position += NODE_DIST;</span>
 <span style = "background-color:#fdd">}</span>
 </pre>
 	</body>

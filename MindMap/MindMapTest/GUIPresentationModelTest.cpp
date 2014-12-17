@@ -232,4 +232,60 @@ namespace MindMapTest
         _pModel->pasteComponent();
         ASSERT_TRUE(_pModel->getPasteActionEnable());
     }
+
+    TEST_F(GUIPresentationModelTest, testGetRedoActionEnable)
+    {
+        ASSERT_FALSE(_pModel->getRedoActionEnable());
+        _pModel->selectComponent(3);
+        _pModel->editDescription("Computer", true);
+        _pModel->undo();
+        ASSERT_TRUE(_pModel->getRedoActionEnable());
+        _pModel->redo();
+        ASSERT_FALSE(_pModel->getRedoActionEnable());
+    }
+
+    TEST_F(GUIPresentationModelTest, testGetUndoActionEnable)
+    {
+        ASSERT_FALSE(_pModel->getUndoActionEnable());
+        _pModel->selectComponent(3);
+        _pModel->editDescription("Computer", true);
+        ASSERT_TRUE(_pModel->getUndoActionEnable());
+        _pModel->undo();
+        ASSERT_FALSE(_pModel->getUndoActionEnable());
+        _pModel->redo();
+        ASSERT_TRUE(_pModel->getUndoActionEnable());
+    }
+
+    TEST_F(GUIPresentationModelTest, testUndo)
+    {
+        ASSERT_FALSE(_pModel->getRedoActionEnable());
+        _pModel->selectComponent(3);
+        _pModel->editDescription("Computer", true);
+        _pModel->undo();
+        ASSERT_TRUE(_pModel->getRedoActionEnable());
+        ASSERT_FALSE(_pModel->getEditNodeActionEnable());
+        ASSERT_FALSE(_pModel->getDeleteNodeActionEnable());
+        ASSERT_FALSE(_pModel->getInsertChildActionEnable());
+        ASSERT_FALSE(_pModel->getInsertSiblingActionEnable());
+        ASSERT_FALSE(_pModel->getInsertParentActionEnable());
+        ASSERT_FALSE(_pModel->getCutActionEnbale());
+        ASSERT_FALSE(_pModel->getCopyActionEnbale());
+    }
+
+    TEST_F(GUIPresentationModelTest, testRedo)
+    {
+        ASSERT_FALSE(_pModel->getRedoActionEnable());
+        _pModel->selectComponent(3);
+        _pModel->editDescription("Computer", true);
+        _pModel->undo();
+        _pModel->redo();
+        ASSERT_FALSE(_pModel->getRedoActionEnable());
+        ASSERT_FALSE(_pModel->getEditNodeActionEnable());
+        ASSERT_FALSE(_pModel->getDeleteNodeActionEnable());
+        ASSERT_FALSE(_pModel->getInsertChildActionEnable());
+        ASSERT_FALSE(_pModel->getInsertSiblingActionEnable());
+        ASSERT_FALSE(_pModel->getInsertParentActionEnable());
+        ASSERT_FALSE(_pModel->getCutActionEnbale());
+        ASSERT_FALSE(_pModel->getCopyActionEnbale());
+    }
 }

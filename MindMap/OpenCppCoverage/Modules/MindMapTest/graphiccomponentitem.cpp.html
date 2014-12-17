@@ -11,17 +11,17 @@
 #include &lt;QPen&gt;
 #include &lt;QtWidgets/QInputDialog&gt;
 
-GraphicComponentItem::GraphicComponentItem(string description, int posX, int posY, int id, GUIPresentationModel* pModel)
+GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresentationModel* pModel)
 <span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    BOUNDING_RECT = 5;</span>
 <span style = "background-color:#fdd">    _id = id;</span>
 <span style = "background-color:#fdd">    _pModel = pModel;</span>
 <span style = "background-color:#fdd">    this-&gt;setHandlesChildEvents(false);</span>
 <span style = "background-color:#fdd">    _textItem = new QGraphicsTextItem(QString::fromStdString(description));</span>
 <span style = "background-color:#fdd">    _textItem-&gt;setObjectName(QString::fromStdString(description));</span>
-<span style = "background-color:#fdd">    _borderItem = new QGraphicsRectItem(_textItem-&gt;boundingRect().adjusted(-5, -5, +5, +5));</span>
-<span style = "background-color:#fdd">    this-&gt;addToGroup(_borderItem);</span>
 <span style = "background-color:#fdd">    this-&gt;addToGroup(_textItem);</span>
-<span style = "background-color:#fdd">    this-&gt;setPos(posX, posY);</span>
+<span style = "background-color:#fdd">    _borderItem = new QGraphicsRectItem(_textItem-&gt;boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT));</span>
+<span style = "background-color:#fdd">    this-&gt;addToGroup(_borderItem);</span>
 <span style = "background-color:#fdd">    _timer = new QTimer(this);</span>
 <span style = "background-color:#fdd">    connect(_timer, SIGNAL(timeout()), this, SLOT(mouseClickEvent()));</span>
 <span style = "background-color:#fdd">}</span>
@@ -62,20 +62,19 @@ void GraphicComponentItem::mouseClickEvent()
 <span style = "background-color:#fdd">    _pModel-&gt;selectComponent(_id);</span>
 <span style = "background-color:#fdd">}</span>
 
-vector&lt;int&gt; GraphicComponentItem::getBoundLeft()
+int GraphicComponentItem::getWidth()
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    vector&lt;int&gt; point;</span>
-<span style = "background-color:#fdd">    point.push_back(boundingRect().center().x() - boundingRect().width() / 2);</span>
-<span style = "background-color:#fdd">    point.push_back(boundingRect().center().y());</span>
-<span style = "background-color:#fdd">    return point;</span>
+<span style = "background-color:#fdd">    return boundingRect().width();</span>
 <span style = "background-color:#fdd">}</span>
 
-vector&lt;int&gt; GraphicComponentItem::getBoundRight()
+int GraphicComponentItem::getHeight()
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    vector&lt;int&gt; point;</span>
-<span style = "background-color:#fdd">    point.push_back(boundingRect().center().x() + boundingRect().width() / 2);</span>
-<span style = "background-color:#fdd">    point.push_back(boundingRect().center().y());</span>
-<span style = "background-color:#fdd">    return point;</span>
+<span style = "background-color:#fdd">    return boundingRect().height();</span>
+<span style = "background-color:#fdd">}</span>
+
+void GraphicComponentItem::setPoint(int x, int y)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    this-&gt;setPos(x + BOUNDING_RECT, y);</span>
 <span style = "background-color:#fdd">}</span>
 
 </pre>

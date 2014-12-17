@@ -362,6 +362,24 @@ void MindMapModel::doPasteNodes(Component* component)
 <span style = "background-color:#dfd">        doPasteNodes(item);</span>
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
+
+bool MindMapModel::isCanRedo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_commandManager.getRedoCommandStack().size() != 0)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool MindMapModel::isCanUedo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_commandManager.getUndoCommandStack().size() != 0)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

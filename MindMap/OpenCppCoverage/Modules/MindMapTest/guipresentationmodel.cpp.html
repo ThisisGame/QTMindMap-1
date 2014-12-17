@@ -67,12 +67,20 @@ bool GUIPresentationModel::getPasteActionEnable()
 <span style = "background-color:#dfd">    return _pasteActionEnable;</span>
 <span style = "background-color:#dfd">}</span>
 
+bool GUIPresentationModel::getRedoActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _model-&gt;isCanRedo();</span>
+<span style = "background-color:#dfd">}</span>
+
+bool GUIPresentationModel::getUndoActionEnable()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _model-&gt;isCanUedo();</span>
+<span style = "background-color:#dfd">}</span>
 
 Subject* GUIPresentationModel::getSubject()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    return this;</span>
 <span style = "background-color:#fdd">}</span>
-
 
 void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
 <span style = "background-color:#dfd">{</span>
@@ -229,6 +237,20 @@ void GUIPresentationModel::cutComponent()
 void GUIPresentationModel::pasteComponent()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _model-&gt;pasteComponent();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::redo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;redo();</span>
+<span style = "background-color:#dfd">    disableSelected();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
+
+void GUIPresentationModel::undo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;undo();</span>
+<span style = "background-color:#dfd">    disableSelected();</span>
 <span style = "background-color:#dfd">    notifyUpdateView();</span>
 <span style = "background-color:#dfd">}</span>
 </pre>

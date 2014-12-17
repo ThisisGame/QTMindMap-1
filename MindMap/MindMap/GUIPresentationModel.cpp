@@ -60,12 +60,12 @@ bool GUIPresentationModel::getPasteActionEnable()
 
 bool GUIPresentationModel::getRedoActionEnable()
 {
-    return _model->IsCanRedo();
+    return _model->isCanRedo();
 }
 
 bool GUIPresentationModel::getUndoActionEnable()
 {
-    return _model->IsCanUedo();
+    return _model->isCanUedo();
 }
 
 Subject* GUIPresentationModel::getSubject()

@@ -47,8 +47,8 @@ class MindMapModel
         void doUninsertNode(Component*);
         list<Component*> getNodeList();
         bool isRoot();
-        bool IsCanRedo();
-        bool IsCanUedo();
+        bool isCanRedo();
+        bool isCanUedo();
         void cloneItem();
         void doCutNodes(Component*);
         void doPasteNodes(Component*);

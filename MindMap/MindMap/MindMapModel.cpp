@@ -354,7 +354,7 @@ void MindMapModel::doPasteNodes(Component* component)
     }
 }
 
-bool MindMapModel::IsCanRedo()
+bool MindMapModel::isCanRedo()
 {
     if (_commandManager.getRedoCommandStack().size() != 0)
     {
@@ -363,7 +363,7 @@ bool MindMapModel::IsCanRedo()
     return false;
 }
 
-bool MindMapModel::IsCanUedo()
+bool MindMapModel::isCanUedo()
 {
     if (_commandManager.getUndoCommandStack().size() != 0)
     {

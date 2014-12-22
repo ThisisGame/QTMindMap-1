@@ -316,8 +316,7 @@ void MindMapModel::draw(MindMapGUIScene* scene)  //繪出MindMap
     {
         return;
     }
-    int position = 0;
-    root->draw(position, 0, scene);
+    root->draw(scene);
 }
 
 void MindMapModel::disableSelected() //取消選擇

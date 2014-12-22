@@ -3,6 +3,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsItem>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
+#include "GraphicComponentItem.h"
 #include "GUIPresentationModel.h"
 
 class MindMapGUIScene : public QGraphicsScene
@@ -14,9 +15,17 @@ class MindMapGUIScene : public QGraphicsScene
         ~MindMapGUIScene();
         GUIPresentationModel* getPModel();
         void draw();
+        void createItem(int, string);
+        int getWidth();
+        int getHeight();
+        void setPos(int, int);
+        void deleteItem();
+        void addComponentItem();
+        void addEllipseDecorator();
+        void addRectDecorator();
+        void setBorder();
     protected:
-        //virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-        //virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
         GUIPresentationModel* _pModel;
+        GraphicComponentItem* _item;
 };
 

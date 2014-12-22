@@ -1,5 +1,4 @@
 #include "MindMapGUIScene.h"
-#include "GraphicComponentItem.h"
 #include <QtWidgets/QGraphicsView>
 #include <iostream>
 using namespace std;
@@ -7,6 +6,12 @@ using namespace std;
 MindMapGUIScene::MindMapGUIScene(GUIPresentationModel* pModel, QObject* parent) : QGraphicsScene(parent)
 {
     _pModel = pModel;
+    QPolygonF Triangle;
+    Triangle.append(QPointF(-10., 0));
+    Triangle.append(QPointF(0., -10));
+    Triangle.append(QPointF(10., 0));
+    Triangle.append(QPointF(-10., 0));
+    addPolygon(Triangle);
 }
 
 
@@ -26,14 +31,41 @@ void MindMapGUIScene::draw()
     this->setSceneRect(this->itemsBoundingRect());
 }
 
-/*
-void MindMapGUIScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void MindMapGUIScene::createItem(int id, string description)
 {
-    //QGraphicsScene::mousePressEvent(event);
+    _item = new GraphicComponentItem(description, id, _pModel);
 }
 
-void MindMapGUIScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+int MindMapGUIScene::getWidth()
 {
-    //QGraphicsScene::mouseDoubleClickEvent(event);
+    return _item->getWidth();
 }
-*/
+int MindMapGUIScene::getHeight()
+{
+    return _item->getHeight();
+}
+void MindMapGUIScene::setPos(int x, int y)
+{
+    _item->setPoint(x, y);
+}
+void MindMapGUIScene::deleteItem()
+{
+    delete _item;
+}
+void MindMapGUIScene::addComponentItem()
+{
+    addItem(_item);
+}
+void MindMapGUIScene::addEllipseDecorator()
+{
+    _item->addEllipseDecorator();
+}
+void MindMapGUIScene::addRectDecorator()
+{
+    _item->addRectangleDecorator();
+}
+
+void MindMapGUIScene::setBorder()
+{
+    _item->setBorder(Qt::red);
+}

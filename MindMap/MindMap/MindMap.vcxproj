@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseComponentItem.cpp" />
     <ClCompile Include="ChangeParentCommand.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandManager.cpp" />
@@ -144,6 +145,8 @@
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Composite.cpp" />
     <ClCompile Include="CutNodeCommand.cpp" />
+    <ClCompile Include="Decorator.cpp" />
+    <ClCompile Include="DecoratorComponent.cpp" />
     <ClCompile Include="DeleteComponentCommand.cpp" />
     <ClCompile Include="EditComponentCommand.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GraphicComponentItem.cpp">
@@ -188,6 +191,7 @@
     <ClCompile Include="TextUIView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseComponentItem.h" />
     <ClInclude Include="ChangeParentCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandManager.h" />
@@ -197,6 +201,8 @@
     <ClInclude Include="ConstString.h" />
     <ClInclude Include="ConstVariables.h" />
     <ClInclude Include="CutNodeCommand.h" />
+    <ClInclude Include="Decorator.h" />
+    <ClInclude Include="DecoratorComponent.h" />
     <ClInclude Include="DeleteComponentCommand.h" />
     <ClInclude Include="EditComponentCommand.h" />
     <CustomBuild Include="GraphicComponentItem.h">

@@ -57,3 +57,18 @@ void Component::setPoint(int x, int y)
     _point.push_back(y);
 }
 
+void Component::setHeightAndWidth(int h, int w)
+{
+    _height = h;
+    _width = w;
+}
+
+int Component::getHeight()
+{
+    return _height;
+}
+
+int Component::getWidth()
+{
+    return _width;
+}

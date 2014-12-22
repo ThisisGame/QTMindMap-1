@@ -1,6 +1,8 @@
 #include "GraphicComponentItem.h"
 #include <QPen>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QGraphicsEllipseItem>
+
 
 GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresentationModel* pModel)
 {
@@ -10,13 +12,13 @@ GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresen
     this->setHandlesChildEvents(false);
     _textItem = new QGraphicsTextItem(QString::fromStdString(description));
     _textItem->setObjectName(QString::fromStdString(description));
+    _textItem->setTextWidth(60);
     this->addToGroup(_textItem);
     _borderItem = new QGraphicsRectItem(_textItem->boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT));
     this->addToGroup(_borderItem);
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(mouseClickEvent()));
 }
-
 
 GraphicComponentItem::~GraphicComponentItem()
 {
@@ -65,6 +67,17 @@ int GraphicComponentItem::getHeight()
 
 void GraphicComponentItem::setPoint(int x, int y)
 {
-    this->setPos(x + BOUNDING_RECT, y);
+    this->setPos(x + BOUNDING_RECT, y + BOUNDING_RECT);
 }
 
+void GraphicComponentItem::addRectangleDecorator()
+{
+    this->addToGroup(new QGraphicsRectItem(this->boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT)));
+}
+void GraphicComponentItem::addEllipseDecorator()
+{
+    this->addToGroup(new QGraphicsEllipseItem(this->boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT)));
+}
+void GraphicComponentItem::addTriangleDecorator()
+{
+}

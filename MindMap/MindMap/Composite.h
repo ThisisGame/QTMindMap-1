@@ -14,7 +14,10 @@ class Composite :
         void display(stringstream&, string, bool);
         void addChilds(list<Component*>);
         list<Component*> getNodeList();
-        void draw(int&, int, MindMapGUIScene*);
+        void draw(MindMapGUIScene*);
+        void drawComponent(MindMapGUIScene*);
+        void calculatePos(int&, int, MindMapGUIScene*);
+        void setChildrenPoint(int);
     protected:
         list<Component*> _nodelist;
 };

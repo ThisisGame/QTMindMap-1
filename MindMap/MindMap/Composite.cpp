@@ -77,35 +77,121 @@ void Composite::display(stringstream& outputStream, string levelString, bool las
     }
 }
 
-void Composite::draw(int& position, int level, MindMapGUIScene* scene)
+void Composite::draw(MindMapGUIScene* scene)
 {
-    int NODE_DIST = 50;
+    int position = 0;
+    calculatePos(position, 0, scene);
+    drawComponent(scene);
+}
+//
+//void Composite::drawComponent(MindMapGUIScene* scene)      //繪圖物件區塊
+//{
+//    int x = getPoint()[0];
+//    int y = getPoint()[1];
+//    scene->createItem(_id, _description);
+//    if (_selected)
+//    {
+//        scene->setBorder();
+//    }
+//    scene->addComponentItem();
+//    scene->setPos(x, y);
+//    for (auto child : _nodelist)  //接線
+//    {
+//        scene->addLine(x + getWidth(), y + getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
+//        child->drawComponent(scene);
+//    }
+//}
+//
+//void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene)  	//AutoLayout計算區塊
+//{
+//    int NODE_DIST = 25;
+//    int x = level;
+//    int y = position;
+//    int itemHeight = 0;
+//    scene->createItem(_id, _description);
+//    setHeightAndWidth(scene->getHeight(), scene->getWidth());
+//    level = level + scene->getWidth() + NODE_DIST;
+//    itemHeight = scene->getHeight();
+//    scene->deleteItem();
+//    for (auto child : _nodelist)
+//    {
+//        child->calculatePos(position, level, scene);
+//    }
+//    int height = position - y;
+//    if (height != 0)
+//    {
+//        y = y + (height - NODE_DIST - itemHeight) / 2;
+//    }
+//    else
+//    {
+//        position += itemHeight + NODE_DIST;
+//    }
+//    setPoint(x, y);
+//    if (height != 0 && height < itemHeight)
+//    {
+//        int changeHeightAmount = itemHeight - height;
+//        setChildrenPoint(changeHeightAmount / 2);
+//        position += changeHeightAmount;
+//    }
+//}
+
+
+void Composite::drawComponent(MindMapGUIScene* scene)      //繪圖物件區塊
+{
+    int x = getPoint()[0];
+    int y = getPoint()[1];
+    scene->createItem(_id, _description);
+    if (_selected)
+    {
+        scene->setBorder();
+    }
+    scene->addComponentItem();
+    scene->setPos(x, y);
+    for (auto child : _nodelist)  //接線
+    {
+        scene->addLine(x, y + getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
+        child->drawComponent(scene);
+    }
+}
+
+void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene)  	//AutoLayout計算區塊
+{
+    int NODE_DIST = 25;
     int x = level;
     int y = position;
-    GraphicComponentItem* item = new GraphicComponentItem(_description, _id, scene->getPModel());
-    //AutoLayout計算區塊
-    level = level + item->getWidth() + NODE_DIST;
+    int getheight = 0;
+    scene->createItem(_id, _description);
+    setHeightAndWidth(scene->getHeight(), scene->getWidth());
+    level = level + scene->getWidth() + NODE_DIST;
+    getheight = scene->getHeight();
+    scene->deleteItem();
     for (auto child : _nodelist)
     {
-        child->draw(position, level, scene);
+        child->calculatePos(position, level, scene);
     }
     int height = position - y;
     if (height != 0)
     {
-        y = y + (height - NODE_DIST) / 2;
-        position -= NODE_DIST;
+        y = y + (height - NODE_DIST - getheight) / 2;
     }
-    //繪圖物件區塊
-    item->setPoint(x, y);
-    setPoint(x, y + item->getHeight() / 2);
-    if (_selected)
+    else
     {
-        item->setBorder(Qt::red);
+        position += getheight + NODE_DIST;
     }
-    scene->addItem(item);
+    setPoint(-x, y);
+    if (height != 0 && height < getheight)
+    {
+        int changeHeightAmount = getheight - height;
+        setChildrenPoint(changeHeightAmount / 2);
+        position += changeHeightAmount;
+    }
+}
+
+void Composite::setChildrenPoint(int height)
+{
+    _point[1] += height;
     for (auto child : _nodelist)
     {
-        scene->addLine(x + item->getWidth(), y + item->getHeight() / 2, child->getPoint()[0], child->getPoint()[1]);
+        child->setChildrenPoint(height);
     }
-    position += NODE_DIST;
 }

@@ -17,6 +17,9 @@ class GraphicComponentItem : public QObject, public QGraphicsItemGroup
         int getHeight();
         int getWidth();
         void setPoint(int, int);
+        void addRectangleDecorator();
+        void addEllipseDecorator();
+        void addTriangleDecorator();
     private slots:
         void mouseClickEvent();
     protected:

@@ -58,6 +58,16 @@ bool GUIPresentationModel::getPasteActionEnable()
     return _pasteActionEnable;
 }
 
+bool GUIPresentationModel::getClearAllDecoratorActionEnable()
+{
+    return _clearAllDecoratorActionEnable;
+}
+
+bool GUIPresentationModel::getAddDecoratorActionEnable()
+{
+    return _addDecoratorActionEnable;
+}
+
 bool GUIPresentationModel::getRedoActionEnable()
 {
     return _model->isCanRedo();
@@ -68,9 +78,35 @@ bool GUIPresentationModel::getUndoActionEnable()
     return _model->isCanUedo();
 }
 
+
+
 Subject* GUIPresentationModel::getSubject()
 {
     return this;
+}
+
+void GUIPresentationModel::addCircleDecorator()
+{
+    _model->addCircleDecorator();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::addRectangleDecorator()
+{
+    _model->addRectangleDecorator();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::addTriangleDecorator()
+{
+    _model->addTriangleDecorator();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::clearAllDecorator()
+{
+    _model->clearAllDecorator();
+    notifyUpdateView();
 }
 
 void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
@@ -129,6 +165,8 @@ void GUIPresentationModel::selectComponent(int id)
     disableAction();
     _insertChildActionEnable = true;
     _editNodeActionEnable = true;
+    _addDecoratorActionEnable = true;
+    _clearAllDecoratorActionEnable = _model->isHaveDecorator();
     if (!_model->isRoot())
     {
         _deleteNodeActionEnable = true;
@@ -209,6 +247,8 @@ void GUIPresentationModel::disableAction()
     _insertParentActionEnable = false;
     _copyActionEnbale = false;
     _cutActionEnbale = false;
+    _clearAllDecoratorActionEnable = false;
+    _addDecoratorActionEnable = false;
 }
 
 void GUIPresentationModel::copyComponent()

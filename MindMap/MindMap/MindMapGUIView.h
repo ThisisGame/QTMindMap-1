@@ -45,6 +45,10 @@ class MindMapGUIView : public QMainWindow, public Observer
         void pasteComponent();
         void redo();
         void undo();
+        void addRectangleDecorator();
+        void addCircleDecorator();
+        void addTriangleDecorator();
+        void clearDecorator();
     protected:
         virtual void mousePressEvent(QMouseEvent*);
         virtual void mouseDoubleClickEvent(QMouseEvent*);
@@ -55,6 +59,7 @@ class MindMapGUIView : public QMainWindow, public Observer
         QMenu* _editMenuBar;
         QMenu* _helpMenuBar;
         QToolBar* _mainToolBar;
+        QToolBar* _funcionailToolBar;
         MindMapGUIScene* _scene;
         QGraphicsView* _view;
         QAction* _createNewMindMapAction;
@@ -71,6 +76,10 @@ class MindMapGUIView : public QMainWindow, public Observer
         QAction* _pasteAction;
         QAction* _redoAction;
         QAction* _undoAction;
+        QAction* _addTriangleAction;
+        QAction* _addCircleAction;
+        QAction* _addRectangleAction;
+        QAction* _clearDecoratorAction;
         void setupString();
         void setupMenu();
         void setupToolbar();
@@ -94,5 +103,9 @@ class MindMapGUIView : public QMainWindow, public Observer
         QString PASTE_STRING;
         QString REDO_STRING;
         QString UNDO_STRING;
+        QString ADD_TRIANGLE_STRING;
+        QString ADD_CIRCLE_STRING;
+        QString ADD_RECTANGLE_STRING;
+        QString CLEAR_DECORATOR_STRING;
 };
 

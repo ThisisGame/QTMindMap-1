@@ -7,6 +7,8 @@
 #include "InsertSiblingCommand.h"
 #include "CutNodeCommand.h"
 #include "PasteNodeCommand.h"
+#include "AddDecoratorCommand.h"
+#include "ClearDecoratorCommand.h"
 #include <regex>
 
 MindMapModel::MindMapModel(void)
@@ -18,6 +20,29 @@ MindMapModel::MindMapModel(void)
 MindMapModel::~MindMapModel(void)
 {
     clearList();
+}
+
+void MindMapModel::addRectangleDecorator()
+{
+    Component* decorator = _componentFactory.createComponent("Rectangle");
+    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
+}
+
+void MindMapModel::addCircleDecorator()
+{
+    Component* decorator = _componentFactory.createComponent("Circle");
+    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
+}
+
+void MindMapModel::addTriangleDecorator()
+{
+    Component* decorator = _componentFactory.createComponent("Triangle");
+    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
+}
+
+void MindMapModel::clearAllDecorator()
+{
+    _commandManager.execute(new ClearDecoratorCommand(_component, this));
 }
 
 void MindMapModel::createMindMap(string topic)  //新建一個Mindmap
@@ -126,8 +151,7 @@ void MindMapModel::deleteComponent()
 
 void MindMapModel::cutComponent()
 {
-    delete _cloneItem;
-    _cloneItem = _component->clone();
+    cloneItem();
     _commandManager.execute(new CutNodeCommand(_component, this));
 }
 
@@ -208,6 +232,7 @@ void MindMapModel::saveMindMap(string filename)  //存檔MindMap
     for (list<Component*>::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)
     {
         file << (*node)->getId() << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getDescription() << DOUBLE_QUOTATION_STRING;
+        file << SPACE_STRING << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getType() << DOUBLE_QUOTATION_STRING;
         list<Component*> nodeList = (*node)->getNodeList();
         for (list<Component*>::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)
         {
@@ -285,9 +310,9 @@ void MindMapModel::createNodesConnectionByList(vector<vector<string>> components
     for (unsigned int i = 0; i < components.size(); i++)
     {
         Component* parnet = findNodeByID(i);
-        for (unsigned int j = 2; j < components[i].size(); j++)
+        for (unsigned int j = 4; j < components[i].size(); j++)
         {
-            stringstream childrenString(components[i][2]);
+            stringstream childrenString(components[i][4]);
             string child;
             while (childrenString >> child)
             {
@@ -303,9 +328,18 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀
     createMindMap(components[0][1]);
     for (unsigned int i = 1; i < components.size(); i++)
     {
-        doInsertNode(createNode());
-        selectComponent(i);
-        setDescription(components[i][1]);
+        if (components[i][3] != "Node")
+        {
+            Component* decorator = _componentFactory.createComponent(components[i][3]);
+            _componentFactory.countId();
+            _nodelist.push_back(decorator);
+        }
+        else
+        {
+            doInsertNode(createNode());
+            selectComponent(i);
+            setDescription(components[i][1]);
+        }
     }
 }
 
@@ -316,7 +350,7 @@ void MindMapModel::draw(MindMapGUIScene* scene)  //繪出MindMap
     {
         return;
     }
-    root->draw(scene);
+    root->getDecorator()->draw(scene);
 }
 
 void MindMapModel::disableSelected() //取消選擇
@@ -330,7 +364,7 @@ void MindMapModel::disableSelected() //取消選擇
 void MindMapModel::cloneItem()
 {
     delete _cloneItem;
-    _cloneItem = _component->clone();
+    _cloneItem = _component->getDecorator()->clone();
 }
 
 void MindMapModel::doCutNodes(Component* component)
@@ -339,6 +373,19 @@ void MindMapModel::doCutNodes(Component* component)
     for (auto item : component->getNodeList())
     {
         doCutNodes(item);
+    }
+}
+
+void MindMapModel::doClearDecorator(Component* decorator, Component* component)
+{
+    if (decorator == component)
+    {
+        return;
+    }
+    _nodelist.remove(decorator);
+    for (auto item : decorator->getNodeList())
+    {
+        doClearDecorator(item, component);
     }
 }
 
@@ -369,4 +416,13 @@ bool MindMapModel::isCanUedo()
         return true;
     }
     return false;
+}
+
+bool MindMapModel::isHaveDecorator()
+{
+    if (_component == _component->getDecorator())
+    {
+        return false;
+    }
+    return true;
 }

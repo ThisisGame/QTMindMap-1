@@ -24,8 +24,10 @@ class Component
         void setPoint(int, int);
         vector<int> getPoint();
         void setHeightAndWidth(int, int);
+        void draw(MindMapGUIScene*);
         int getHeight();
         int getWidth();
+        virtual void addDecorator(Component*) = 0;
         virtual void addChild(Component*) = 0;
         virtual void addParent(Component*) = 0;
         virtual void addSibling(Component*) = 0;
@@ -37,11 +39,14 @@ class Component
         virtual void addChilds(list<Component*>) = 0;
         virtual Component* getParent() = 0;
         virtual list<Component*> getNodeList() = 0;
-        virtual void draw(MindMapGUIScene*) = 0;
         virtual Component* clone() = 0;
         virtual void drawComponent(MindMapGUIScene*) = 0;
-        virtual void calculatePos(int&, int, MindMapGUIScene*) = 0;
-        virtual void setChildrenPoint(int) = 0;
+        virtual void calculatePos(int&, int, MindMapGUIScene*, string) = 0;
+        virtual void setChildrenYPoint(int) = 0;
+        virtual void setChildrenXPoint(int, bool) = 0;
+        virtual Component* getDecorator() = 0;
+        virtual void changeNodeByNode(Component*, Component*) = 0;
+        virtual bool isDecorator() = 0;
     protected:
         int _id;
         vector<int> _point;

@@ -21,8 +21,9 @@ class MindMapGUIScene : public QGraphicsScene
         void setPos(int, int);
         void deleteItem();
         void addComponentItem();
-        void addEllipseDecorator();
-        void addRectDecorator();
+        void addCircleDecorator(int, int, int, int);
+        void addRectDecorator(int, int, int, int);
+        void addTriangleDecorator(int, int, int, int);
         void setBorder();
     protected:
         GUIPresentationModel* _pModel;

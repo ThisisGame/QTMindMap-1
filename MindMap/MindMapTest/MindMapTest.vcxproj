@@ -19,13 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MindMap\AddDecoratorCommand.cpp" />
     <ClCompile Include="..\MindMap\ChangeParentCommand.cpp" />
+    <ClCompile Include="..\MindMap\Circle.cpp" />
+    <ClCompile Include="..\MindMap\ClearDecoratorCommand.cpp" />
     <ClCompile Include="..\MindMap\Command.cpp" />
     <ClCompile Include="..\MindMap\CommandManager.cpp" />
     <ClCompile Include="..\MindMap\Component.cpp" />
     <ClCompile Include="..\MindMap\ComponentFactory.cpp" />
     <ClCompile Include="..\MindMap\Composite.cpp" />
     <ClCompile Include="..\MindMap\CutNodeCommand.cpp" />
+    <ClCompile Include="..\MindMap\Decorator.cpp" />
     <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp" />
     <ClCompile Include="..\MindMap\EditComponentCommand.cpp" />
     <ClCompile Include="..\MindMap\GraphicComponentItem.cpp" />
@@ -38,6 +42,7 @@
     <ClCompile Include="..\MindMap\Node.cpp" />
     <ClCompile Include="..\MindMap\Observer.cpp" />
     <ClCompile Include="..\MindMap\PasteNodeCommand.cpp" />
+    <ClCompile Include="..\MindMap\Rectangle.cpp" />
     <ClCompile Include="..\MindMap\Root.cpp" />
     <ClCompile Include="..\MindMap\Subject.cpp" />
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp" />

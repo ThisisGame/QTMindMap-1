@@ -2,7 +2,7 @@
 
 InsertSiblingCommand::InsertSiblingCommand(Component* component, Component* sibling, MindMapModel* model)
 {
-    _component = component;
+    _component = component->getDecorator();
     _sibling = sibling;
     _parent = _component->getParent();
     _model = model;

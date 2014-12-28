@@ -1,4 +1,6 @@
 #include "Node.h"
+#include "Decorator.h"
+
 
 Node::Node(int id) : Composite(id)
 {

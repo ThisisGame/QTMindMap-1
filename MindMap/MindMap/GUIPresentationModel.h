@@ -9,6 +9,11 @@ class GUIPresentationModel : public Subject
     public:
         GUIPresentationModel(MindMapModel*);
         ~GUIPresentationModel();
+        void addRectangleDecorator();
+        void addCircleDecorator();
+        void addTriangleDecorator();
+        void clearAllDecorator
+        ();
         void loadMindMap(string);
         void selectComponent(int);
         void disableSelected();
@@ -33,6 +38,8 @@ class GUIPresentationModel : public Subject
         bool getPasteActionEnable();
         bool getUndoActionEnable();
         bool getRedoActionEnable();
+        bool getAddDecoratorActionEnable();
+        bool getClearAllDecoratorActionEnable();
         Subject* getSubject();
         void undo();
         void redo();
@@ -50,5 +57,7 @@ class GUIPresentationModel : public Subject
         bool _pasteActionEnable;
         void disableAction();
         bool checkString(string, bool);
+        bool _addDecoratorActionEnable;
+        bool _clearAllDecoratorActionEnable;
 };
 

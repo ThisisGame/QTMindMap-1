@@ -36,6 +36,12 @@ class MindMapModel
         bool selectComponent(int);
         string getMessage();
 
+        void addRectangleDecorator();
+        void addCircleDecorator();
+        void addTriangleDecorator();
+        void clearAllDecorator();
+        void doClearDecorator(Component*, Component*);
+
         void redo();
         void undo();
         void changeDescription(string);
@@ -57,6 +63,7 @@ class MindMapModel
 
         void draw(MindMapGUIScene*);
         void disableSelected();
+        bool isHaveDecorator();
     private:
         int _selectedComponentId;
         ComponentFactory _componentFactory;

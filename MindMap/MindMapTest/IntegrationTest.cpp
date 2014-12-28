@@ -15,7 +15,7 @@ namespace MindMapTest
                 fstream outFile;
                 CreateDirectory(L"testData", NULL);
                 outFile.open("testData\\test_file1.mm", ios::out);
-                string data = "0 \"Computer\" 2 7 \n1 \"windows\" 5 6 \n2 \"OS\" 1 3 4 \n3 \"IOS\" \n4 \"Linux\" \n5 \"DirectX\" \n6 \"Microsoft Office\" \n7 \"Network\" 8 9 \n8 \"Wireless\" \n9 \"Cable\" \n";
+                string data = "0 \"Computer\"  \"Root\" 2 7 \n1 \"windows\"  \"Node\" 5 6 \n2 \"OS\"  \"Node\" 1 3 4 \n3 \"IOS\"  \"Node\" \n4 \"Linux\"  \"Node\" \n5 \"DirectX\"  \"Node\" \n6 \"Microsoft Office\"  \"Node\" \n7 \"Network\"  \"Node\" 8 9 \n8 \"Wireless\"  \"Node\" \n9 \"Cable\"  \"Node\" \n";
                 outFile << data;
                 outFile.close();
                 _model = new MindMapModel();

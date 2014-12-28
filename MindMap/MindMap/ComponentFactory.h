@@ -1,8 +1,5 @@
 #pragma once
-#include "Node.h"
-#include "Root.h"
 #include "Component.h"
-#include "ConstString.h"
 
 class ComponentFactory
 {

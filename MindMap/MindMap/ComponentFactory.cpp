@@ -1,4 +1,10 @@
 #include "ComponentFactory.h"
+#include "Node.h"
+#include "Root.h"
+#include "ConstString.h"
+#include "Circle.h"
+#include "Rectangle.h"
+#include "Triangle.h"
 
 ComponentFactory::ComponentFactory()
 {
@@ -38,6 +44,18 @@ Component* ComponentFactory::createComponent(string type)
     else if (type == NODE_TYPE)
     {
         return new Node(_id);
+    }
+    else if (type == "Circle")
+    {
+        return new Circle(_id);
+    }
+    else if (type == "Rectangle")
+    {
+        return new Rectangle(_id);
+    }
+    else if (type == "Triangle")
+    {
+        return new Triangle(_id);
     }
     else
     {

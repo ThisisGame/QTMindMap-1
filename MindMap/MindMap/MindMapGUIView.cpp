@@ -17,6 +17,7 @@ MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWind
     setupToolbar();
     setupView();
     connectEvents();
+    updateActions();
 }
 
 MindMapGUIView::~MindMapGUIView()
@@ -72,6 +73,14 @@ void MindMapGUIView::setupToolbar()
     _mainToolBar->addSeparator();
     _mainToolBar->addAction(_undoAction);
     _mainToolBar->addAction(_redoAction);
+    _funcionailToolBar = new QToolBar(this);
+    this->addToolBarBreak();
+    this->addToolBar(Qt::TopToolBarArea, _funcionailToolBar);
+    _funcionailToolBar->addAction(_addRectangleAction);
+    _funcionailToolBar->addAction(_addCircleAction);
+    _funcionailToolBar->addAction(_addTriangleAction);
+    _mainToolBar->addSeparator();
+    _funcionailToolBar->addAction(_clearDecoratorAction);
 }
 
 void MindMapGUIView::setupView()
@@ -100,6 +109,10 @@ void MindMapGUIView::setupString()
     PASTE_STRING = "Paste";
     REDO_STRING = "Redo";
     UNDO_STRING = "Undo";
+    ADD_TRIANGLE_STRING = "Add triangle decorator";
+    ADD_CIRCLE_STRING = "Add circle decorator";;
+    ADD_RECTANGLE_STRING = "Add rectangle decorator";;
+    CLEAR_DECORATOR_STRING = "Clear all decorator";;
 }
 
 void MindMapGUIView::connectEvents()
@@ -119,8 +132,12 @@ void MindMapGUIView::connectEvents()
     connect(_pasteAction, SIGNAL(triggered()), this, SLOT(pasteComponent()));
     connect(_undoAction, SIGNAL(triggered()), this, SLOT(undo()));
     connect(_redoAction, SIGNAL(triggered()), this, SLOT(redo()));
+    //
+    connect(_addTriangleAction, SIGNAL(triggered()), this, SLOT(addTriangleDecorator()));
+    connect(_addCircleAction, SIGNAL(triggered()), this, SLOT(addCircleDecorator()));
+    connect(_addRectangleAction, SIGNAL(triggered()), this, SLOT(addRectangleDecorator()));
+    connect(_clearDecoratorAction, SIGNAL(triggered()), this, SLOT(clearDecorator()));
 }
-
 void MindMapGUIView::createActions()
 {
     _createNewMindMapAction = new QAction(QIcon("icons/createNewMindMap.png"), CREATE_MINDMAP_STRING, this);
@@ -137,7 +154,31 @@ void MindMapGUIView::createActions()
     _pasteAction = new QAction(QIcon("icons/paste.png"), PASTE_STRING, this);
     _undoAction = new QAction(QIcon("icons/undo.png"), UNDO_STRING, this);
     _redoAction = new QAction(QIcon("icons/redo.png"), REDO_STRING, this);
-    updateActions();
+    //
+    _addTriangleAction = new QAction(QIcon("icons/triangle.png"), ADD_TRIANGLE_STRING, this);;
+    _addCircleAction = new QAction(QIcon("icons/circle.png"), ADD_CIRCLE_STRING, this);;
+    _addRectangleAction = new QAction(QIcon("icons/rectangle.png"), ADD_RECTANGLE_STRING, this);;
+    _clearDecoratorAction = new QAction(QIcon("icons/clearDecorator.png"), CLEAR_DECORATOR_STRING, this);;
+}
+
+void MindMapGUIView::addTriangleDecorator()
+{
+    _pModel->addTriangleDecorator();
+}
+
+void MindMapGUIView::addRectangleDecorator()
+{
+    _pModel->addRectangleDecorator();
+}
+
+void MindMapGUIView::addCircleDecorator()
+{
+    _pModel->addCircleDecorator();
+}
+
+void MindMapGUIView::clearDecorator()
+{
+    _pModel->clearAllDecorator();
 }
 
 void MindMapGUIView::updateView()
@@ -164,11 +205,16 @@ void MindMapGUIView::updateActions()
     _pasteAction->setEnabled(_pModel->getPasteActionEnable());
     _undoAction->setEnabled(_pModel->getUndoActionEnable());
     _redoAction->setEnabled(_pModel->getRedoActionEnable());
+    _addRectangleAction->setEnabled(_pModel->getAddDecoratorActionEnable());
+    _addCircleAction->setEnabled(_pModel->getAddDecoratorActionEnable());
+    _addTriangleAction->setEnabled(_pModel->getAddDecoratorActionEnable());
+    _clearDecoratorAction->setEnabled(_pModel->getClearAllDecoratorActionEnable());
+    //_funcionailToolBar->setVisible(_pModel->getAddDecoratorActionEnable());
 }
 
 void MindMapGUIView::aboutActionClick()
 {
-    QMessageBox::about(NULL, "About", "<center><h2>2014POSD</h2>103598002<br>Kuan-Ting Chen</center>");
+    QMessageBox::about(NULL, "About", "<center><h2>2014POSD < / h2 > 103598002<br>Kuan - Ting Chen < / center > ");
 }
 
 void MindMapGUIView::openFile()

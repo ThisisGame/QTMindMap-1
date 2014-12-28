@@ -2,7 +2,7 @@
 
 InsertParentCommand::InsertParentCommand(Component* component, Component* parent, MindMapModel* model)
 {
-    _component = component;
+    _component = component->getDecorator();
     _newParent = parent;
     _oldParent = _component->getParent();
     _model = model;

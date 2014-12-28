@@ -15,7 +15,5 @@ class Node :
         bool isParent(Component*);
         Component* getParent();
         Component* clone();
-    private:
-        Component* _parent;
 };
 

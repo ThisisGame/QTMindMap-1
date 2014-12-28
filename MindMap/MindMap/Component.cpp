@@ -72,3 +72,10 @@ int Component::getWidth()
 {
     return _width;
 }
+
+void Component::draw(MindMapGUIScene* scene)
+{
+    int position = 0;
+    calculatePos(position, 0, scene, "None");
+    drawComponent(scene);
+}

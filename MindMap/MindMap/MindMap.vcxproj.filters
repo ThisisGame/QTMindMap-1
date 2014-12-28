@@ -53,11 +53,11 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{c1cddc5f-1f63-4b8b-9862-7e945cf9e822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Decorator">
-      <UniqueIdentifier>{8f43d224-77ca-494b-88d5-8f54d3a64fcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Decorator">
+    <Filter Include="Source Files\Component\Decorator">
       <UniqueIdentifier>{f83db8f3-75bd-49f3-b4bc-d4f34e4c6322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Decorator">
+      <UniqueIdentifier>{8f43d224-77ca-494b-88d5-8f54d3a64fcd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,14 +154,23 @@
     <ClCompile Include="PasteNodeCommand.cpp">
       <Filter>Source Files\Command</Filter>
     </ClCompile>
-    <ClCompile Include="BaseComponentItem.cpp">
-      <Filter>Source Files\Decorator</Filter>
-    </ClCompile>
     <ClCompile Include="Decorator.cpp">
-      <Filter>Source Files\Decorator</Filter>
+      <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
-    <ClCompile Include="DecoratorComponent.cpp">
-      <Filter>Source Files\Decorator</Filter>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearDecoratorCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="AddDecoratorCommand.cpp">
+      <Filter>Source Files\Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,14 +243,23 @@
     <ClInclude Include="PasteNodeCommand.h">
       <Filter>Header Files\Command</Filter>
     </ClInclude>
-    <ClInclude Include="BaseComponentItem.h">
-      <Filter>Header Files\Decorator</Filter>
-    </ClInclude>
     <ClInclude Include="Decorator.h">
-      <Filter>Header Files\Decorator</Filter>
+      <Filter>Header Files\Component\Decorator</Filter>
     </ClInclude>
-    <ClInclude Include="DecoratorComponent.h">
-      <Filter>Header Files\Decorator</Filter>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearDecoratorCommand.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="AddDecoratorCommand.h">
+      <Filter>Header Files\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

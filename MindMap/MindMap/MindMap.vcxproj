@@ -137,8 +137,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BaseComponentItem.cpp" />
+    <ClCompile Include="AddDecoratorCommand.cpp" />
     <ClCompile Include="ChangeParentCommand.cpp" />
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="ClearDecoratorCommand.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -146,7 +148,6 @@
     <ClCompile Include="Composite.cpp" />
     <ClCompile Include="CutNodeCommand.cpp" />
     <ClCompile Include="Decorator.cpp" />
-    <ClCompile Include="DecoratorComponent.cpp" />
     <ClCompile Include="DeleteComponentCommand.cpp" />
     <ClCompile Include="EditComponentCommand.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GraphicComponentItem.cpp">
@@ -185,14 +186,18 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PasteNodeCommand.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextUIPresentationModel.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="TextUIView.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseComponentItem.h" />
+    <ClInclude Include="AddDecoratorCommand.h" />
     <ClInclude Include="ChangeParentCommand.h" />
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="ClearDecoratorCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Component.h" />
@@ -202,9 +207,9 @@
     <ClInclude Include="ConstVariables.h" />
     <ClInclude Include="CutNodeCommand.h" />
     <ClInclude Include="Decorator.h" />
-    <ClInclude Include="DecoratorComponent.h" />
     <ClInclude Include="DeleteComponentCommand.h" />
     <ClInclude Include="EditComponentCommand.h" />
+    <ClInclude Include="Triangle.h" />
     <CustomBuild Include="GraphicComponentItem.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing GraphicComponentItem.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -267,6 +272,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PasteNodeCommand.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextUIPresentationModel.h" />

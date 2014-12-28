@@ -6,14 +6,7 @@ using namespace std;
 MindMapGUIScene::MindMapGUIScene(GUIPresentationModel* pModel, QObject* parent) : QGraphicsScene(parent)
 {
     _pModel = pModel;
-    QPolygonF Triangle;
-    Triangle.append(QPointF(-10., 0));
-    Triangle.append(QPointF(0., -10));
-    Triangle.append(QPointF(10., 0));
-    Triangle.append(QPointF(-10., 0));
-    addPolygon(Triangle);
 }
-
 
 MindMapGUIScene::~MindMapGUIScene()
 {
@@ -40,29 +33,45 @@ int MindMapGUIScene::getWidth()
 {
     return _item->getWidth();
 }
+
 int MindMapGUIScene::getHeight()
 {
     return _item->getHeight();
 }
+
 void MindMapGUIScene::setPos(int x, int y)
 {
     _item->setPoint(x, y);
 }
+
 void MindMapGUIScene::deleteItem()
 {
     delete _item;
 }
+
 void MindMapGUIScene::addComponentItem()
 {
     addItem(_item);
 }
-void MindMapGUIScene::addEllipseDecorator()
+
+void MindMapGUIScene::addCircleDecorator(int x, int y, int width, int height)
 {
-    _item->addEllipseDecorator();
+    addEllipse(x, y, width, height);
 }
-void MindMapGUIScene::addRectDecorator()
+
+void MindMapGUIScene::addRectDecorator(int x, int y, int width, int height)
 {
-    _item->addRectangleDecorator();
+    addRect(x, y, width, height);
+}
+
+void MindMapGUIScene::addTriangleDecorator(int x, int y, int width, int height)
+{
+    QPolygonF triangle;
+    triangle.append(QPointF(x, y + height));
+    triangle.append(QPointF(x + width / 2, y));
+    triangle.append(QPointF(x + width, y + height));
+    triangle.append(QPointF(x, y + height));
+    addPolygon(triangle);
 }
 
 void MindMapGUIScene::setBorder()

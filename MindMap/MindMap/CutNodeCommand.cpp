@@ -2,9 +2,9 @@
 
 CutNodeCommand::CutNodeCommand(Component* component, MindMapModel* model)
 {
-    _component = component;
+    _component = component->getDecorator(); //從最上層開始切
     _model = model;
-    _parent = component->getParent();
+    _parent = _component->getParent();
     _oldNodeList = _model->getNodeList();
     _oldParentList = _parent->getNodeList();
 }

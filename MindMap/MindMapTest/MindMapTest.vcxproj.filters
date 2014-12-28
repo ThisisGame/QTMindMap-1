@@ -42,6 +42,12 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Component\Decorator">
+      <UniqueIdentifier>{2d4ba906-d5ca-481c-9731-7fa100fb9804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visitor">
+      <UniqueIdentifier>{93b97871-5617-4eff-8d05-06a5be58d340}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChangeParentCommandTest.cpp">
@@ -182,20 +188,32 @@
     <ClCompile Include="PasteNodeCommandTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\Decorator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\MindMap\AddDecoratorCommand.cpp">
       <Filter>Source Files\Command</Filter>
     </ClCompile>
     <ClCompile Include="..\MindMap\ClearDecoratorCommand.cpp">
       <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Decorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\ComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\DisplayComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\RectangleDecorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\CircleDecorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\TriangleDecorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\SaveComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

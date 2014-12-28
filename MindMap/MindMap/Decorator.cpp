@@ -91,11 +91,6 @@ list<Component*> Decorator::getNodeList()
     return child;
 }
 
-void Decorator::draw(MindMapGUIScene* scene)
-{
-    _child->draw(scene);
-}
-
 void Decorator::calculatePos(int& position, int level, MindMapGUIScene* scene, string side)
 {
     level += 5;

@@ -61,3 +61,8 @@ Component* Node::clone()
     }
     return cloneItem;
 }
+
+void Node::accept(ComponentVisitor* visitor)
+{
+    visitor->Visitor(this);
+}

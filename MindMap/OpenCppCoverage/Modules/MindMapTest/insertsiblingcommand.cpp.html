@@ -11,7 +11,7 @@
 
 InsertSiblingCommand::InsertSiblingCommand(Component* component, Component* sibling, MindMapModel* model)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _component = component-&gt;getDecorator();</span>
 <span style = "background-color:#dfd">    _sibling = sibling;</span>
 <span style = "background-color:#dfd">    _parent = _component-&gt;getParent();</span>
 <span style = "background-color:#dfd">    _model = model;</span>

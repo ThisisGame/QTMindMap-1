@@ -1,0 +1,105 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		displaycomponentvisitor.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "DisplayComponentVisitor.h"
+#include "MindMapGUIScene.h"
+#include "Node.h"
+#include "Root.h"
+#include "TriangleDecorator.h"
+#include "CircleDecorator.h"
+#include "RectangleDecorator.h"
+
+DisplayComponentVisitor::DisplayComponentVisitor(MindMapGUIScene* scene)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _scene = scene;</span>
+<span style = "background-color:#fdd">}</span>
+
+DisplayComponentVisitor::~DisplayComponentVisitor()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::Visitor(Node* node)  //NODEµe¹Ï
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    int x = node-&gt;getPoint()[0];</span>
+<span style = "background-color:#fdd">    int y = node-&gt;getPoint()[1];</span>
+<span style = "background-color:#fdd">    drawNode(x, y, node-&gt;getId(), node-&gt;getDescription(), node-&gt;getSelected());</span>
+<span style = "background-color:#fdd">    for (auto child : node-&gt;getNodeList())  //±µ½u</span>
+    {
+<span style = "background-color:#fdd">        if (node-&gt;getSide() == LEFT_SIDE)</span>
+        {
+<span style = "background-color:#fdd">            _scene-&gt;addLine(x, y + node-&gt;getHeight() / 2, child-&gt;getPoint()[0] + child-&gt;getWidth(), child-&gt;getPoint()[1] + child-&gt;getHeight() / 2);</span>
+        }
+<span style = "background-color:#fdd">        else</span>
+        {
+<span style = "background-color:#fdd">            _scene-&gt;addLine(x + node-&gt;getWidth(), y + node-&gt;getHeight() / 2, child-&gt;getPoint()[0], child-&gt;getPoint()[1] + child-&gt;getHeight() / 2);</span>
+        }
+<span style = "background-color:#fdd">        child-&gt;accept(this);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::Visitor(Root* root)  //ROOTµe¹Ï
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    int x = root-&gt;getPoint()[0];</span>
+<span style = "background-color:#fdd">    int y = root-&gt;getPoint()[1];</span>
+<span style = "background-color:#fdd">    drawNode(x, y, root-&gt;getId(), root-&gt;getDescription(), root-&gt;getSelected());</span>
+<span style = "background-color:#fdd">    int i = 0;</span>
+<span style = "background-color:#fdd">    for (auto child : root-&gt;getNodeList())  //±µ½u</span>
+    {
+<span style = "background-color:#fdd">        if (i % 2 != 0)</span>
+        {
+<span style = "background-color:#fdd">            _scene-&gt;addLine(x, y + root-&gt;getHeight() / 2, child-&gt;getPoint()[0] + child-&gt;getWidth(), child-&gt;getPoint()[1] + child-&gt;getHeight() / 2);</span>
+        }
+<span style = "background-color:#fdd">        else</span>
+        {
+<span style = "background-color:#fdd">            _scene-&gt;addLine(x + root-&gt;getWidth(), y + root-&gt;getHeight() / 2, child-&gt;getPoint()[0], child-&gt;getPoint()[1] + child-&gt;getHeight() / 2);</span>
+        }
+<span style = "background-color:#fdd">        child-&gt;accept(this);</span>
+<span style = "background-color:#fdd">        i++;</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::Visitor(TriangleDecorator* triangle) //¤T¨¤§Î¸Ë¹¢
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    displayNode(triangle-&gt;getNodeList());</span>
+<span style = "background-color:#fdd">    _scene-&gt;addTriangleDecorator(triangle-&gt;getPoint()[0], triangle-&gt;getPoint()[1], triangle-&gt;getWidth(), triangle-&gt;getHeight());</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::Visitor(CircleDecorator* circle) //¶ê§Î¸Ë¹¢
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    displayNode(circle-&gt;getNodeList());</span>
+<span style = "background-color:#fdd">    _scene-&gt;addCircleDecorator(circle-&gt;getPoint()[0], circle-&gt;getPoint()[1], circle-&gt;getWidth(), circle-&gt;getHeight());</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::Visitor(RectangleDecorator* rectangle) //¤è§Î¸Ë¹¢
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    displayNode(rectangle-&gt;getNodeList());</span>
+<span style = "background-color:#fdd">    _scene-&gt;addRectDecorator(rectangle-&gt;getPoint()[0], rectangle-&gt;getPoint()[1], rectangle-&gt;getWidth(), rectangle-&gt;getHeight());</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::displayNode(list&lt;Component*&gt; nodelist) //Åã¥Ü¸Ë¹¢¤ºªºNODE
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    for (auto child : nodelist)</span>
+    {
+<span style = "background-color:#fdd">        child-&gt;accept(this);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void DisplayComponentVisitor::drawNode(int x, int y, int id, string description, bool selected)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _scene-&gt;createItem(id, description);</span>
+<span style = "background-color:#fdd">    if (selected)</span>
+    {
+<span style = "background-color:#fdd">        _scene-&gt;setBorder();</span>
+    }
+<span style = "background-color:#fdd">    _scene-&gt;addComponentItem();</span>
+<span style = "background-color:#fdd">    _scene-&gt;setPos(x, y);</span>
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

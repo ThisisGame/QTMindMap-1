@@ -75,14 +75,7 @@ bool GUIPresentationModel::getRedoActionEnable()
 
 bool GUIPresentationModel::getUndoActionEnable()
 {
-    return _model->isCanUedo();
-}
-
-
-
-Subject* GUIPresentationModel::getSubject()
-{
-    return this;
+    return _model->isCanUndo();
 }
 
 void GUIPresentationModel::addCircleDecorator()

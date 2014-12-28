@@ -59,11 +59,11 @@ void Root::calculatePos(int& position, int level, MindMapGUIScene* scene, string
     {
         if (i % 2 == 0)
         {
-            child->calculatePos(positionRight, getWidth() + 25, scene, "Right");
+            child->calculatePos(positionRight, getWidth() + 25, scene, RIGHT_SIDE);
         }
         else
         {
-            child->calculatePos(positionLeft, getWidth() + 25, scene, "Left");
+            child->calculatePos(positionLeft, getWidth() + 25, scene, LEFT_SIDE);
         }
         i++;
     }
@@ -98,33 +98,6 @@ void Root::calculatePos(int& position, int level, MindMapGUIScene* scene, string
     }
 }
 
-void Root::drawComponent(MindMapGUIScene* scene)      //繪圖物件區塊
-{
-    int x = getPoint()[0];
-    int y = getPoint()[1];
-    scene->createItem(_id, _description);
-    if (_selected)
-    {
-        scene->setBorder();
-    }
-    scene->addComponentItem();
-    scene->setPos(x, y);
-    int i = 0;
-    for (auto child : _nodelist)  //接線
-    {
-        if (i % 2 != 0)
-        {
-            scene->addLine(x, y + getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
-        }
-        else
-        {
-            scene->addLine(x + getWidth(), y + getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
-        }
-        child->drawComponent(scene);
-        i++;
-    }
-}
-
 void Root::setChildrenXPoint(int x, bool firstNode)
 {
     if (firstNode == false)
@@ -145,4 +118,9 @@ void Root::setChildrenXPoint(int x, bool firstNode)
         }
         i++;
     }
+}
+
+void Root::accept(ComponentVisitor* visitor)
+{
+    visitor->Visitor(this);
 }

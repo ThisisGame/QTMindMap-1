@@ -14,6 +14,8 @@
 Composite::Composite(int id)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _id = id;</span>
+<span style = "background-color:#dfd">    _parent = NULL;</span>
+<span style = "background-color:#dfd">    _side = NONE_SIDE;</span>
 <span style = "background-color:#dfd">}</span>
 
 Composite::~Composite()
@@ -23,6 +25,15 @@ Composite::~Composite()
 <span style = "background-color:#dfd">        delete child;</span>
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
+
+void Composite::addDecorator(Component* decorator)  //¼W¥[
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (_parent != NULL)</span>
+    {
+<span style = "background-color:#fdd">        _parent-&gt;changeNodeByNode(this, decorator);</span>
+    }
+<span style = "background-color:#fdd">    decorator-&gt;addChild(this);</span>
+<span style = "background-color:#fdd">}</span>
 
 void Composite::addChild(Component* node)  //¼W¥[Node
 <span style = "background-color:#dfd">{</span>
@@ -55,6 +66,19 @@ list&lt;Component*&gt; Composite::getNodeList()  //¨ú±oNodeList
 <span style = "background-color:#dfd">    return _nodelist;</span>
 <span style = "background-color:#dfd">}</span>
 
+void Composite::changeNodeByNode(Component* component, Component* newComponent)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#fdd">        if (*i == component)</span>
+        {
+<span style = "background-color:#fdd">            *i = newComponent;</span>
+<span style = "background-color:#fdd">            newComponent-&gt;setParent(this);</span>
+<span style = "background-color:#fdd">            return;</span>
+<span style = "background-color:#fdd">        }</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
 void Composite::deleteNodeByNode(Component* component)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _nodelist.remove(component);</span>
@@ -86,37 +110,88 @@ void Composite::display(stringstream&amp; outputStream, string levelString, bool
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
-void Composite::draw(int&amp; position, int level, MindMapGUIScene* scene)
+void Composite::calculatePos(int&amp; position, int level, MindMapGUIScene* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    int NODE_DIST = 50;</span>
+<span style = "background-color:#fdd">    int NODE_DIST = 25;</span>
 <span style = "background-color:#fdd">    int x = level;</span>
 <span style = "background-color:#fdd">    int y = position;</span>
-<span style = "background-color:#fdd">    GraphicComponentItem* item = new GraphicComponentItem(_description, _id, scene-&gt;getPModel());</span>
-    //AutoLayout­pºâ°Ï¶ô
-<span style = "background-color:#fdd">    level = level + item-&gt;getWidth() + NODE_DIST;</span>
+<span style = "background-color:#fdd">    int getheight = 0;</span>
+<span style = "background-color:#fdd">    scene-&gt;createItem(_id, _description);</span>
+<span style = "background-color:#fdd">    setHeightAndWidth(scene-&gt;getHeight(), scene-&gt;getWidth());</span>
+<span style = "background-color:#fdd">    level = level + scene-&gt;getWidth() + NODE_DIST;</span>
+<span style = "background-color:#fdd">    scene-&gt;deleteItem();</span>
 <span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
     {
-<span style = "background-color:#fdd">        child-&gt;draw(position, level, scene);</span>
+<span style = "background-color:#fdd">        child-&gt;calculatePos(position, level, scene, side);</span>
 <span style = "background-color:#fdd">    }</span>
 <span style = "background-color:#fdd">    int height = position - y;</span>
 <span style = "background-color:#fdd">    if (height != 0)</span>
     {
-<span style = "background-color:#fdd">        y = y + (height - NODE_DIST) / 2;</span>
-<span style = "background-color:#fdd">        position -= NODE_DIST;</span>
+<span style = "background-color:#fdd">        y = y + (height - NODE_DIST - _height) / 2;</span>
     }
-    //Ã¸¹Ïª«¥ó°Ï¶ô
-<span style = "background-color:#fdd">    item-&gt;setPoint(x, y);</span>
-<span style = "background-color:#fdd">    setPoint(x, y + item-&gt;getHeight() / 2);</span>
-<span style = "background-color:#fdd">    if (_selected)</span>
+<span style = "background-color:#fdd">    else</span>
     {
-<span style = "background-color:#fdd">        item-&gt;setBorder(Qt::red);</span>
+<span style = "background-color:#fdd">        position += _height + NODE_DIST;</span>
     }
-<span style = "background-color:#fdd">    scene-&gt;addItem(item);</span>
+<span style = "background-color:#fdd">    _side = side;</span>
+<span style = "background-color:#fdd">    if (_side == RIGHT_SIDE)</span>
+    {
+<span style = "background-color:#fdd">        setPoint(x, y);</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#fdd">        setPoint(-x, y);</span>
+    }
+<span style = "background-color:#fdd">    if (height != 0 &amp;&amp; height &lt; _height)</span>
+    {
+<span style = "background-color:#fdd">        int changeHeightAmount = _height - height;</span>
+<span style = "background-color:#fdd">        setChildrenYPoint(changeHeightAmount / 2);</span>
+<span style = "background-color:#fdd">        position += changeHeightAmount;</span>
+    }
+<span style = "background-color:#fdd">}</span>
+
+void Composite::setChildrenYPoint(int height)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _point[1] += height;</span>
 <span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
     {
-<span style = "background-color:#fdd">        scene-&gt;addLine(x + item-&gt;getWidth(), y + item-&gt;getHeight() / 2, child-&gt;getPoint()[0], child-&gt;getPoint()[1]);</span>
+<span style = "background-color:#fdd">        child-&gt;setChildrenYPoint(height);</span>
 <span style = "background-color:#fdd">    }</span>
-<span style = "background-color:#fdd">    position += NODE_DIST;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::setChildrenXPoint(int x, bool firstNode)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (firstNode == false)</span>
+    {
+<span style = "background-color:#fdd">        _point[0] += x;</span>
+    }
+<span style = "background-color:#fdd">    firstNode = false;</span>
+<span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
+    {
+<span style = "background-color:#fdd">        child-&gt;setChildrenXPoint(x, firstNode);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+Component* Composite::getDecorator()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_parent != NULL &amp;&amp; _parent-&gt;isDecorator())</span>
+    {
+<span style = "background-color:#fdd">        return _parent-&gt;getDecorator();</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#dfd">        return this;</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+bool Composite::isDecorator()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+string Composite::getSide()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _side;</span>
 <span style = "background-color:#fdd">}</span>
 </pre>
 	</body>

@@ -67,6 +67,16 @@ bool GUIPresentationModel::getPasteActionEnable()
 <span style = "background-color:#dfd">    return _pasteActionEnable;</span>
 <span style = "background-color:#dfd">}</span>
 
+bool GUIPresentationModel::getClearAllDecoratorActionEnable()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _clearAllDecoratorActionEnable;</span>
+<span style = "background-color:#fdd">}</span>
+
+bool GUIPresentationModel::getAddDecoratorActionEnable()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _addDecoratorActionEnable;</span>
+<span style = "background-color:#fdd">}</span>
+
 bool GUIPresentationModel::getRedoActionEnable()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    return _model-&gt;isCanRedo();</span>
@@ -74,12 +84,31 @@ bool GUIPresentationModel::getRedoActionEnable()
 
 bool GUIPresentationModel::getUndoActionEnable()
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    return _model-&gt;isCanUedo();</span>
+<span style = "background-color:#dfd">    return _model-&gt;isCanUndo();</span>
 <span style = "background-color:#dfd">}</span>
 
-Subject* GUIPresentationModel::getSubject()
+void GUIPresentationModel::addCircleDecorator()
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return this;</span>
+<span style = "background-color:#fdd">    _model-&gt;addCircleDecorator();</span>
+<span style = "background-color:#fdd">    notifyUpdateView();</span>
+<span style = "background-color:#fdd">}</span>
+
+void GUIPresentationModel::addRectangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _model-&gt;addRectangleDecorator();</span>
+<span style = "background-color:#fdd">    notifyUpdateView();</span>
+<span style = "background-color:#fdd">}</span>
+
+void GUIPresentationModel::addTriangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _model-&gt;addTriangleDecorator();</span>
+<span style = "background-color:#fdd">    notifyUpdateView();</span>
+<span style = "background-color:#fdd">}</span>
+
+void GUIPresentationModel::clearAllDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _model-&gt;clearAllDecorator();</span>
+<span style = "background-color:#fdd">    notifyUpdateView();</span>
 <span style = "background-color:#fdd">}</span>
 
 void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
@@ -138,6 +167,8 @@ void GUIPresentationModel::selectComponent(int id)
 <span style = "background-color:#dfd">    disableAction();</span>
 <span style = "background-color:#dfd">    _insertChildActionEnable = true;</span>
 <span style = "background-color:#dfd">    _editNodeActionEnable = true;</span>
+<span style = "background-color:#dfd">    _addDecoratorActionEnable = true;</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = _model-&gt;isHaveDecorator();</span>
 <span style = "background-color:#dfd">    if (!_model-&gt;isRoot())</span>
     {
 <span style = "background-color:#dfd">        _deleteNodeActionEnable = true;</span>
@@ -218,6 +249,8 @@ void GUIPresentationModel::disableAction()
 <span style = "background-color:#dfd">    _insertParentActionEnable = false;</span>
 <span style = "background-color:#dfd">    _copyActionEnbale = false;</span>
 <span style = "background-color:#dfd">    _cutActionEnbale = false;</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = false;</span>
+<span style = "background-color:#dfd">    _addDecoratorActionEnable = false;</span>
 <span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::copyComponent()

@@ -29,7 +29,7 @@ string Component::getDescription()
 <span style = "background-color:#dfd">    return _description;</span>
 <span style = "background-color:#dfd">}</span>
 
-int Component::getId()
+int Component::getId() const
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    return _id;</span>
 <span style = "background-color:#dfd">}</span>
@@ -66,6 +66,26 @@ void Component::setPoint(int x, int y)
 <span style = "background-color:#dfd">    _point.push_back(y);</span>
 <span style = "background-color:#dfd">}</span>
 
+void Component::setHeightAndWidth(int h, int w)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _height = h;</span>
+<span style = "background-color:#fdd">    _width = w;</span>
+<span style = "background-color:#fdd">}</span>
+
+int Component::getHeight()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _height;</span>
+<span style = "background-color:#fdd">}</span>
+
+int Component::getWidth()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _width;</span>
+<span style = "background-color:#fdd">}</span>
+
+bool Component::operator &lt; (const Component&amp; component)const
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _id &lt; component.getId();</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

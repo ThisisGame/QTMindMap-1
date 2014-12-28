@@ -10,6 +10,8 @@
 		<pre class="prettyprint lang-cpp linenums">#include "GraphicComponentItem.h"
 #include &lt;QPen&gt;
 #include &lt;QtWidgets/QInputDialog&gt;
+#include &lt;QtWidgets/QGraphicsEllipseItem&gt;
+
 
 GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresentationModel* pModel)
 <span style = "background-color:#fdd">{</span>
@@ -19,13 +21,13 @@ GraphicComponentItem::GraphicComponentItem(string description, int id, GUIPresen
 <span style = "background-color:#fdd">    this-&gt;setHandlesChildEvents(false);</span>
 <span style = "background-color:#fdd">    _textItem = new QGraphicsTextItem(QString::fromStdString(description));</span>
 <span style = "background-color:#fdd">    _textItem-&gt;setObjectName(QString::fromStdString(description));</span>
+<span style = "background-color:#fdd">    _textItem-&gt;setTextWidth(60);</span>
 <span style = "background-color:#fdd">    this-&gt;addToGroup(_textItem);</span>
 <span style = "background-color:#fdd">    _borderItem = new QGraphicsRectItem(_textItem-&gt;boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT));</span>
 <span style = "background-color:#fdd">    this-&gt;addToGroup(_borderItem);</span>
 <span style = "background-color:#fdd">    _timer = new QTimer(this);</span>
 <span style = "background-color:#fdd">    connect(_timer, SIGNAL(timeout()), this, SLOT(mouseClickEvent()));</span>
 <span style = "background-color:#fdd">}</span>
-
 
 GraphicComponentItem::~GraphicComponentItem()
 <span style = "background-color:#fdd">{</span>
@@ -74,9 +76,20 @@ int GraphicComponentItem::getHeight()
 
 void GraphicComponentItem::setPoint(int x, int y)
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    this-&gt;setPos(x + BOUNDING_RECT, y);</span>
+<span style = "background-color:#fdd">    this-&gt;setPos(x + BOUNDING_RECT, y + BOUNDING_RECT);</span>
 <span style = "background-color:#fdd">}</span>
 
+void GraphicComponentItem::addRectangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    this-&gt;addToGroup(new QGraphicsRectItem(this-&gt;boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT)));</span>
+<span style = "background-color:#fdd">}</span>
+void GraphicComponentItem::addEllipseDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    this-&gt;addToGroup(new QGraphicsEllipseItem(this-&gt;boundingRect().adjusted(-BOUNDING_RECT, -BOUNDING_RECT, BOUNDING_RECT, BOUNDING_RECT)));</span>
+<span style = "background-color:#fdd">}</span>
+void GraphicComponentItem::addTriangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
 </pre>
 	</body>
 </html>

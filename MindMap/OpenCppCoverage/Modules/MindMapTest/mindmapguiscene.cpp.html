@@ -8,7 +8,6 @@
 	</title>
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "MindMapGUIScene.h"
-#include "GraphicComponentItem.h"
 #include &lt;QtWidgets/QGraphicsView&gt;
 #include &lt;iostream&gt;
 using namespace std;
@@ -17,7 +16,6 @@ MindMapGUIScene::MindMapGUIScene(GUIPresentationModel* pModel, QObject* parent) 
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    _pModel = pModel;</span>
 <span style = "background-color:#fdd">}</span>
-
 
 MindMapGUIScene::~MindMapGUIScene()
 <span style = "background-color:#fdd">{</span>
@@ -35,17 +33,60 @@ void MindMapGUIScene::draw()
 <span style = "background-color:#fdd">    this-&gt;setSceneRect(this-&gt;itemsBoundingRect());</span>
 <span style = "background-color:#fdd">}</span>
 
-/*
-void MindMapGUIScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    //QGraphicsScene::mousePressEvent(event);
-}
+void MindMapGUIScene::createItem(int id, string description)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _item = new GraphicComponentItem(description, id, _pModel);</span>
+<span style = "background-color:#fdd">}</span>
 
-void MindMapGUIScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
-{
-    //QGraphicsScene::mouseDoubleClickEvent(event);
-}
-*/
+int MindMapGUIScene::getWidth()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _item-&gt;getWidth();</span>
+<span style = "background-color:#fdd">}</span>
+
+int MindMapGUIScene::getHeight()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _item-&gt;getHeight();</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::setPos(int x, int y)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _item-&gt;setPoint(x, y);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::deleteItem()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    delete _item;</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::addComponentItem()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    addItem(_item);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::addCircleDecorator(int x, int y, int width, int height)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    addEllipse(x, y, width, height);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::addRectDecorator(int x, int y, int width, int height)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    addRect(x, y, width, height);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::addTriangleDecorator(int x, int y, int width, int height)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    QPolygonF triangle;</span>
+<span style = "background-color:#fdd">    triangle.append(QPointF(x, y + height));</span>
+<span style = "background-color:#fdd">    triangle.append(QPointF(x + width / 2, y));</span>
+<span style = "background-color:#fdd">    triangle.append(QPointF(x + width, y + height));</span>
+<span style = "background-color:#fdd">    triangle.append(QPointF(x, y + height));</span>
+<span style = "background-color:#fdd">    addPolygon(triangle);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapGUIScene::setBorder()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _item-&gt;setBorder(Qt::red);</span>
+<span style = "background-color:#fdd">}</span>
 </pre>
 	</body>
 </html>

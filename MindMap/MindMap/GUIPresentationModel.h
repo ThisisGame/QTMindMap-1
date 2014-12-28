@@ -40,7 +40,6 @@ class GUIPresentationModel : public Subject
         bool getRedoActionEnable();
         bool getAddDecoratorActionEnable();
         bool getClearAllDecoratorActionEnable();
-        Subject* getSubject();
         void undo();
         void redo();
     private:

@@ -2,9 +2,9 @@
 #include "Node.h"
 #include "Root.h"
 #include "ConstString.h"
-#include "Circle.h"
-#include "Rectangle.h"
-#include "Triangle.h"
+#include "CircleDecorator.h"
+#include "RectangleDecorator.h"
+#include "TriangleDecorator.h"
 
 ComponentFactory::ComponentFactory()
 {
@@ -45,17 +45,17 @@ Component* ComponentFactory::createComponent(string type)
     {
         return new Node(_id);
     }
-    else if (type == "Circle")
+    else if (type == CIRCLE_TYPE)
     {
-        return new Circle(_id);
+        return new CircleDecorator(_id);
     }
-    else if (type == "Rectangle")
+    else if (type == RECTANGLE_TYPE)
     {
-        return new Rectangle(_id);
+        return new RectangleDecorator(_id);
     }
-    else if (type == "Triangle")
+    else if (type == TRIANGLE_TYPE)
     {
-        return new Triangle(_id);
+        return new TriangleDecorator(_id);
     }
     else
     {

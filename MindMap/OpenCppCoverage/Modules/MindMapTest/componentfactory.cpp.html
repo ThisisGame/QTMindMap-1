@@ -8,6 +8,12 @@
 	</title>
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "ComponentFactory.h"
+#include "Node.h"
+#include "Root.h"
+#include "ConstString.h"
+#include "CircleDecorator.h"
+#include "RectangleDecorator.h"
+#include "TriangleDecorator.h"
 
 ComponentFactory::ComponentFactory()
 <span style = "background-color:#dfd">{</span>
@@ -47,6 +53,18 @@ Component* ComponentFactory::createComponent(string type)
 <span style = "background-color:#dfd">    else if (type == NODE_TYPE)</span>
     {
 <span style = "background-color:#dfd">        return new Node(_id);</span>
+    }
+<span style = "background-color:#dfd">    else if (type == CIRCLE_TYPE)</span>
+    {
+<span style = "background-color:#fdd">        return new CircleDecorator(_id);</span>
+    }
+<span style = "background-color:#dfd">    else if (type == RECTANGLE_TYPE)</span>
+    {
+<span style = "background-color:#fdd">        return new RectangleDecorator(_id);</span>
+    }
+<span style = "background-color:#dfd">    else if (type == TRIANGLE_TYPE)</span>
+    {
+<span style = "background-color:#fdd">        return new TriangleDecorator(_id);</span>
     }
 <span style = "background-color:#fdd">    else</span>
     {

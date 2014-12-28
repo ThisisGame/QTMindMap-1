@@ -1,0 +1,46 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		adddecoratorcommand.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "AddDecoratorCommand.h"
+
+AddDecoratorCommand::AddDecoratorCommand(Component* component, Component* decorator, MindMapModel* model)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _component = component-&gt;getDecorator();</span>
+<span style = "background-color:#fdd">    _decorator = decorator;</span>
+<span style = "background-color:#fdd">    _oldParent = _component-&gt;getParent();</span>
+<span style = "background-color:#fdd">    _model = model;</span>
+<span style = "background-color:#fdd">}</span>
+
+AddDecoratorCommand::~AddDecoratorCommand()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    delete _decorator;</span>
+<span style = "background-color:#fdd">}</span>
+
+void AddDecoratorCommand::execute()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _component-&gt;addDecorator(_decorator);</span>
+<span style = "background-color:#fdd">    _model-&gt;doInsertNode(_decorator);</span>
+<span style = "background-color:#fdd">}</span>
+
+void AddDecoratorCommand::unexcute()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (_oldParent != NULL)</span>
+    {
+<span style = "background-color:#fdd">        _oldParent-&gt;deleteNodeByNode(_decorator);</span>
+<span style = "background-color:#fdd">        _oldParent-&gt;addChild(_component);</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#fdd">        _component-&gt;setParent(NULL);</span>
+    }
+<span style = "background-color:#fdd">    _model-&gt;doUninsertNode(_decorator);</span>
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

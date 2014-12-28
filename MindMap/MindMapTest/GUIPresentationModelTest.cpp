@@ -3,6 +3,8 @@
 #include <windows.h>
 #include "GUIPresentationModel.h"
 #include "MindMapModel.h"
+#include "Root.h"
+#include "Node.h"
 #include "ConstVariables.h"
 
 namespace MindMapTest

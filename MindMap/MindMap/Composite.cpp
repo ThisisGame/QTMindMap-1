@@ -6,7 +6,7 @@ Composite::Composite(int id)
 {
     _id = id;
     _parent = NULL;
-    _side = "None";
+    _side = NONE_SIDE;
 }
 
 Composite::~Composite()
@@ -101,31 +101,6 @@ void Composite::display(stringstream& outputStream, string levelString, bool las
     }
 }
 
-void Composite::drawComponent(MindMapGUIScene* scene)      //繪圖物件區塊
-{
-    int x = getPoint()[0];
-    int y = getPoint()[1];
-    scene->createItem(_id, _description);
-    if (_selected)
-    {
-        scene->setBorder();
-    }
-    scene->addComponentItem();
-    scene->setPos(x, y);
-    for (auto child : _nodelist)  //接線
-    {
-        if (_side == "Left")
-        {
-            scene->addLine(x, y + getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
-        }
-        else
-        {
-            scene->addLine(x + getWidth(), y + getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
-        }
-        child->drawComponent(scene);
-    }
-}
-
 void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene, string side)  	//AutoLayout計算區塊
 {
     int NODE_DIST = 25;
@@ -150,7 +125,7 @@ void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene, s
         position += _height + NODE_DIST;
     }
     _side = side;
-    if (_side == "Right")
+    if (_side == RIGHT_SIDE)
     {
         setPoint(x, y);
     }
@@ -203,4 +178,9 @@ Component* Composite::getDecorator()
 bool Composite::isDecorator()
 {
     return false;
+}
+
+string Composite::getSide()
+{
+    return _side;
 }

@@ -9,7 +9,10 @@
 #include "PasteNodeCommand.h"
 #include "AddDecoratorCommand.h"
 #include "ClearDecoratorCommand.h"
+#include "DisplayComponentVisitor.h"
+#include "SaveComponentVisitor.h"
 #include <regex>
+#include <fstream>
 
 MindMapModel::MindMapModel(void)
 {
@@ -24,19 +27,19 @@ MindMapModel::~MindMapModel(void)
 
 void MindMapModel::addRectangleDecorator()
 {
-    Component* decorator = _componentFactory.createComponent("Rectangle");
+    Component* decorator = _componentFactory.createComponent(RECTANGLE_TYPE);
     _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
 }
 
 void MindMapModel::addCircleDecorator()
 {
-    Component* decorator = _componentFactory.createComponent("Circle");
+    Component* decorator = _componentFactory.createComponent(CIRCLE_TYPE);
     _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
 }
 
 void MindMapModel::addTriangleDecorator()
 {
-    Component* decorator = _componentFactory.createComponent("Triangle");
+    Component* decorator = _componentFactory.createComponent(TRIANGLE_TYPE);
     _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));
 }
 
@@ -217,63 +220,16 @@ void MindMapModel::display()  //顯示MindMap
 
 void MindMapModel::saveMindMap(string filename)  //存檔MindMap
 {
-    fstream file;
-    vector<int> oldIdList = getIdList();
-    reOrderNumber();
-    file.open(filename, ios::out);//開啟檔案
+    SaveComponentVisitor visitor;
     if (_nodelist.size() == 0)
     {
         throw ERROR_SAVE;
     }
-    if (!file) //如果開啟檔案失敗 輸出字串
-    {
-        throw ERROR_OPEN_FILE;
-    }
-    for (list<Component*>::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)
-    {
-        file << (*node)->getId() << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getDescription() << DOUBLE_QUOTATION_STRING;
-        file << SPACE_STRING << SPACE_STRING << DOUBLE_QUOTATION_STRING << (*node)->getType() << DOUBLE_QUOTATION_STRING;
-        list<Component*> nodeList = (*node)->getNodeList();
-        for (list<Component*>::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)
-        {
-            file << SPACE_STRING << (*childNode)->getId();
-        }
-        file << SPACE_STRING << endl;
-    }
-    file.close();						//關閉檔案
-    unOrderNumber(oldIdList);
+    Component* root = findNodeByID(0)->getDecorator();
+    root->accept(&visitor);
+    visitor.saveFile(filename);
     display();
     _message += SAVE_FILE_SUCCESS;
-}
-
-void MindMapModel::reOrderNumber()
-{
-    int i = 0;
-    for (auto node : _nodelist)
-    {
-        node->setId(i);
-        i++;
-    }
-}
-
-void MindMapModel::unOrderNumber(vector<int> idList)
-{
-    int i = 0;
-    for (auto node : _nodelist)
-    {
-        node->setId(idList[i]);
-        i++;
-    }
-}
-
-vector<int> MindMapModel::getIdList()
-{
-    vector<int> oldIdList;
-    for (auto node : _nodelist)
-    {
-        oldIdList.push_back(node->getId());
-    }
-    return oldIdList;
 }
 
 void MindMapModel::loadMindMap(string filename)  //讀檔
@@ -328,7 +284,7 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀
     createMindMap(components[0][1]);
     for (unsigned int i = 1; i < components.size(); i++)
     {
-        if (components[i][3] != "Node")
+        if (components[i][3] != NODE_TYPE)
         {
             Component* decorator = _componentFactory.createComponent(components[i][3]);
             _componentFactory.countId();
@@ -345,12 +301,15 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀
 
 void MindMapModel::draw(MindMapGUIScene* scene)  //繪出MindMap
 {
-    Component* root = findNodeByID(0);
+    Component* root = findNodeByID(0)->getDecorator();
     if (root == NULL)
     {
         return;
     }
-    root->getDecorator()->draw(scene);
+    int position = 0;
+    root->calculatePos(position, 0, scene, NONE_SIDE);
+    DisplayComponentVisitor visitor(scene);
+    root->accept(&visitor);
 }
 
 void MindMapModel::disableSelected() //取消選擇
@@ -361,13 +320,13 @@ void MindMapModel::disableSelected() //取消選擇
     }
 }
 
-void MindMapModel::cloneItem()
+void MindMapModel::cloneItem()  //複製Component
 {
     delete _cloneItem;
     _cloneItem = _component->getDecorator()->clone();
 }
 
-void MindMapModel::doCutNodes(Component* component)
+void MindMapModel::doCutNodes(Component* component)  //剪下
 {
     _nodelist.remove(component);
     for (auto item : component->getNodeList())
@@ -376,7 +335,7 @@ void MindMapModel::doCutNodes(Component* component)
     }
 }
 
-void MindMapModel::doClearDecorator(Component* decorator, Component* component)
+void MindMapModel::doClearDecorator(Component* decorator, Component* component)  //清除裝飾
 {
     if (decorator == component)
     {
@@ -389,7 +348,7 @@ void MindMapModel::doClearDecorator(Component* decorator, Component* component)
     }
 }
 
-void MindMapModel::doPasteNodes(Component* component)
+void MindMapModel::doPasteNodes(Component* component) //貼上
 {
     component->setId(_componentFactory.getId());
     _nodelist.push_back(component);
@@ -400,7 +359,7 @@ void MindMapModel::doPasteNodes(Component* component)
     }
 }
 
-bool MindMapModel::isCanRedo()
+bool MindMapModel::isCanRedo() //確認是否可以Redo
 {
     if (_commandManager.getRedoCommandStack().size() != 0)
     {
@@ -409,7 +368,7 @@ bool MindMapModel::isCanRedo()
     return false;
 }
 
-bool MindMapModel::isCanUedo()
+bool MindMapModel::isCanUndo() //確認是否可以Undo
 {
     if (_commandManager.getUndoCommandStack().size() != 0)
     {
@@ -418,7 +377,7 @@ bool MindMapModel::isCanUedo()
     return false;
 }
 
-bool MindMapModel::isHaveDecorator()
+bool MindMapModel::isHaveDecorator() //確認是否有裝飾
 {
     if (_component == _component->getDecorator())
     {

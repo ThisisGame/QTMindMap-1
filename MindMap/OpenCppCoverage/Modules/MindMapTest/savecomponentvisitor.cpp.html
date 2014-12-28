@@ -1,0 +1,140 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		savecomponentvisitor.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "SaveComponentVisitor.h"
+#include "Node.h"
+#include "Root.h"
+#include "TriangleDecorator.h"
+#include "CircleDecorator.h"
+#include "RectangleDecorator.h"
+#include &lt;algorithm&gt;
+#include &lt;fstream&gt;
+
+SaveComponentVisitor::SaveComponentVisitor()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+SaveComponentVisitor::~SaveComponentVisitor()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::Visitor(Node* node)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _saveList.push_back(node);</span>
+<span style = "background-color:#dfd">    for (auto item : node-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#dfd">        item-&gt;accept(this);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::Visitor(Root* root)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _saveList.push_back(root);</span>
+<span style = "background-color:#dfd">    for (auto item : root-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#dfd">        item-&gt;accept(this);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::Visitor(TriangleDecorator* triangle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _saveList.push_back(triangle);</span>
+<span style = "background-color:#fdd">    for (auto item : triangle-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void SaveComponentVisitor::Visitor(CircleDecorator* circle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _saveList.push_back(circle);</span>
+<span style = "background-color:#fdd">    for (auto item : circle-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void SaveComponentVisitor::Visitor(RectangleDecorator* rectangle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _saveList.push_back(rectangle);</span>
+<span style = "background-color:#fdd">    for (auto item : rectangle-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+struct SaveComponentVisitor::PointerCompare
+{
+    bool operator()(const Component* left, const Component* right)
+<span style = "background-color:#dfd">    {</span>
+<span style = "background-color:#dfd">        return *left &lt; *right;</span>
+<span style = "background-color:#dfd">    }</span>
+};
+
+void SaveComponentVisitor::saveFile(string filename)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    stable_sort(_saveList.begin(), _saveList.end(), PointerCompare());</span>
+<span style = "background-color:#dfd">    fstream file;</span>
+<span style = "background-color:#dfd">    vector&lt;int&gt; oldIdList = getIdList();</span>
+<span style = "background-color:#dfd">    reOrderNumber();</span>
+<span style = "background-color:#dfd">    file.open(filename, ios::out);//¶}±ÒÀÉ®×</span>
+<span style = "background-color:#dfd">    if (!file) //¦pªG¶}±ÒÀÉ®×¥¢±Ñ ¿é¥X¦r¦ê</span>
+    {
+<span style = "background-color:#dfd">        throw ERROR_OPEN_FILE;</span>
+    }
+<span style = "background-color:#dfd">    int i = 0;</span>
+<span style = "background-color:#dfd">    for (auto node : _saveList)</span>
+    {
+<span style = "background-color:#dfd">        file &lt;&lt; node-&gt;getId() &lt;&lt; SPACE_STRING &lt;&lt; DOUBLE_QUOTATION_STRING &lt;&lt; node-&gt;getDescription() &lt;&lt; DOUBLE_QUOTATION_STRING;</span>
+<span style = "background-color:#dfd">        file &lt;&lt; SPACE_STRING &lt;&lt; SPACE_STRING &lt;&lt; DOUBLE_QUOTATION_STRING &lt;&lt; node-&gt;getType() &lt;&lt; DOUBLE_QUOTATION_STRING;</span>
+<span style = "background-color:#dfd">        list&lt;Component*&gt; children = node-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">        for (auto child : children)</span>
+        {
+<span style = "background-color:#dfd">            file &lt;&lt; SPACE_STRING &lt;&lt; child-&gt;getId();</span>
+        }
+<span style = "background-color:#dfd">        file &lt;&lt; SPACE_STRING &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">        i++;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    file.close();						//Ãö³¬ÀÉ®×</span>
+<span style = "background-color:#dfd">    unOrderNumber(oldIdList);</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::reOrderNumber()   //­«·s±Æ§Ç
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    int i = 0;</span>
+<span style = "background-color:#dfd">    for (auto node : _saveList)</span>
+    {
+<span style = "background-color:#dfd">        node-&gt;setId(i);</span>
+<span style = "background-color:#dfd">        i++;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::unOrderNumber(vector&lt;int&gt; idList)   //ÁÙ­ì­ì¥»±Æ§Ç
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    int i = 0;</span>
+<span style = "background-color:#dfd">    for (auto node : _saveList)</span>
+    {
+<span style = "background-color:#dfd">        node-&gt;setId(idList[i]);</span>
+<span style = "background-color:#dfd">        i++;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+vector&lt;int&gt; SaveComponentVisitor::getIdList()  //¨ú±oID±Æ§Ç
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    vector&lt;int&gt; oldIdList;</span>
+<span style = "background-color:#dfd">    for (auto node : _saveList)</span>
+    {
+<span style = "background-color:#dfd">        oldIdList.push_back(node-&gt;getId());</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    return oldIdList;</span>
+<span style = "background-color:#dfd">}</span>
+
+</pre>
+	</body>
+</html>

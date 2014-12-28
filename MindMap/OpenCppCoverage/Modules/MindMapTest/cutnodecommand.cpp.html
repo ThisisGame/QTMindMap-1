@@ -11,9 +11,9 @@
 
 CutNodeCommand::CutNodeCommand(Component* component, MindMapModel* model)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _component = component-&gt;getDecorator(); //±q³Ì¤W¼h¶}©l¤Á</span>
 <span style = "background-color:#dfd">    _model = model;</span>
-<span style = "background-color:#dfd">    _parent = component-&gt;getParent();</span>
+<span style = "background-color:#dfd">    _parent = _component-&gt;getParent();</span>
 <span style = "background-color:#dfd">    _oldNodeList = _model-&gt;getNodeList();</span>
 <span style = "background-color:#dfd">    _oldParentList = _parent-&gt;getNodeList();</span>
 <span style = "background-color:#dfd">}</span>

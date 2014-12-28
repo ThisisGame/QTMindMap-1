@@ -16,7 +16,12 @@
 #include "InsertSiblingCommand.h"
 #include "CutNodeCommand.h"
 #include "PasteNodeCommand.h"
+#include "AddDecoratorCommand.h"
+#include "ClearDecoratorCommand.h"
+#include "DisplayComponentVisitor.h"
+#include "SaveComponentVisitor.h"
 #include &lt;regex&gt;
+#include &lt;fstream&gt;
 
 MindMapModel::MindMapModel(void)
 <span style = "background-color:#dfd">{</span>
@@ -28,6 +33,29 @@ MindMapModel::~MindMapModel(void)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    clearList();</span>
 <span style = "background-color:#dfd">}</span>
+
+void MindMapModel::addRectangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    Component* decorator = _componentFactory.createComponent(RECTANGLE_TYPE);</span>
+<span style = "background-color:#fdd">    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::addCircleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    Component* decorator = _componentFactory.createComponent(CIRCLE_TYPE);</span>
+<span style = "background-color:#fdd">    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::addTriangleDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    Component* decorator = _componentFactory.createComponent(TRIANGLE_TYPE);</span>
+<span style = "background-color:#fdd">    _commandManager.execute(new AddDecoratorCommand(_component, decorator, this));</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::clearAllDecorator()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _commandManager.execute(new ClearDecoratorCommand(_component, this));</span>
+<span style = "background-color:#fdd">}</span>
 
 void MindMapModel::createMindMap(string topic)  //·s«Ø¤@­ÓMindmap
 <span style = "background-color:#dfd">{</span>
@@ -135,8 +163,7 @@ void MindMapModel::deleteComponent()
 
 void MindMapModel::cutComponent()
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    delete _cloneItem;</span>
-<span style = "background-color:#dfd">    _cloneItem = _component-&gt;clone();</span>
+<span style = "background-color:#dfd">    cloneItem();</span>
 <span style = "background-color:#dfd">    _commandManager.execute(new CutNodeCommand(_component, this));</span>
 <span style = "background-color:#dfd">}</span>
 
@@ -202,62 +229,16 @@ void MindMapModel::display()  //Åã¥ÜMindMap
 
 void MindMapModel::saveMindMap(string filename)  //¦sÀÉMindMap
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    fstream file;</span>
-<span style = "background-color:#dfd">    vector&lt;int&gt; oldIdList = getIdList();</span>
-<span style = "background-color:#dfd">    reOrderNumber();</span>
-<span style = "background-color:#dfd">    file.open(filename, ios::out);//¶}±ÒÀÉ®×</span>
+<span style = "background-color:#dfd">    SaveComponentVisitor visitor;</span>
 <span style = "background-color:#dfd">    if (_nodelist.size() == 0)</span>
     {
 <span style = "background-color:#dfd">        throw ERROR_SAVE;</span>
     }
-<span style = "background-color:#dfd">    if (!file) //¦pªG¶}±ÒÀÉ®×¥¢±Ñ ¿é¥X¦r¦ê</span>
-    {
-<span style = "background-color:#dfd">        throw ERROR_OPEN_FILE;</span>
-    }
-<span style = "background-color:#dfd">    for (list&lt;Component*&gt;::iterator node = _nodelist.begin(); node != _nodelist.end(); node++)</span>
-    {
-<span style = "background-color:#dfd">        file &lt;&lt; (*node)-&gt;getId() &lt;&lt; SPACE_STRING &lt;&lt; DOUBLE_QUOTATION_STRING &lt;&lt; (*node)-&gt;getDescription() &lt;&lt; DOUBLE_QUOTATION_STRING;</span>
-<span style = "background-color:#dfd">        list&lt;Component*&gt; nodeList = (*node)-&gt;getNodeList();</span>
-<span style = "background-color:#dfd">        for (list&lt;Component*&gt;::iterator childNode = nodeList.begin(); childNode != nodeList.end(); childNode++)</span>
-        {
-<span style = "background-color:#dfd">            file &lt;&lt; SPACE_STRING &lt;&lt; (*childNode)-&gt;getId();</span>
-<span style = "background-color:#dfd">        }</span>
-<span style = "background-color:#dfd">        file &lt;&lt; SPACE_STRING &lt;&lt; endl;</span>
-<span style = "background-color:#dfd">    }</span>
-<span style = "background-color:#dfd">    file.close();						//Ãö³¬ÀÉ®×</span>
-<span style = "background-color:#dfd">    unOrderNumber(oldIdList);</span>
+<span style = "background-color:#dfd">    Component* root = findNodeByID(0)-&gt;getDecorator();</span>
+<span style = "background-color:#dfd">    root-&gt;accept(&amp;visitor);</span>
+<span style = "background-color:#dfd">    visitor.saveFile(filename);</span>
 <span style = "background-color:#dfd">    display();</span>
 <span style = "background-color:#dfd">    _message += SAVE_FILE_SUCCESS;</span>
-<span style = "background-color:#dfd">}</span>
-
-void MindMapModel::reOrderNumber()
-<span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    int i = 0;</span>
-<span style = "background-color:#dfd">    for (auto node : _nodelist)</span>
-    {
-<span style = "background-color:#dfd">        node-&gt;setId(i);</span>
-<span style = "background-color:#dfd">        i++;</span>
-<span style = "background-color:#dfd">    }</span>
-<span style = "background-color:#dfd">}</span>
-
-void MindMapModel::unOrderNumber(vector&lt;int&gt; idList)
-<span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    int i = 0;</span>
-<span style = "background-color:#dfd">    for (auto node : _nodelist)</span>
-    {
-<span style = "background-color:#dfd">        node-&gt;setId(idList[i]);</span>
-<span style = "background-color:#dfd">        i++;</span>
-<span style = "background-color:#dfd">    }</span>
-<span style = "background-color:#dfd">}</span>
-
-vector&lt;int&gt; MindMapModel::getIdList()
-<span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    vector&lt;int&gt; oldIdList;</span>
-<span style = "background-color:#dfd">    for (auto node : _nodelist)</span>
-    {
-<span style = "background-color:#dfd">        oldIdList.push_back(node-&gt;getId());</span>
-<span style = "background-color:#dfd">    }</span>
-<span style = "background-color:#dfd">    return oldIdList;</span>
 <span style = "background-color:#dfd">}</span>
 
 void MindMapModel::loadMindMap(string filename)  //ÅªÀÉ
@@ -294,9 +275,9 @@ void MindMapModel::createNodesConnectionByList(vector&lt;vector&lt;string&gt;&gt
 <span style = "background-color:#dfd">    for (unsigned int i = 0; i &lt; components.size(); i++)</span>
     {
 <span style = "background-color:#dfd">        Component* parnet = findNodeByID(i);</span>
-<span style = "background-color:#dfd">        for (unsigned int j = 2; j &lt; components[i].size(); j++)</span>
+<span style = "background-color:#dfd">        for (unsigned int j = 4; j &lt; components[i].size(); j++)</span>
         {
-<span style = "background-color:#dfd">            stringstream childrenString(components[i][2]);</span>
+<span style = "background-color:#dfd">            stringstream childrenString(components[i][4]);</span>
 <span style = "background-color:#dfd">            string child;</span>
 <span style = "background-color:#dfd">            while (childrenString &gt;&gt; child)</span>
             {
@@ -312,21 +293,32 @@ void MindMapModel::createMindMapByList(vector&lt;vector&lt;string&gt;&gt; compon
 <span style = "background-color:#dfd">    createMindMap(components[0][1]);</span>
 <span style = "background-color:#dfd">    for (unsigned int i = 1; i &lt; components.size(); i++)</span>
     {
-<span style = "background-color:#dfd">        doInsertNode(createNode());</span>
-<span style = "background-color:#dfd">        selectComponent(i);</span>
-<span style = "background-color:#dfd">        setDescription(components[i][1]);</span>
+<span style = "background-color:#dfd">        if (components[i][3] != NODE_TYPE)</span>
+        {
+<span style = "background-color:#fdd">            Component* decorator = _componentFactory.createComponent(components[i][3]);</span>
+<span style = "background-color:#fdd">            _componentFactory.countId();</span>
+<span style = "background-color:#fdd">            _nodelist.push_back(decorator);</span>
+        }
+<span style = "background-color:#fdd">        else</span>
+        {
+<span style = "background-color:#dfd">            doInsertNode(createNode());</span>
+<span style = "background-color:#dfd">            selectComponent(i);</span>
+<span style = "background-color:#dfd">            setDescription(components[i][1]);</span>
+        }
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
 void MindMapModel::draw(MindMapGUIScene* scene)  //Ã¸¥XMindMap
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    Component* root = findNodeByID(0);</span>
+<span style = "background-color:#fdd">    Component* root = findNodeByID(0)-&gt;getDecorator();</span>
 <span style = "background-color:#fdd">    if (root == NULL)</span>
     {
 <span style = "background-color:#fdd">        return;</span>
     }
 <span style = "background-color:#fdd">    int position = 0;</span>
-<span style = "background-color:#fdd">    root-&gt;draw(position, 0, scene);</span>
+<span style = "background-color:#fdd">    root-&gt;calculatePos(position, 0, scene, NONE_SIDE);</span>
+<span style = "background-color:#fdd">    DisplayComponentVisitor visitor(scene);</span>
+<span style = "background-color:#fdd">    root-&gt;accept(&amp;visitor);</span>
 <span style = "background-color:#fdd">}</span>
 
 void MindMapModel::disableSelected() //¨ú®ø¿ï¾Ü
@@ -337,13 +329,13 @@ void MindMapModel::disableSelected() //¨ú®ø¿ï¾Ü
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
-void MindMapModel::cloneItem()
+void MindMapModel::cloneItem()  //½Æ»sComponent
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    delete _cloneItem;</span>
-<span style = "background-color:#dfd">    _cloneItem = _component-&gt;clone();</span>
+<span style = "background-color:#dfd">    _cloneItem = _component-&gt;getDecorator()-&gt;clone();</span>
 <span style = "background-color:#dfd">}</span>
 
-void MindMapModel::doCutNodes(Component* component)
+void MindMapModel::doCutNodes(Component* component)  //°Å¤U
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _nodelist.remove(component);</span>
 <span style = "background-color:#dfd">    for (auto item : component-&gt;getNodeList())</span>
@@ -352,7 +344,20 @@ void MindMapModel::doCutNodes(Component* component)
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
-void MindMapModel::doPasteNodes(Component* component)
+void MindMapModel::doClearDecorator(Component* decorator, Component* component)  //²M°£¸Ë¹¢
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (decorator == component)</span>
+    {
+<span style = "background-color:#fdd">        return;</span>
+    }
+<span style = "background-color:#fdd">    _nodelist.remove(decorator);</span>
+<span style = "background-color:#fdd">    for (auto item : decorator-&gt;getNodeList())</span>
+    {
+<span style = "background-color:#fdd">        doClearDecorator(item, component);</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::doPasteNodes(Component* component) //¶K¤W
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    component-&gt;setId(_componentFactory.getId());</span>
 <span style = "background-color:#dfd">    _nodelist.push_back(component);</span>
@@ -363,7 +368,7 @@ void MindMapModel::doPasteNodes(Component* component)
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
-bool MindMapModel::isCanRedo()
+bool MindMapModel::isCanRedo() //½T»{¬O§_¥i¥HRedo
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    if (_commandManager.getRedoCommandStack().size() != 0)</span>
     {
@@ -372,13 +377,22 @@ bool MindMapModel::isCanRedo()
 <span style = "background-color:#dfd">    return false;</span>
 <span style = "background-color:#dfd">}</span>
 
-bool MindMapModel::isCanUedo()
+bool MindMapModel::isCanUndo() //½T»{¬O§_¥i¥HUndo
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    if (_commandManager.getUndoCommandStack().size() != 0)</span>
     {
 <span style = "background-color:#dfd">        return true;</span>
     }
 <span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool MindMapModel::isHaveDecorator() //½T»{¬O§_¦³¸Ë¹¢
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_component == _component-&gt;getDecorator())</span>
+    {
+<span style = "background-color:#dfd">        return false;</span>
+    }
+<span style = "background-color:#fdd">    return true;</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

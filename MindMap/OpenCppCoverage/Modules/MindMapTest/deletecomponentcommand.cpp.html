@@ -12,8 +12,9 @@
 DeleteComponentCommand::DeleteComponentCommand(Component* component, MindMapModel* model)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _decorator = component-&gt;getDecorator();</span>
 <span style = "background-color:#dfd">    _model = model;</span>
-<span style = "background-color:#dfd">    _parent = _component-&gt;getParent();</span>
+<span style = "background-color:#dfd">    _parent = _decorator-&gt;getParent();</span>
 <span style = "background-color:#dfd">    _oldChildList = _component-&gt;getNodeList();</span>
 <span style = "background-color:#dfd">    _oldNodeList = _model-&gt;getNodeList();</span>
 <span style = "background-color:#dfd">    _oldParentList = _parent-&gt;getNodeList();</span>
@@ -25,16 +26,16 @@ DeleteComponentCommand::~DeleteComponentCommand()
 
 void DeleteComponentCommand::execute()
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _model-&gt;doDeleteNode(_component);</span>
-<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(_component);</span>
+<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(_decorator);</span>
 <span style = "background-color:#dfd">    _parent-&gt;addChilds(_oldChildList);</span>
+<span style = "background-color:#dfd">    _component-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">    _model-&gt;doCutNodes(_decorator);</span>
 <span style = "background-color:#dfd">}</span>
 
 void DeleteComponentCommand::unexcute()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _parent-&gt;clearNodeList();</span>
 <span style = "background-color:#dfd">    _parent-&gt;addChilds(_oldParentList);</span>
-<span style = "background-color:#dfd">    _component-&gt;clearNodeList();</span>
 <span style = "background-color:#dfd">    _component-&gt;addChilds(_oldChildList);</span>
 <span style = "background-color:#dfd">    _model-&gt;doAddNodes(_oldNodeList);</span>
 <span style = "background-color:#dfd">}</span>

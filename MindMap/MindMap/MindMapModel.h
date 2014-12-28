@@ -3,7 +3,6 @@
 #include <map>
 #include <list>
 #include <vector>
-#include <fstream>
 #include <iterator>
 #include <regex>
 #include "ConstString.h"
@@ -54,7 +53,7 @@ class MindMapModel
         list<Component*> getNodeList();
         bool isRoot();
         bool isCanRedo();
-        bool isCanUedo();
+        bool isCanUndo();
         void cloneItem();
         void doCutNodes(Component*);
         void doPasteNodes(Component*);
@@ -71,13 +70,10 @@ class MindMapModel
         string _message;
         list<Component*> _nodelist;
         void clearList();
-        void reOrderNumber();
-        void unOrderNumber(vector<int>);
         void createMindMapByList(vector<vector<string>>);
         void createNodesConnectionByList(vector<vector<string>>);
         Component* createNode();
         CommandManager _commandManager;
         Component* findNodeByID(int);
-        vector<int> getIdList();
         Component* _cloneItem;
 };

@@ -20,7 +20,7 @@ string Component::getDescription()
     return _description;
 }
 
-int Component::getId()
+int Component::getId() const
 {
     return _id;
 }
@@ -73,9 +73,7 @@ int Component::getWidth()
     return _width;
 }
 
-void Component::draw(MindMapGUIScene* scene)
+bool Component::operator < (const Component& component)const
 {
-    int position = 0;
-    calculatePos(position, 0, scene, "None");
-    drawComponent(scene);
+    return _id < component.getId();
 }

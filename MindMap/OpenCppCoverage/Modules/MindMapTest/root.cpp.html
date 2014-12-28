@@ -8,6 +8,7 @@
 	</title>
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "Root.h"
+#include "MindMapGUIScene.h"
 
 Root::Root(int id) : Composite(id)
 <span style = "background-color:#dfd">{</span>
@@ -36,6 +37,7 @@ void Root::addSibling(Component* sibling) //Root¤£¯à¦³Sibling
 
 void Root::setParent(Component* parent) //Root¤£¯à³]©wParent
 <span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent = parent;</span>
 <span style = "background-color:#dfd">}</span>
 
 bool Root::isParent(Component* parent)
@@ -45,12 +47,91 @@ bool Root::isParent(Component* parent)
 
 Component* Root::getParent()
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    return NULL;</span>
+<span style = "background-color:#dfd">    return _parent;</span>
 <span style = "background-color:#dfd">}</span>
 
 Component* Root::clone()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    return NULL;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Root::calculatePos(int&amp; position, int level, MindMapGUIScene* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    int positionRight = 0;</span>
+<span style = "background-color:#fdd">    int positionLeft = 0;</span>
+<span style = "background-color:#fdd">    int i = 0;</span>
+    //SETUP
+<span style = "background-color:#fdd">    scene-&gt;createItem(_id, _description);</span>
+<span style = "background-color:#fdd">    setHeightAndWidth(scene-&gt;getHeight(), scene-&gt;getWidth());</span>
+<span style = "background-color:#fdd">    scene-&gt;deleteItem();</span>
+<span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
+    {
+<span style = "background-color:#fdd">        if (i % 2 == 0)</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;calculatePos(positionRight, getWidth() + 25, scene, RIGHT_SIDE);</span>
+        }
+<span style = "background-color:#fdd">        else</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;calculatePos(positionLeft, getWidth() + 25, scene, LEFT_SIDE);</span>
+        }
+<span style = "background-color:#fdd">        i++;</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">    int test = 0;</span>
+<span style = "background-color:#fdd">    int mode = 0;</span>
+<span style = "background-color:#fdd">    int y = 0;</span>
+<span style = "background-color:#fdd">    i = 0;</span>
+<span style = "background-color:#fdd">    if (positionLeft &gt; positionRight)</span>
+    {
+<span style = "background-color:#fdd">        mode = 1;</span>
+<span style = "background-color:#fdd">        y = (positionLeft - getHeight() - 25) / 2;</span>
+<span style = "background-color:#fdd">        test = y - (positionRight - getHeight() - 25) / 2;</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#fdd">        mode = 2;</span>
+<span style = "background-color:#fdd">        y = (positionRight - getHeight() - 25) / 2;</span>
+<span style = "background-color:#fdd">        test = y - (positionLeft - getHeight() - 25) / 2;</span>
+    }
+<span style = "background-color:#fdd">    setPoint(0, y);</span>
+<span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
+    {
+<span style = "background-color:#fdd">        if (i % 2 == 0 &amp;&amp; mode == 1)</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;setChildrenYPoint(test);</span>
+        }
+<span style = "background-color:#fdd">        else if (i % 2 == 1 &amp;&amp; mode == 2)</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;setChildrenYPoint(test);</span>
+        }
+<span style = "background-color:#fdd">        i++;</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void Root::setChildrenXPoint(int x, bool firstNode)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (firstNode == false)</span>
+    {
+<span style = "background-color:#fdd">        _point[0] += x;</span>
+    }
+<span style = "background-color:#fdd">    firstNode = false;</span>
+<span style = "background-color:#fdd">    int i = 0;</span>
+<span style = "background-color:#fdd">    for (auto child : _nodelist)  //±µ½u</span>
+    {
+<span style = "background-color:#fdd">        if (i % 2 != 0)</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;setChildrenXPoint(-x, firstNode);</span>
+        }
+<span style = "background-color:#fdd">        else</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;setChildrenXPoint(x, firstNode);</span>
+        }
+<span style = "background-color:#fdd">        i++;</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void Root::accept(ComponentVisitor* visitor)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitor-&gt;Visitor(this);</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

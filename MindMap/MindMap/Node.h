@@ -15,5 +15,6 @@ class Node :
         bool isParent(Component*);
         Component* getParent();
         Component* clone();
+        void accept(ComponentVisitor*);
 };
 

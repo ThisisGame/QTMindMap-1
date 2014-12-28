@@ -11,7 +11,7 @@
 
 InsertParentCommand::InsertParentCommand(Component* component, Component* parent, MindMapModel* model)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _component = component-&gt;getDecorator();</span>
 <span style = "background-color:#dfd">    _newParent = parent;</span>
 <span style = "background-color:#dfd">    _oldParent = _component-&gt;getParent();</span>
 <span style = "background-color:#dfd">    _model = model;</span>

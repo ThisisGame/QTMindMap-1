@@ -8,6 +8,8 @@
 	</title>
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "Node.h"
+#include "Decorator.h"
+
 
 Node::Node(int id) : Composite(id)
 <span style = "background-color:#dfd">{</span>
@@ -67,6 +69,11 @@ Component* Node::clone()
 <span style = "background-color:#dfd">        cloneItem-&gt;addChild(child);</span>
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">    return cloneItem;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::accept(ComponentVisitor* visitor)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitor-&gt;Visitor(this);</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

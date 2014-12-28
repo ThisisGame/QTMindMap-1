@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <fstream>
+#include "Root.h"
+#include "Node.h"
 #include "MindMapModel.h"
 #include <windows.h>
 #include "TextUIPresentationModel.h"

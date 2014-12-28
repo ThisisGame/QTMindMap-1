@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <fstream>
+#include "Root.h"
+#include "Node.h"
 #include "MindMapModel.h"
 #include <windows.h>
 
@@ -349,9 +351,9 @@ namespace MindMapTest
     TEST_F(MindMapModelTest, testIsCanUedo)
     {
         _model->doAddNodes(_components);
-        ASSERT_FALSE(_model->isCanUedo());
+        ASSERT_FALSE(_model->isCanUndo());
         _model->selectComponent(0);
         _model->changeDescription("ComputerScience");
-        ASSERT_TRUE(_model->isCanUedo());
+        ASSERT_TRUE(_model->isCanUndo());
     }
 }

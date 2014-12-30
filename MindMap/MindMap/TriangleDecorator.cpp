@@ -23,5 +23,5 @@ Component* TriangleDecorator::clone()
 
 void TriangleDecorator::accept(ComponentVisitor* visitor)
 {
-    visitor->Visitor(this);
+    visitor->visitor(this);
 }

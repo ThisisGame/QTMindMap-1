@@ -11,6 +11,8 @@
 #include "ClearDecoratorCommand.h"
 #include "DisplayComponentVisitor.h"
 #include "SaveComponentVisitor.h"
+#include "SimpleExpendAndCollapseComponentVisitor.h"
+#include "AllExpendAndCollapseComponentVisitor.h"
 #include <regex>
 #include <fstream>
 
@@ -379,9 +381,53 @@ bool MindMapModel::isCanUndo() //確認是否可以Undo
 
 bool MindMapModel::isHaveDecorator() //確認是否有裝飾
 {
-    if (_component == _component->getDecorator())
+    if (_component == NULL || _component == _component->getDecorator())
     {
         return false;
     }
     return true;
+}
+
+void MindMapModel::simpleExpend()
+{
+    SimpleExpendAndCollapseComponentVisitor visitor;
+    _component->accept(&visitor);
+}
+
+void MindMapModel::allExpend()
+{
+    AllExpendAndCollapseComponentVisitor visitor;
+    _component->accept(&visitor);
+}
+
+void MindMapModel::up()
+{
+    Component* component = _component->getDecorator();
+    component->getParent()->up(component);
+}
+
+void MindMapModel::down()
+{
+    Component* component = _component->getDecorator();
+    component->getParent()->down(component);
+}
+
+bool MindMapModel::isCanUp()
+{
+    if (_component->getType() == ROOT_TYPE)
+    {
+        return false;
+    }
+    Component* component = _component->getDecorator();
+    return !component->getParent()->isUpComonent(component);
+}
+
+bool MindMapModel::isCanDown()
+{
+    if (_component->getType() == ROOT_TYPE)
+    {
+        return false;
+    }
+    Component* component = _component->getDecorator();
+    return !component->getParent()->isUnderComonent(component);
 }

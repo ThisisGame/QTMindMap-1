@@ -78,6 +78,44 @@ bool GUIPresentationModel::getUndoActionEnable()
     return _model->isCanUndo();
 }
 
+bool GUIPresentationModel::getUpActionEnable()
+{
+    return _upActionEnable;
+}
+
+bool GUIPresentationModel::getDownActionEnable()
+{
+    return _downActionEnable;
+}
+
+void GUIPresentationModel::allExpend()
+{
+    _model->allExpend();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::simpleExpend()
+{
+    _model->simpleExpend();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::up()
+{
+    _model->up();
+    _upActionEnable = _model->isCanUp();
+    _downActionEnable = _model->isCanDown();
+    notifyUpdateView();
+}
+
+void GUIPresentationModel::down()
+{
+    _model->down();
+    _upActionEnable = _model->isCanUp();
+    _downActionEnable = _model->isCanDown();
+    notifyUpdateView();
+}
+
 void GUIPresentationModel::addCircleDecorator()
 {
     _model->addCircleDecorator();
@@ -160,6 +198,8 @@ void GUIPresentationModel::selectComponent(int id)
     _editNodeActionEnable = true;
     _addDecoratorActionEnable = true;
     _clearAllDecoratorActionEnable = _model->isHaveDecorator();
+    _upActionEnable = _model->isCanUp();
+    _downActionEnable = _model->isCanDown();
     if (!_model->isRoot())
     {
         _deleteNodeActionEnable = true;
@@ -242,6 +282,8 @@ void GUIPresentationModel::disableAction()
     _cutActionEnbale = false;
     _clearAllDecoratorActionEnable = false;
     _addDecoratorActionEnable = false;
+    _upActionEnable = false;
+    _downActionEnable = false;
 }
 
 void GUIPresentationModel::copyComponent()

@@ -79,8 +79,14 @@ void MindMapGUIView::setupToolbar()
     _funcionailToolBar->addAction(_addRectangleAction);
     _funcionailToolBar->addAction(_addCircleAction);
     _funcionailToolBar->addAction(_addTriangleAction);
-    _mainToolBar->addSeparator();
+    _funcionailToolBar->addSeparator();
     _funcionailToolBar->addAction(_clearDecoratorAction);
+    _funcionailToolBar->addSeparator();
+    _funcionailToolBar->addAction(_simpleExpendAction);
+    _funcionailToolBar->addAction(_allExpendAction);
+    _funcionailToolBar->addSeparator();
+    _funcionailToolBar->addAction(_upAction);
+    _funcionailToolBar->addAction(_downAction);
 }
 
 void MindMapGUIView::setupView()
@@ -110,9 +116,13 @@ void MindMapGUIView::setupString()
     REDO_STRING = "Redo";
     UNDO_STRING = "Undo";
     ADD_TRIANGLE_STRING = "Add triangle decorator";
-    ADD_CIRCLE_STRING = "Add circle decorator";;
-    ADD_RECTANGLE_STRING = "Add rectangle decorator";;
-    CLEAR_DECORATOR_STRING = "Clear all decorator";;
+    ADD_CIRCLE_STRING = "Add circle decorator";
+    ADD_RECTANGLE_STRING = "Add rectangle decorator";
+    CLEAR_DECORATOR_STRING = "Clear all decorator";
+    SIMPLE_EXPEND_STRING = "Expend/Collapse";
+    ALL_EXPEND_STRING = "Expend/Collapse All";
+    UP_STRING = "Up";
+    DOWN_STRING = "Down";
 }
 
 void MindMapGUIView::connectEvents()
@@ -137,6 +147,10 @@ void MindMapGUIView::connectEvents()
     connect(_addCircleAction, SIGNAL(triggered()), this, SLOT(addCircleDecorator()));
     connect(_addRectangleAction, SIGNAL(triggered()), this, SLOT(addRectangleDecorator()));
     connect(_clearDecoratorAction, SIGNAL(triggered()), this, SLOT(clearDecorator()));
+    connect(_simpleExpendAction, SIGNAL(triggered()), this, SLOT(simpleExpend()));
+    connect(_allExpendAction, SIGNAL(triggered()), this, SLOT(allExpend()));
+    connect(_upAction, SIGNAL(triggered()), this, SLOT(up()));
+    connect(_downAction, SIGNAL(triggered()), this, SLOT(down()));
 }
 void MindMapGUIView::createActions()
 {
@@ -155,10 +169,34 @@ void MindMapGUIView::createActions()
     _undoAction = new QAction(QIcon("icons/undo.png"), UNDO_STRING, this);
     _redoAction = new QAction(QIcon("icons/redo.png"), REDO_STRING, this);
     //
-    _addTriangleAction = new QAction(QIcon("icons/triangle.png"), ADD_TRIANGLE_STRING, this);;
-    _addCircleAction = new QAction(QIcon("icons/circle.png"), ADD_CIRCLE_STRING, this);;
-    _addRectangleAction = new QAction(QIcon("icons/rectangle.png"), ADD_RECTANGLE_STRING, this);;
-    _clearDecoratorAction = new QAction(QIcon("icons/clearDecorator.png"), CLEAR_DECORATOR_STRING, this);;
+    _addTriangleAction = new QAction(QIcon("icons/triangle.png"), ADD_TRIANGLE_STRING, this);
+    _addCircleAction = new QAction(QIcon("icons/circle.png"), ADD_CIRCLE_STRING, this);
+    _addRectangleAction = new QAction(QIcon("icons/rectangle.png"), ADD_RECTANGLE_STRING, this);
+    _clearDecoratorAction = new QAction(QIcon("icons/clearDecorator.png"), CLEAR_DECORATOR_STRING, this);
+    _simpleExpendAction = new QAction(QIcon("icons/simpleExpend.png"), SIMPLE_EXPEND_STRING, this);
+    _allExpendAction = new QAction(QIcon("icons/allExpend.png"), ALL_EXPEND_STRING, this);
+    _upAction = new QAction(QIcon("icons/up.png"), UP_STRING, this);
+    _downAction = new QAction(QIcon("icons/down.png"), DOWN_STRING, this);
+}
+
+void MindMapGUIView::up()
+{
+    _pModel->up();
+}
+
+void MindMapGUIView::down()
+{
+    _pModel->down();
+}
+
+void MindMapGUIView::allExpend()
+{
+    _pModel->allExpend();
+}
+
+void MindMapGUIView::simpleExpend()
+{
+    _pModel->simpleExpend();
 }
 
 void MindMapGUIView::addTriangleDecorator()
@@ -209,7 +247,11 @@ void MindMapGUIView::updateActions()
     _addCircleAction->setEnabled(_pModel->getAddDecoratorActionEnable());
     _addTriangleAction->setEnabled(_pModel->getAddDecoratorActionEnable());
     _clearDecoratorAction->setEnabled(_pModel->getClearAllDecoratorActionEnable());
-    //_funcionailToolBar->setVisible(_pModel->getAddDecoratorActionEnable());
+    _simpleExpendAction->setEnabled(_pModel->getAddDecoratorActionEnable());
+    _allExpendAction->setEnabled(_pModel->getAddDecoratorActionEnable());
+    _upAction->setEnabled(_pModel->getUpActionEnable());
+    _downAction->setEnabled(_pModel->getDownActionEnable());
+    _funcionailToolBar->setVisible(_pModel->getAddDecoratorActionEnable());
 }
 
 void MindMapGUIView::aboutActionClick()

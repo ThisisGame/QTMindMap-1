@@ -11,10 +11,10 @@ class ComponentVisitor
     public:
         ComponentVisitor();
         virtual ~ComponentVisitor();
-        virtual void Visitor(Node*) = 0;
-        virtual void Visitor(Root*) = 0;
-        virtual void Visitor(RectangleDecorator*) = 0;
-        virtual void Visitor(TriangleDecorator*) = 0;
-        virtual void Visitor(CircleDecorator*) = 0;
+        virtual void visitor(Node*) = 0;
+        virtual void visitor(Root*) = 0;
+        virtual void visitor(RectangleDecorator*) = 0;
+        virtual void visitor(TriangleDecorator*) = 0;
+        virtual void visitor(CircleDecorator*) = 0;
 };
 

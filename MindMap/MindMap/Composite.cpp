@@ -7,6 +7,7 @@ Composite::Composite(int id)
     _id = id;
     _parent = NULL;
     _side = NONE_SIDE;
+    _expend = true;
 }
 
 Composite::~Composite()
@@ -106,14 +107,16 @@ void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene, s
     int NODE_DIST = 25;
     int x = level;
     int y = position;
-    int getheight = 0;
     scene->createItem(_id, _description);
     setHeightAndWidth(scene->getHeight(), scene->getWidth());
     level = level + scene->getWidth() + NODE_DIST;
     scene->deleteItem();
-    for (auto child : _nodelist)
+    if (_expend == true)
     {
-        child->calculatePos(position, level, scene, side);
+        for (auto child : _nodelist)
+        {
+            child->calculatePos(position, level, scene, side);
+        }
     }
     int height = position - y;
     if (height != 0)
@@ -183,4 +186,72 @@ bool Composite::isDecorator()
 string Composite::getSide()
 {
     return _side;
+}
+
+bool Composite::isExpend()
+{
+    return _expend;
+}
+
+void Composite::setExpend(bool expend)
+{
+    _expend = expend;
+}
+
+void Composite::up(Component* component)
+{
+    if (*_nodelist.begin() == component)
+    {
+        return;
+    }
+    list<Component*>::iterator upComponent;
+    for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
+    {
+        if (*i == component)
+        {
+            Component*  newComponent = *upComponent;
+            *upComponent = component;
+            *i = newComponent;
+            return;
+        }
+        upComponent = i;
+    }
+}
+
+void Composite::down(Component* component)
+{
+    if (*--_nodelist.end() == component)
+    {
+        return;
+    }
+    list<Component*>::iterator upComponent;
+    for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
+    {
+        if (*i == component)
+        {
+            upComponent = i++;
+            Component* newComponent = *i;
+            *upComponent = newComponent;
+            *i = component;
+            return;
+        }
+    }
+}
+
+bool Composite::isUpComonent(Component* component)
+{
+    if (*_nodelist.begin() == component)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Composite::isUnderComonent(Component* component)
+{
+    if (*--_nodelist.end() == component)
+    {
+        return true;
+    }
+    return false;
 }

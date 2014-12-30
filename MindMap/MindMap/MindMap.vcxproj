@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddDecoratorCommand.cpp" />
+    <ClCompile Include="AllExpendAndCollapseComponentVisitor.cpp" />
     <ClCompile Include="ChangeParentCommand.cpp" />
     <ClCompile Include="CircleDecorator.cpp" />
     <ClCompile Include="ClearDecoratorCommand.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="PasteNodeCommand.cpp" />
     <ClCompile Include="RectangleDecorator.cpp" />
     <ClCompile Include="SaveComponentVisitor.cpp" />
+    <ClCompile Include="SimpleExpendAndCollapseComponentVisitor.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextUIPresentationModel.cpp" />
     <ClCompile Include="Root.cpp" />
@@ -198,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddDecoratorCommand.h" />
+    <ClInclude Include="AllExpendAndCollapseComponentVisitor.h" />
     <ClInclude Include="ChangeParentCommand.h" />
     <ClInclude Include="CircleDecorator.h" />
     <ClInclude Include="ClearDecoratorCommand.h" />
@@ -214,6 +217,7 @@
     <ClInclude Include="DisplayComponentVisitor.h" />
     <ClInclude Include="EditComponentCommand.h" />
     <ClInclude Include="SaveComponentVisitor.h" />
+    <ClInclude Include="SimpleExpendAndCollapseComponentVisitor.h" />
     <ClInclude Include="TriangleDecorator.h" />
     <ClInclude Include="ComponentVisitor.h" />
     <CustomBuild Include="GraphicComponentItem.h">

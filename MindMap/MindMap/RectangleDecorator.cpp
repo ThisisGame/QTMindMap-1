@@ -23,5 +23,5 @@ Component* RectangleDecorator::clone()
 
 void RectangleDecorator::accept(ComponentVisitor* visitor)
 {
-    visitor->Visitor(this);
+    visitor->visitor(this);
 }

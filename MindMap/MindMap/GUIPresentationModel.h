@@ -12,8 +12,7 @@ class GUIPresentationModel : public Subject
         void addRectangleDecorator();
         void addCircleDecorator();
         void addTriangleDecorator();
-        void clearAllDecorator
-        ();
+        void clearAllDecorator();
         void loadMindMap(string);
         void selectComponent(int);
         void disableSelected();
@@ -40,8 +39,14 @@ class GUIPresentationModel : public Subject
         bool getRedoActionEnable();
         bool getAddDecoratorActionEnable();
         bool getClearAllDecoratorActionEnable();
+        bool getUpActionEnable();
+        bool getDownActionEnable();
         void undo();
         void redo();
+        void simpleExpend();
+        void allExpend();
+        void up();
+        void down();
     private:
         MindMapModel* _model;
         string _message;
@@ -58,5 +63,7 @@ class GUIPresentationModel : public Subject
         bool checkString(string, bool);
         bool _addDecoratorActionEnable;
         bool _clearAllDecoratorActionEnable;
+        bool _upActionEnable;
+        bool _downActionEnable;
 };
 

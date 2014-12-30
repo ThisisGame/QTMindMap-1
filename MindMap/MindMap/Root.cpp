@@ -122,5 +122,5 @@ void Root::setChildrenXPoint(int x, bool firstNode)
 
 void Root::accept(ComponentVisitor* visitor)
 {
-    visitor->Visitor(this);
+    visitor->visitor(this);
 }

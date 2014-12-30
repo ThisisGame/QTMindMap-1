@@ -63,6 +63,12 @@ class MindMapModel
         void draw(MindMapGUIScene*);
         void disableSelected();
         bool isHaveDecorator();
+        void simpleExpend();
+        void allExpend();
+        void up();
+        void down();
+        bool isCanUp();
+        bool isCanDown();
     private:
         int _selectedComponentId;
         ComponentFactory _componentFactory;

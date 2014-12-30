@@ -64,5 +64,5 @@ Component* Node::clone()
 
 void Node::accept(ComponentVisitor* visitor)
 {
-    visitor->Visitor(this);
+    visitor->visitor(this);
 }

@@ -187,6 +187,12 @@
     <ClCompile Include="SaveComponentVisitor.cpp">
       <Filter>Source Files\Visitor</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleExpendAndCollapseComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="AllExpendAndCollapseComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstString.h">
@@ -283,6 +289,12 @@
       <Filter>Header Files\Component\Decorator</Filter>
     </ClInclude>
     <ClInclude Include="SaveComponentVisitor.h">
+      <Filter>Header Files\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleExpendAndCollapseComponentVisitor.h">
+      <Filter>Header Files\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="AllExpendAndCollapseComponentVisitor.h">
       <Filter>Header Files\Visitor</Filter>
     </ClInclude>
   </ItemGroup>

@@ -49,6 +49,10 @@ class MindMapGUIView : public QMainWindow, public Observer
         void addCircleDecorator();
         void addTriangleDecorator();
         void clearDecorator();
+        void simpleExpend();
+        void allExpend();
+        void up();
+        void down();
     protected:
         virtual void mousePressEvent(QMouseEvent*);
         virtual void mouseDoubleClickEvent(QMouseEvent*);
@@ -80,6 +84,10 @@ class MindMapGUIView : public QMainWindow, public Observer
         QAction* _addCircleAction;
         QAction* _addRectangleAction;
         QAction* _clearDecoratorAction;
+        QAction* _simpleExpendAction;
+        QAction* _allExpendAction;
+        QAction* _upAction;
+        QAction* _downAction;
         void setupString();
         void setupMenu();
         void setupToolbar();
@@ -107,5 +115,9 @@ class MindMapGUIView : public QMainWindow, public Observer
         QString ADD_CIRCLE_STRING;
         QString ADD_RECTANGLE_STRING;
         QString CLEAR_DECORATOR_STRING;
+        QString SIMPLE_EXPEND_STRING;
+        QString ALL_EXPEND_STRING;
+        QString UP_STRING;
+        QString DOWN_STRING;
 };
 

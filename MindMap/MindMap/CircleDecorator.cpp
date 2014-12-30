@@ -23,5 +23,5 @@ Component* CircleDecorator::clone()
 
 void CircleDecorator::accept(ComponentVisitor* visitor)
 {
-    visitor->Visitor(this);
+    visitor->visitor(this);
 }

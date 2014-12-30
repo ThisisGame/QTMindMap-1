@@ -48,6 +48,10 @@ class Component
         virtual void changeNodeByNode(Component*, Component*) = 0;
         virtual bool isDecorator() = 0;
         virtual void accept(ComponentVisitor*) = 0;
+        virtual void up(Component*) = 0;
+        virtual void down(Component*) = 0;
+        virtual bool isUpComonent(Component*) = 0;
+        virtual bool isUnderComonent(Component*) = 0;
     protected:
         int _id;
         vector<int> _point;

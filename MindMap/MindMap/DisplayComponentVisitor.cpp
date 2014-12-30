@@ -15,11 +15,15 @@ DisplayComponentVisitor::~DisplayComponentVisitor()
 {
 }
 
-void DisplayComponentVisitor::Visitor(Node* node)  //NODE畫圖
+void DisplayComponentVisitor::visitor(Node* node)  //NODE畫圖
 {
     int x = node->getPoint()[0];
     int y = node->getPoint()[1];
     drawNode(x, y, node->getId(), node->getDescription(), node->getSelected());
+    if (!node->isExpend())
+    {
+        return;
+    }
     for (auto child : node->getNodeList())  //接線
     {
         if (node->getSide() == LEFT_SIDE)
@@ -34,11 +38,15 @@ void DisplayComponentVisitor::Visitor(Node* node)  //NODE畫圖
     }
 }
 
-void DisplayComponentVisitor::Visitor(Root* root)  //ROOT畫圖
+void DisplayComponentVisitor::visitor(Root* root)  //ROOT畫圖
 {
     int x = root->getPoint()[0];
     int y = root->getPoint()[1];
     drawNode(x, y, root->getId(), root->getDescription(), root->getSelected());
+    if (!root->isExpend())
+    {
+        return;
+    }
     int i = 0;
     for (auto child : root->getNodeList())  //接線
     {
@@ -55,19 +63,19 @@ void DisplayComponentVisitor::Visitor(Root* root)  //ROOT畫圖
     }
 }
 
-void DisplayComponentVisitor::Visitor(TriangleDecorator* triangle) //三角形裝飾
+void DisplayComponentVisitor::visitor(TriangleDecorator* triangle) //三角形裝飾
 {
     displayNode(triangle->getNodeList());
     _scene->addTriangleDecorator(triangle->getPoint()[0], triangle->getPoint()[1], triangle->getWidth(), triangle->getHeight());
 }
 
-void DisplayComponentVisitor::Visitor(CircleDecorator* circle) //圓形裝飾
+void DisplayComponentVisitor::visitor(CircleDecorator* circle) //圓形裝飾
 {
     displayNode(circle->getNodeList());
     _scene->addCircleDecorator(circle->getPoint()[0], circle->getPoint()[1], circle->getWidth(), circle->getHeight());
 }
 
-void DisplayComponentVisitor::Visitor(RectangleDecorator* rectangle) //方形裝飾
+void DisplayComponentVisitor::visitor(RectangleDecorator* rectangle) //方形裝飾
 {
     displayNode(rectangle->getNodeList());
     _scene->addRectDecorator(rectangle->getPoint()[0], rectangle->getPoint()[1], rectangle->getWidth(), rectangle->getHeight());

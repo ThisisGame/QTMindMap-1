@@ -24,6 +24,10 @@ class Decorator : public Component
         Component* getDecorator();
         bool isDecorator();
         void changeNodeByNode(Component*, Component*);
+        void up(Component*);
+        void down(Component*);
+        bool isUpComonent(Component*);
+        bool isUnderComonent(Component*);
     protected:
         Component* _child;
         Component* _parent;

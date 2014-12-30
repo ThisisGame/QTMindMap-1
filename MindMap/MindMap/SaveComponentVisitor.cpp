@@ -15,49 +15,38 @@ SaveComponentVisitor::~SaveComponentVisitor()
 {
 }
 
-void SaveComponentVisitor::Visitor(Node* node)
+void SaveComponentVisitor::visitorNode(Component* component)
 {
-    _saveList.push_back(node);
-    for (auto item : node->getNodeList())
+    _saveList.push_back(component);
+    for (auto item : component->getNodeList())
     {
         item->accept(this);
     }
 }
 
-void SaveComponentVisitor::Visitor(Root* root)
+void SaveComponentVisitor::visitor(Node* node)
 {
-    _saveList.push_back(root);
-    for (auto item : root->getNodeList())
-    {
-        item->accept(this);
-    }
+    visitorNode(node);
 }
 
-void SaveComponentVisitor::Visitor(TriangleDecorator* triangle)
+void SaveComponentVisitor::visitor(Root* root)
 {
-    _saveList.push_back(triangle);
-    for (auto item : triangle->getNodeList())
-    {
-        item->accept(this);
-    }
+    visitorNode(root);
 }
 
-void SaveComponentVisitor::Visitor(CircleDecorator* circle)
+void SaveComponentVisitor::visitor(TriangleDecorator* triangle)
 {
-    _saveList.push_back(circle);
-    for (auto item : circle->getNodeList())
-    {
-        item->accept(this);
-    }
+    visitorNode(triangle);
 }
 
-void SaveComponentVisitor::Visitor(RectangleDecorator* rectangle)
+void SaveComponentVisitor::visitor(CircleDecorator* circle)
 {
-    _saveList.push_back(rectangle);
-    for (auto item : rectangle->getNodeList())
-    {
-        item->accept(this);
-    }
+    visitorNode(circle);
+}
+
+void SaveComponentVisitor::visitor(RectangleDecorator* rectangle)
+{
+    visitorNode(rectangle);
 }
 
 struct SaveComponentVisitor::PointerCompare

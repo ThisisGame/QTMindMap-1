@@ -11,11 +11,11 @@ class DisplayComponentVisitor : public ComponentVisitor
     public:
         DisplayComponentVisitor(MindMapGUIScene*);
         ~DisplayComponentVisitor();
-        void Visitor(Node*);
-        void Visitor(Root*);
-        void Visitor(TriangleDecorator*);
-        void Visitor(CircleDecorator*);
-        void Visitor(RectangleDecorator*);
+        void visitor(Node*);
+        void visitor(Root*);
+        void visitor(TriangleDecorator*);
+        void visitor(CircleDecorator*);
+        void visitor(RectangleDecorator*);
     private:
         MindMapGUIScene* _scene;
         void displayNode(list<Component*>);

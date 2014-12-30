@@ -141,3 +141,21 @@ bool Decorator::isDecorator()
 {
     return true;
 }
+
+void Decorator::up(Component* component)
+{
+}
+
+void Decorator::down(Component* component)
+{
+}
+
+bool Decorator::isUpComonent(Component* component)
+{
+    return false;
+}
+
+bool Decorator::isUnderComonent(Component* component)
+{
+    return false;
+}

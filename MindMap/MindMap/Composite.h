@@ -21,9 +21,16 @@ class Composite : public Component
         Component* getDecorator();
         bool isDecorator();
         string getSide();
+        bool isExpend();
+        void setExpend(bool);
+        void up(Component*);
+        void down(Component*);
+        bool isUpComonent(Component*);
+        bool isUnderComonent(Component*);
     protected:
         list<Component*> _nodelist;
         Component* _parent;
         string _side;
+        bool _expend;
 };
 

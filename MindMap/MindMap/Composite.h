@@ -23,10 +23,6 @@ class Composite : public Component
         string getSide();
         bool isExpend();
         void setExpend(bool);
-        void up(Component*);
-        void down(Component*);
-        bool isUpComonent(Component*);
-        bool isUnderComonent(Component*);
     protected:
         list<Component*> _nodelist;
         Component* _parent;

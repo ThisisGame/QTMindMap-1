@@ -159,3 +159,8 @@ bool Decorator::isUnderComonent(Component* component)
 {
     return false;
 }
+
+string Decorator::getSide()
+{
+    return _child->getSide();
+}

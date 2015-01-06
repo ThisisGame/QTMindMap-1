@@ -52,6 +52,7 @@ class Component
         virtual void down(Component*) = 0;
         virtual bool isUpComonent(Component*) = 0;
         virtual bool isUnderComonent(Component*) = 0;
+        virtual string getSide() = 0;
     protected:
         int _id;
         vector<int> _point;

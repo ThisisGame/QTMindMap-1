@@ -24,11 +24,15 @@ DisplayComponentVisitor::~DisplayComponentVisitor()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">}</span>
 
-void DisplayComponentVisitor::Visitor(Node* node)  //NODEµe¹Ï
+void DisplayComponentVisitor::visitor(Node* node)  //NODEµe¹Ï
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    int x = node-&gt;getPoint()[0];</span>
 <span style = "background-color:#fdd">    int y = node-&gt;getPoint()[1];</span>
 <span style = "background-color:#fdd">    drawNode(x, y, node-&gt;getId(), node-&gt;getDescription(), node-&gt;getSelected());</span>
+<span style = "background-color:#fdd">    if (!node-&gt;isExpend())</span>
+    {
+<span style = "background-color:#fdd">        return;</span>
+    }
 <span style = "background-color:#fdd">    for (auto child : node-&gt;getNodeList())  //±µ½u</span>
     {
 <span style = "background-color:#fdd">        if (node-&gt;getSide() == LEFT_SIDE)</span>
@@ -43,11 +47,15 @@ void DisplayComponentVisitor::Visitor(Node* node)  //NODEµe¹Ï
 <span style = "background-color:#fdd">    }</span>
 <span style = "background-color:#fdd">}</span>
 
-void DisplayComponentVisitor::Visitor(Root* root)  //ROOTµe¹Ï
+void DisplayComponentVisitor::visitor(Root* root)  //ROOTµe¹Ï
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    int x = root-&gt;getPoint()[0];</span>
 <span style = "background-color:#fdd">    int y = root-&gt;getPoint()[1];</span>
 <span style = "background-color:#fdd">    drawNode(x, y, root-&gt;getId(), root-&gt;getDescription(), root-&gt;getSelected());</span>
+<span style = "background-color:#fdd">    if (!root-&gt;isExpend())</span>
+    {
+<span style = "background-color:#fdd">        return;</span>
+    }
 <span style = "background-color:#fdd">    int i = 0;</span>
 <span style = "background-color:#fdd">    for (auto child : root-&gt;getNodeList())  //±µ½u</span>
     {
@@ -64,19 +72,19 @@ void DisplayComponentVisitor::Visitor(Root* root)  //ROOTµe¹Ï
 <span style = "background-color:#fdd">    }</span>
 <span style = "background-color:#fdd">}</span>
 
-void DisplayComponentVisitor::Visitor(TriangleDecorator* triangle) //¤T¨¤§Î¸Ë¹¢
+void DisplayComponentVisitor::visitor(TriangleDecorator* triangle) //¤T¨¤§Î¸Ë¹¢
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    displayNode(triangle-&gt;getNodeList());</span>
 <span style = "background-color:#fdd">    _scene-&gt;addTriangleDecorator(triangle-&gt;getPoint()[0], triangle-&gt;getPoint()[1], triangle-&gt;getWidth(), triangle-&gt;getHeight());</span>
 <span style = "background-color:#fdd">}</span>
 
-void DisplayComponentVisitor::Visitor(CircleDecorator* circle) //¶ê§Î¸Ë¹¢
+void DisplayComponentVisitor::visitor(CircleDecorator* circle) //¶ê§Î¸Ë¹¢
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    displayNode(circle-&gt;getNodeList());</span>
 <span style = "background-color:#fdd">    _scene-&gt;addCircleDecorator(circle-&gt;getPoint()[0], circle-&gt;getPoint()[1], circle-&gt;getWidth(), circle-&gt;getHeight());</span>
 <span style = "background-color:#fdd">}</span>
 
-void DisplayComponentVisitor::Visitor(RectangleDecorator* rectangle) //¤è§Î¸Ë¹¢
+void DisplayComponentVisitor::visitor(RectangleDecorator* rectangle) //¤è§Î¸Ë¹¢
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    displayNode(rectangle-&gt;getNodeList());</span>
 <span style = "background-color:#fdd">    _scene-&gt;addRectDecorator(rectangle-&gt;getPoint()[0], rectangle-&gt;getPoint()[1], rectangle-&gt;getWidth(), rectangle-&gt;getHeight());</span>

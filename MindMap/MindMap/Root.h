@@ -18,5 +18,9 @@ class Root :
         void calculatePos(int&, int, MindMapGUIScene*, string);
         void setChildrenXPoint(int, bool);
         void accept(ComponentVisitor*);
+        void up(Component*);
+        void down(Component*);
+        bool isUpComonent(Component*);
+        bool isUnderComonent(Component*);
 };
 

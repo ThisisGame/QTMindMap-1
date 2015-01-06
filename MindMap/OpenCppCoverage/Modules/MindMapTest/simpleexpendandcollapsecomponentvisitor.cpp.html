@@ -1,0 +1,47 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		simpleexpendandcollapsecomponentvisitor.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "SimpleExpendAndCollapseComponentVisitor.h"
+#include "Node.h"
+#include "Root.h"
+
+SimpleExpendAndCollapseComponentVisitor::SimpleExpendAndCollapseComponentVisitor()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+SimpleExpendAndCollapseComponentVisitor::~SimpleExpendAndCollapseComponentVisitor()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void SimpleExpendAndCollapseComponentVisitor::visitor(Node* node)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    bool expend = node-&gt;isExpend();</span>
+<span style = "background-color:#fdd">    node-&gt;setExpend(!expend);</span>
+<span style = "background-color:#fdd">}</span>
+
+void SimpleExpendAndCollapseComponentVisitor::visitor(Root* root)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    bool expend = root-&gt;isExpend();</span>
+<span style = "background-color:#fdd">    root-&gt;setExpend(!expend);</span>
+<span style = "background-color:#fdd">}</span>
+
+void SimpleExpendAndCollapseComponentVisitor::visitor(TriangleDecorator* triangle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void SimpleExpendAndCollapseComponentVisitor::visitor(CircleDecorator* circle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void SimpleExpendAndCollapseComponentVisitor::visitor(RectangleDecorator* rectangle)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

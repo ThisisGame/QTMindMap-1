@@ -52,6 +52,15 @@ namespace MindMapTest
         component = _componentFactory->createComponent("Node");
         ASSERT_STREQ("Node", component->getType().c_str());
         delete component;
+        component = _componentFactory->createComponent("Triangle");
+        ASSERT_STREQ("Triangle", component->getType().c_str());
+        delete component;
+        component = _componentFactory->createComponent("Circle");
+        ASSERT_STREQ("Circle", component->getType().c_str());
+        delete component;
+        component = _componentFactory->createComponent("Rectangle");
+        ASSERT_STREQ("Rectangle", component->getType().c_str());
+        delete component;
         ASSERT_THROW(_componentFactory->createComponent("NoComponent")->getType().c_str(), char*);
     }
 }

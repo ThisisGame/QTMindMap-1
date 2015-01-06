@@ -28,6 +28,7 @@ class Decorator : public Component
         void down(Component*);
         bool isUpComonent(Component*);
         bool isUnderComonent(Component*);
+        string getSide();
     protected:
         Component* _child;
         Component* _parent;

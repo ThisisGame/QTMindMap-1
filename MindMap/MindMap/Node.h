@@ -16,5 +16,9 @@ class Node :
         Component* getParent();
         Component* clone();
         void accept(ComponentVisitor*);
+        void up(Component*);
+        void down(Component*);
+        bool isUpComonent(Component*);
+        bool isUnderComonent(Component*);
 };
 

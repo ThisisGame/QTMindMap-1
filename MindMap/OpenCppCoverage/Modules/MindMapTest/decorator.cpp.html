@@ -18,8 +18,8 @@ Decorator::Decorator(int id)
 <span style = "background-color:#fdd">}</span>
 
 Decorator::Decorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
 
 Decorator::~Decorator()
 <span style = "background-color:#fdd">{</span>
@@ -149,6 +149,24 @@ Component* Decorator::getDecorator()
 bool Decorator::isDecorator()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    return true;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Decorator::up(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void Decorator::down(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+bool Decorator::isUpComonent(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return false;</span>
+<span style = "background-color:#fdd">}</span>
+
+bool Decorator::isUnderComonent(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return false;</span>
 <span style = "background-color:#fdd">}</span>
 </pre>
 	</body>

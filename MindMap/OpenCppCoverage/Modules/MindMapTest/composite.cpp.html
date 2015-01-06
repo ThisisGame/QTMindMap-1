@@ -16,6 +16,7 @@ Composite::Composite(int id)
 <span style = "background-color:#dfd">    _id = id;</span>
 <span style = "background-color:#dfd">    _parent = NULL;</span>
 <span style = "background-color:#dfd">    _side = NONE_SIDE;</span>
+<span style = "background-color:#dfd">    _expend = true;</span>
 <span style = "background-color:#dfd">}</span>
 
 Composite::~Composite()
@@ -115,15 +116,17 @@ void Composite::calculatePos(int&amp; position, int level, MindMapGUIScene* scen
 <span style = "background-color:#fdd">    int NODE_DIST = 25;</span>
 <span style = "background-color:#fdd">    int x = level;</span>
 <span style = "background-color:#fdd">    int y = position;</span>
-<span style = "background-color:#fdd">    int getheight = 0;</span>
 <span style = "background-color:#fdd">    scene-&gt;createItem(_id, _description);</span>
 <span style = "background-color:#fdd">    setHeightAndWidth(scene-&gt;getHeight(), scene-&gt;getWidth());</span>
 <span style = "background-color:#fdd">    level = level + scene-&gt;getWidth() + NODE_DIST;</span>
 <span style = "background-color:#fdd">    scene-&gt;deleteItem();</span>
-<span style = "background-color:#fdd">    for (auto child : _nodelist)</span>
+<span style = "background-color:#fdd">    if (_expend == true)</span>
     {
-<span style = "background-color:#fdd">        child-&gt;calculatePos(position, level, scene, side);</span>
-<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">        for (auto child : _nodelist)</span>
+        {
+<span style = "background-color:#fdd">            child-&gt;calculatePos(position, level, scene, side);</span>
+<span style = "background-color:#fdd">        }</span>
+    }
 <span style = "background-color:#fdd">    int height = position - y;</span>
 <span style = "background-color:#fdd">    if (height != 0)</span>
     {
@@ -193,6 +196,74 @@ string Composite::getSide()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    return _side;</span>
 <span style = "background-color:#fdd">}</span>
+
+bool Composite::isExpend()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return _expend;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::setExpend(bool expend)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _expend = expend;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::up(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (*_nodelist.begin() == component)</span>
+    {
+<span style = "background-color:#fdd">        return;</span>
+    }
+<span style = "background-color:#fdd">    list&lt;Component*&gt;::iterator upComponent;</span>
+<span style = "background-color:#fdd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#fdd">        if (*i == component)</span>
+        {
+<span style = "background-color:#fdd">            Component*  newComponent = *upComponent;</span>
+<span style = "background-color:#fdd">            *upComponent = component;</span>
+<span style = "background-color:#fdd">            *i = newComponent;</span>
+<span style = "background-color:#fdd">            return;</span>
+        }
+<span style = "background-color:#fdd">        upComponent = i;</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::down(Component* component)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (*--_nodelist.end() == component)</span>
+    {
+<span style = "background-color:#fdd">        return;</span>
+    }
+<span style = "background-color:#fdd">    list&lt;Component*&gt;::iterator upComponent;</span>
+<span style = "background-color:#fdd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#fdd">        if (*i == component)</span>
+        {
+<span style = "background-color:#fdd">            upComponent = i++;</span>
+<span style = "background-color:#fdd">            Component* newComponent = *i;</span>
+<span style = "background-color:#fdd">            *upComponent = newComponent;</span>
+<span style = "background-color:#fdd">            *i = component;</span>
+<span style = "background-color:#fdd">            return;</span>
+<span style = "background-color:#fdd">        }</span>
+<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">}</span>
+
+bool Composite::isUpComonent(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*_nodelist.begin() == component)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Composite::isUnderComonent(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*--_nodelist.end() == component)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

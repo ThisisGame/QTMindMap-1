@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MindMap\AddDecoratorCommand.cpp" />
+    <ClCompile Include="..\MindMap\AllExpendAndCollapseComponentVisitor.cpp" />
     <ClCompile Include="..\MindMap\ChangeParentCommand.cpp" />
     <ClCompile Include="..\MindMap\CircleDecorator.cpp" />
     <ClCompile Include="..\MindMap\ClearDecoratorCommand.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="..\MindMap\RectangleDecorator.cpp" />
     <ClCompile Include="..\MindMap\Root.cpp" />
     <ClCompile Include="..\MindMap\SaveComponentVisitor.cpp" />
+    <ClCompile Include="..\MindMap\SimpleExpendAndCollapseComponentVisitor.cpp" />
     <ClCompile Include="..\MindMap\Subject.cpp" />
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp" />
     <ClCompile Include="..\MindMap\TriangleDecorator.cpp" />

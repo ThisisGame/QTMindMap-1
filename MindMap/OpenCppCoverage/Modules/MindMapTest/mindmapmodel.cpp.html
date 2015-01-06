@@ -20,6 +20,8 @@
 #include "ClearDecoratorCommand.h"
 #include "DisplayComponentVisitor.h"
 #include "SaveComponentVisitor.h"
+#include "SimpleExpendAndCollapseComponentVisitor.h"
+#include "AllExpendAndCollapseComponentVisitor.h"
 #include &lt;regex&gt;
 #include &lt;fstream&gt;
 
@@ -388,11 +390,55 @@ bool MindMapModel::isCanUndo() //½T»{¬O§_¥i¥HUndo
 
 bool MindMapModel::isHaveDecorator() //½T»{¬O§_¦³¸Ë¹¢
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    if (_component == _component-&gt;getDecorator())</span>
+<span style = "background-color:#dfd">    if (_component == NULL || _component == _component-&gt;getDecorator())</span>
     {
 <span style = "background-color:#dfd">        return false;</span>
     }
 <span style = "background-color:#fdd">    return true;</span>
+<span style = "background-color:#dfd">}</span>
+
+void MindMapModel::simpleExpend()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    SimpleExpendAndCollapseComponentVisitor visitor;</span>
+<span style = "background-color:#fdd">    _component-&gt;accept(&amp;visitor);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::allExpend()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    AllExpendAndCollapseComponentVisitor visitor;</span>
+<span style = "background-color:#fdd">    _component-&gt;accept(&amp;visitor);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::up()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    Component* component = _component-&gt;getDecorator();</span>
+<span style = "background-color:#fdd">    component-&gt;getParent()-&gt;up(component);</span>
+<span style = "background-color:#fdd">}</span>
+
+void MindMapModel::down()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    Component* component = _component-&gt;getDecorator();</span>
+<span style = "background-color:#fdd">    component-&gt;getParent()-&gt;down(component);</span>
+<span style = "background-color:#fdd">}</span>
+
+bool MindMapModel::isCanUp()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_component-&gt;getType() == ROOT_TYPE)</span>
+    {
+<span style = "background-color:#dfd">        return false;</span>
+    }
+<span style = "background-color:#dfd">    Component* component = _component-&gt;getDecorator();</span>
+<span style = "background-color:#dfd">    return !component-&gt;getParent()-&gt;isUpComonent(component);</span>
+<span style = "background-color:#dfd">}</span>
+
+bool MindMapModel::isCanDown()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_component-&gt;getType() == ROOT_TYPE)</span>
+    {
+<span style = "background-color:#dfd">        return false;</span>
+    }
+<span style = "background-color:#dfd">    Component* component = _component-&gt;getDecorator();</span>
+<span style = "background-color:#dfd">    return !component-&gt;getParent()-&gt;isUnderComonent(component);</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

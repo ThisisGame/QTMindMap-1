@@ -17,18 +17,6 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{f5183932-0a5e-402d-92b1-b1dd6089f530}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Command">
-      <UniqueIdentifier>{d92822cd-55a0-4d52-90e8-28b639091a31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component">
-      <UniqueIdentifier>{f6f8428c-2466-4b7a-b48d-4b2f7b04e71b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\TextUI">
-      <UniqueIdentifier>{8061555d-2b18-48d9-a8bc-ad857472f94b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GUI">
-      <UniqueIdentifier>{f4054623-702e-4abd-bee1-8da0857a33d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{6d5f0bdd-3f93-4758-9052-80ba8acabd31}</UniqueIdentifier>
     </Filter>
@@ -42,11 +30,23 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Command">
+      <UniqueIdentifier>{dbabad06-dd76-4ebd-a044-9ed0e6c6fca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{8d031e1b-baaf-44a4-a66b-0f1fbfae7bef}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Component\Decorator">
-      <UniqueIdentifier>{2d4ba906-d5ca-481c-9731-7fa100fb9804}</UniqueIdentifier>
+      <UniqueIdentifier>{74c86128-5897-4bee-970d-8bf3bfc70702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{d6dbcc44-f8fa-4a68-94d2-5f7b3ab839d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TextUI">
+      <UniqueIdentifier>{7146a04a-a50d-48de-b016-535aa614f5da}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Visitor">
-      <UniqueIdentifier>{93b97871-5617-4eff-8d05-06a5be58d340}</UniqueIdentifier>
+      <UniqueIdentifier>{86e806d9-fffb-4353-ae6f-556f9bce9bdd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -95,60 +95,6 @@
     <ClCompile Include="Source.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\MindMapModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Observer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Subject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\ChangeParentCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Command.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\CommandManager.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\EditComponentCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\InsertChildCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\InsertParentCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\InsertSiblingCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Component.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\ComponentFactory.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Composite.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Node.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\Root.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp">
-      <Filter>Source Files\TextUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\GUIPresentationModel.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_GraphicComponentItem.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -170,18 +116,6 @@
     <ClCompile Include="SubjectTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\GraphicComponentItem.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\MindMapGUIScene.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\PasteNodeCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\CutNodeCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
     <ClCompile Include="CutNodeCommandTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
@@ -191,29 +125,101 @@
     <ClCompile Include="..\MindMap\AddDecoratorCommand.cpp">
       <Filter>Source Files\Command</Filter>
     </ClCompile>
+    <ClCompile Include="..\MindMap\ChangeParentCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
     <ClCompile Include="..\MindMap\ClearDecoratorCommand.cpp">
       <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Command.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\CommandManager.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\CutNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\EditComponentCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\InsertChildCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\InsertParentCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\InsertSiblingCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\PasteNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Component.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\ComponentFactory.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Composite.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Node.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Root.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\CircleDecorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="..\MindMap\Decorator.cpp">
       <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\ComponentVisitor.cpp">
-      <Filter>Source Files\Visitor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\DisplayComponentVisitor.cpp">
-      <Filter>Source Files\Visitor</Filter>
-    </ClCompile>
     <ClCompile Include="..\MindMap\RectangleDecorator.cpp">
-      <Filter>Source Files\Component\Decorator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\CircleDecorator.cpp">
       <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="..\MindMap\TriangleDecorator.cpp">
       <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
+    <ClCompile Include="..\MindMap\GraphicComponentItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\GUIPresentationModel.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\MindMapGUIScene.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp">
+      <Filter>Source Files\TextUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\AllExpendAndCollapseComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\DisplayComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
     <ClCompile Include="..\MindMap\SaveComponentVisitor.cpp">
       <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\SimpleExpendAndCollapseComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\ComponentVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\MindMapModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Subject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

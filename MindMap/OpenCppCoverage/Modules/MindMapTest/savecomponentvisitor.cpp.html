@@ -24,49 +24,38 @@ SaveComponentVisitor::~SaveComponentVisitor()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">}</span>
 
-void SaveComponentVisitor::Visitor(Node* node)
+void SaveComponentVisitor::visitorNode(Component* component)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _saveList.push_back(node);</span>
-<span style = "background-color:#dfd">    for (auto item : node-&gt;getNodeList())</span>
+<span style = "background-color:#dfd">    _saveList.push_back(component);</span>
+<span style = "background-color:#dfd">    for (auto item : component-&gt;getNodeList())</span>
     {
 <span style = "background-color:#dfd">        item-&gt;accept(this);</span>
 <span style = "background-color:#dfd">    }</span>
 <span style = "background-color:#dfd">}</span>
 
-void SaveComponentVisitor::Visitor(Root* root)
+void SaveComponentVisitor::visitor(Node* node)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _saveList.push_back(root);</span>
-<span style = "background-color:#dfd">    for (auto item : root-&gt;getNodeList())</span>
-    {
-<span style = "background-color:#dfd">        item-&gt;accept(this);</span>
-<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">    visitorNode(node);</span>
 <span style = "background-color:#dfd">}</span>
 
-void SaveComponentVisitor::Visitor(TriangleDecorator* triangle)
+void SaveComponentVisitor::visitor(Root* root)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitorNode(root);</span>
+<span style = "background-color:#dfd">}</span>
+
+void SaveComponentVisitor::visitor(TriangleDecorator* triangle)
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _saveList.push_back(triangle);</span>
-<span style = "background-color:#fdd">    for (auto item : triangle-&gt;getNodeList())</span>
-    {
-<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
-<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">    visitorNode(triangle);</span>
 <span style = "background-color:#fdd">}</span>
 
-void SaveComponentVisitor::Visitor(CircleDecorator* circle)
+void SaveComponentVisitor::visitor(CircleDecorator* circle)
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _saveList.push_back(circle);</span>
-<span style = "background-color:#fdd">    for (auto item : circle-&gt;getNodeList())</span>
-    {
-<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
-<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">    visitorNode(circle);</span>
 <span style = "background-color:#fdd">}</span>
 
-void SaveComponentVisitor::Visitor(RectangleDecorator* rectangle)
+void SaveComponentVisitor::visitor(RectangleDecorator* rectangle)
 <span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _saveList.push_back(rectangle);</span>
-<span style = "background-color:#fdd">    for (auto item : rectangle-&gt;getNodeList())</span>
-    {
-<span style = "background-color:#fdd">        item-&gt;accept(this);</span>
-<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#fdd">    visitorNode(rectangle);</span>
 <span style = "background-color:#fdd">}</span>
 
 struct SaveComponentVisitor::PointerCompare

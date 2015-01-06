@@ -124,3 +124,73 @@ void Root::accept(ComponentVisitor* visitor)
 {
     visitor->visitor(this);
 }
+
+
+void Root::up(Component* component)
+{
+    if (*_nodelist.begin() == component)
+    {
+        return;
+    }
+    list<Component*>::iterator upComponent;
+    for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
+    {
+        if (*i == component)
+        {
+            Component*  newComponent = *upComponent;
+            *upComponent = component;
+            *i = newComponent;
+            return;
+        }
+        if (component->getSide() == (*i)->getSide())
+        {
+            upComponent = i;
+        }
+    }
+}
+
+void Root::down(Component* component)
+{
+    if (*--_nodelist.end() == component)
+    {
+        return;
+    }
+    list<Component*>::iterator upComponent;
+    for (list<Component*>::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)
+    {
+        if (*i == component)
+        {
+            upComponent = i++;
+            Component* newComponent = *++i;
+            *upComponent = newComponent;
+            *i = component;
+            return;
+        }
+    }
+}
+
+bool Root::isUpComonent(Component* component)
+{
+    if (*_nodelist.begin() == component)
+    {
+        return true;
+    }
+    if (*++_nodelist.begin() == component)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Root::isUnderComonent(Component* component)
+{
+    if (*--_nodelist.end() == component)
+    {
+        return true;
+    }
+    if (*--(--_nodelist.end()) == component)
+    {
+        return true;
+    }
+    return false;
+}

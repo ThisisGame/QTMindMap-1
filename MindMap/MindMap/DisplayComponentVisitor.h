@@ -1,15 +1,15 @@
 #pragma once
 #include "ComponentVisitor.h"
 #include <list>
+#include "MindMapSceneAdapter.h"
 using namespace std;
 
-class MindMapGUIScene;
 class Component;
 
 class DisplayComponentVisitor : public ComponentVisitor
 {
     public:
-        DisplayComponentVisitor(MindMapGUIScene*);
+        DisplayComponentVisitor(MindMapSceneAdapter*);
         ~DisplayComponentVisitor();
         void visitor(Node*);
         void visitor(Root*);
@@ -17,7 +17,7 @@ class DisplayComponentVisitor : public ComponentVisitor
         void visitor(CircleDecorator*);
         void visitor(RectangleDecorator*);
     private:
-        MindMapGUIScene* _scene;
+        MindMapSceneAdapter* _scene;
         void displayNode(list<Component*>);
         void drawNode(int, int, int, string, bool);
 };

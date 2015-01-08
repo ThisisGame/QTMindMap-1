@@ -17,7 +17,7 @@ namespace MindMapTest
     class MindMapModelTest;
 }
 
-class MindMapGUIScene;
+class MindMapSceneAdapter;
 
 class MindMapModel
 {
@@ -60,7 +60,7 @@ class MindMapModel
         void cutComponent();
         void pasteComponent();
 
-        void draw(MindMapGUIScene*);
+        void draw(MindMapSceneAdapter*);
         void disableSelected();
         bool isHaveDecorator();
         void simpleExpend();

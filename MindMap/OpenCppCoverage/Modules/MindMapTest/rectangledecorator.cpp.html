@@ -14,26 +14,27 @@ RectangleDecorator::RectangleDecorator(int id)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _id = id;</span>
 <span style = "background-color:#dfd">    _parent = NULL;</span>
+<span style = "background-color:#dfd">    _child = NULL;</span>
 <span style = "background-color:#dfd">    _type = RECTANGLE_TYPE;</span>
 <span style = "background-color:#dfd">}</span>
 
 RectangleDecorator::~RectangleDecorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    delete _child;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    delete _child;</span>
+<span style = "background-color:#dfd">}</span>
 
 Component* RectangleDecorator::clone()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    Component* cloneItem = new RectangleDecorator(_id);</span>
-<span style = "background-color:#fdd">    Component* child = _child-&gt;clone();</span>
-<span style = "background-color:#fdd">    cloneItem-&gt;addChild(child);</span>
-<span style = "background-color:#fdd">    return cloneItem;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    Component* cloneItem = new RectangleDecorator(_id);</span>
+<span style = "background-color:#dfd">    Component* child = _child-&gt;clone();</span>
+<span style = "background-color:#dfd">    cloneItem-&gt;addChild(child);</span>
+<span style = "background-color:#dfd">    return cloneItem;</span>
+<span style = "background-color:#dfd">}</span>
 
 void RectangleDecorator::accept(ComponentVisitor* visitor)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    visitor-&gt;visitor(this);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitor-&gt;visitor(this);</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

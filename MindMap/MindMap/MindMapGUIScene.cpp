@@ -78,3 +78,8 @@ void MindMapGUIScene::setBorder()
 {
     _item->setBorder(Qt::red);
 }
+
+void MindMapGUIScene::addConnectLine(int x1, int y1, int x2, int y2)
+{
+    addLine(x1, y1, x2, y2);
+}

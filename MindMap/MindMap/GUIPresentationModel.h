@@ -2,7 +2,7 @@
 #include "MindMapModel.h"
 #include "Subject.h"
 
-class MindMapGUIScene;
+class MindMapSceneAdapter;
 
 class GUIPresentationModel : public Subject
 {
@@ -21,7 +21,7 @@ class GUIPresentationModel : public Subject
         void deleteComponent();
         void insertNode(char, string, bool);
         void saveMindMap(string);
-        void draw(MindMapGUIScene*);
+        void draw(MindMapSceneAdapter*);
         void copyComponent();
         void cutComponent();
         void pasteComponent();

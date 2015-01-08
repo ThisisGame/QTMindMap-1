@@ -1,6 +1,4 @@
 #include "Composite.h"
-#include "GraphicComponentItem.h"
-#include "MindMapGUIScene.h"
 
 Composite::Composite(int id)
 {
@@ -102,67 +100,12 @@ void Composite::display(stringstream& outputStream, string levelString, bool las
     }
 }
 
-void Composite::calculatePos(int& position, int level, MindMapGUIScene* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
-{
-    int NODE_DIST = 25;
-    int x = level;
-    int y = position;
-    scene->createItem(_id, _description);
-    setHeightAndWidth(scene->getHeight(), scene->getWidth());
-    level = level + scene->getWidth() + NODE_DIST;
-    scene->deleteItem();
-    if (_expend == true)
-    {
-        for (auto child : _nodelist)
-        {
-            child->calculatePos(position, level, scene, side);
-        }
-    }
-    int height = position - y;
-    if (height != 0)
-    {
-        y = y + (height - NODE_DIST - _height) / 2;
-    }
-    else
-    {
-        position += _height + NODE_DIST;
-    }
-    _side = side;
-    if (_side == RIGHT_SIDE)
-    {
-        setPoint(x, y);
-    }
-    else
-    {
-        setPoint(-x, y);
-    }
-    if (height != 0 && height < _height)
-    {
-        int changeHeightAmount = _height - height;
-        setChildrenYPoint(changeHeightAmount / 2);
-        position += changeHeightAmount;
-    }
-}
-
 void Composite::setChildrenYPoint(int height)
 {
     _point[1] += height;
     for (auto child : _nodelist)
     {
         child->setChildrenYPoint(height);
-    }
-}
-
-void Composite::setChildrenXPoint(int x, bool firstNode)
-{
-    if (firstNode == false)
-    {
-        _point[0] += x;
-    }
-    firstNode = false;
-    for (auto child : _nodelist)
-    {
-        child->setChildrenXPoint(x, firstNode);
     }
 }
 

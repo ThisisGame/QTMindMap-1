@@ -185,7 +185,7 @@ string GUIPresentationModel::getMessage() //¨ú±o¦r¦ê°T®§
     return message;
 }
 
-void GUIPresentationModel::draw(MindMapGUIScene* scene)
+void GUIPresentationModel::draw(MindMapSceneAdapter* scene)
 {
     _model->draw(scene);
 }

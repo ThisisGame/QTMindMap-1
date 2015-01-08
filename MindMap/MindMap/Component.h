@@ -8,13 +8,13 @@
 
 using namespace std;
 
-class MindMapGUIScene;
+class MindMapSceneAdapter;
 
 class Component
 {
     public:
         Component();
-        ~Component();
+        virtual ~Component();
         int getId() const;
         void setId(int);
         void setDescription(string);
@@ -41,7 +41,7 @@ class Component
         virtual Component* getParent() = 0;
         virtual list<Component*> getNodeList() = 0;
         virtual Component* clone() = 0;
-        virtual void calculatePos(int&, int, MindMapGUIScene*, string) = 0;
+        virtual void calculatePos(int&, int, MindMapSceneAdapter*, string) = 0;
         virtual void setChildrenYPoint(int) = 0;
         virtual void setChildrenXPoint(int, bool) = 0;
         virtual Component* getDecorator() = 0;

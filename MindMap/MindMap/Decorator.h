@@ -18,7 +18,7 @@ class Decorator : public Component
         void addChilds(list<Component*>);
         Component* getParent();
         list<Component*> getNodeList();
-        void calculatePos(int&, int, MindMapGUIScene*, string);
+        void calculatePos(int&, int, MindMapSceneAdapter*, string);
         void setChildrenYPoint(int);
         void setChildrenXPoint(int, bool);
         Component* getDecorator();

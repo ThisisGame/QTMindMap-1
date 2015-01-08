@@ -7,7 +7,7 @@ using namespace std;
 MindMapGUIView::MindMapGUIView(MindMapModel* model, QWidget* parent) : QMainWindow(parent)
 {
     this->setWindowTitle("MindMap");
-    this->resize(600, 400);
+    this->resize(800, 600);
     _pModel = new GUIPresentationModel(model);
     _pModel->attach(this);
     //setup

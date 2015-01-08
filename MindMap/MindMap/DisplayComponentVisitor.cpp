@@ -1,12 +1,12 @@
 #include "DisplayComponentVisitor.h"
-#include "MindMapGUIScene.h"
+#include "MindMapSceneAdapter.h"
 #include "Node.h"
 #include "Root.h"
 #include "TriangleDecorator.h"
 #include "CircleDecorator.h"
 #include "RectangleDecorator.h"
 
-DisplayComponentVisitor::DisplayComponentVisitor(MindMapGUIScene* scene)
+DisplayComponentVisitor::DisplayComponentVisitor(MindMapSceneAdapter* scene)
 {
     _scene = scene;
 }
@@ -28,11 +28,11 @@ void DisplayComponentVisitor::visitor(Node* node)  //NODE畫圖
     {
         if (node->getSide() == LEFT_SIDE)
         {
-            _scene->addLine(x, y + node->getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
+            _scene->addConnectLine(x, y + node->getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
         }
         else
         {
-            _scene->addLine(x + node->getWidth(), y + node->getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
+            _scene->addConnectLine(x + node->getWidth(), y + node->getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
         }
         child->accept(this);
     }
@@ -52,11 +52,11 @@ void DisplayComponentVisitor::visitor(Root* root)  //ROOT畫圖
     {
         if (i % 2 != 0)
         {
-            _scene->addLine(x, y + root->getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
+            _scene->addConnectLine(x, y + root->getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
         }
         else
         {
-            _scene->addLine(x + root->getWidth(), y + root->getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
+            _scene->addConnectLine(x + root->getWidth(), y + root->getHeight() / 2, child->getPoint()[0], child->getPoint()[1] + child->getHeight() / 2);
         }
         child->accept(this);
         i++;

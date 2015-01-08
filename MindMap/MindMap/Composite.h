@@ -14,9 +14,7 @@ class Composite : public Component
         void display(stringstream&, string, bool);
         void addChilds(list<Component*>);
         list<Component*> getNodeList();
-        void calculatePos(int&, int, MindMapGUIScene*, string);
         void setChildrenYPoint(int);
-        void setChildrenXPoint(int, bool);
         void addDecorator(Component*);
         Component* getDecorator();
         bool isDecorator();

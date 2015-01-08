@@ -10,6 +10,7 @@ AddDecoratorCommand::AddDecoratorCommand(Component* component, Component* decora
 
 AddDecoratorCommand::~AddDecoratorCommand()
 {
+    _decorator->addChild(NULL);
     delete _decorator;
 }
 
@@ -23,8 +24,7 @@ void AddDecoratorCommand::unexcute()
 {
     if (_oldParent != NULL)
     {
-        _oldParent->deleteNodeByNode(_decorator);
-        _oldParent->addChild(_component);
+        _oldParent->changeNodeByNode(_decorator, _component);
     }
     else
     {

@@ -46,6 +46,8 @@ namespace MindMapTest
         ASSERT_EQ(0, _node->getNodeList().size());
         ASSERT_EQ(0, _node->getNodeList().size());
         ASSERT_EQ(3, _model->getNodeList().size());
+        _root->clearNodeList();
+        _root->addChild(_node);
         _model->doUninsertNode(_parent);
     }
 

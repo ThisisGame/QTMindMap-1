@@ -1,0 +1,75 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		mockmindmapscene.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "MockMindMapScene.h"
+
+MockMindMapScene::MockMindMapScene()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+MockMindMapScene::~MockMindMapScene()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void MockMindMapScene::createItem(int id, string description)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _description = description;</span>
+<span style = "background-color:#dfd">}</span>
+
+int MockMindMapScene::getWidth()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return 50;</span>
+<span style = "background-color:#dfd">}</span>
+
+int MockMindMapScene::getHeight()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_description.size() &gt;= 15)</span>
+    {
+<span style = "background-color:#dfd">        return 600;</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#dfd">        return 100;</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void MockMindMapScene::setPos(int, int)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::deleteItem()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void MockMindMapScene::addComponentItem()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::addCircleDecorator(int, int, int, int)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::addRectDecorator(int, int, int, int)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::addTriangleDecorator(int, int, int, int)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::setBorder()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+void MockMindMapScene::addConnectLine(int, int, int, int)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

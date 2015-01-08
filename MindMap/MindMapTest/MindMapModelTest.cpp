@@ -323,7 +323,6 @@ namespace MindMapTest
         _model->selectComponent(5);
         _model->doCutNodes(_model->getSelectComponent());
         ASSERT_EQ(6, _model->getNodeList().size());
-        delete _nodeMicrosoft;
     }
 
     TEST_F(MindMapModelTest, testPasteNodes)

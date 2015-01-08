@@ -10,6 +10,10 @@ InsertParentCommand::InsertParentCommand(Component* component, Component* parent
 
 InsertParentCommand::~InsertParentCommand()
 {
+    if (_newParent != NULL)
+    {
+        _newParent->clearNodeList();
+    }
     delete _newParent;
 }
 

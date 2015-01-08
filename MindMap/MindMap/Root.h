@@ -15,7 +15,7 @@ class Root :
         bool isParent(Component*);
         Component* getParent();
         Component* clone();
-        void calculatePos(int&, int, MindMapGUIScene*, string);
+        void calculatePos(int&, int, MindMapSceneAdapter*, string);
         void setChildrenXPoint(int, bool);
         void accept(ComponentVisitor*);
         void up(Component*);

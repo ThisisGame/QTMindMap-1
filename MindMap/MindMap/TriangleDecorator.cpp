@@ -5,6 +5,7 @@ TriangleDecorator::TriangleDecorator(int id)
 {
     _id = id;
     _parent = NULL;
+    _child = NULL;
     _type = TRIANGLE_TYPE;
 }
 

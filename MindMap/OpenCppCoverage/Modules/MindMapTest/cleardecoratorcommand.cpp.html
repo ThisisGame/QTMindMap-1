@@ -15,6 +15,7 @@ ClearDecoratorCommand::ClearDecoratorCommand(Component* component, MindMapModel*
 <span style = "background-color:#fdd">    _decorator = component-&gt;getDecorator();</span>
 <span style = "background-color:#fdd">    _model = model;</span>
 <span style = "background-color:#fdd">    _parent = _decorator-&gt;getParent();</span>
+<span style = "background-color:#fdd">    _componentParent = component-&gt;getParent();</span>
 <span style = "background-color:#fdd">    _oldNodeList = _model-&gt;getNodeList();</span>
 <span style = "background-color:#fdd">}</span>
 
@@ -43,6 +44,7 @@ void ClearDecoratorCommand::unexcute()
     {
 <span style = "background-color:#fdd">        _parent-&gt;clearNodeList();</span>
 <span style = "background-color:#fdd">        _parent-&gt;addChilds(_oldParentList);</span>
+<span style = "background-color:#fdd">        _component-&gt;setParent(_componentParent);</span>
     }
 <span style = "background-color:#fdd">    else</span>
     {

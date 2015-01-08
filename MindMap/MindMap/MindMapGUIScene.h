@@ -5,8 +5,9 @@
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include "GraphicComponentItem.h"
 #include "GUIPresentationModel.h"
+#include "MindMapSceneAdapter.h"
 
-class MindMapGUIScene : public QGraphicsScene
+class MindMapGUIScene : public QGraphicsScene , public MindMapSceneAdapter
 {
         Q_OBJECT
 
@@ -25,6 +26,7 @@ class MindMapGUIScene : public QGraphicsScene
         void addRectDecorator(int, int, int, int);
         void addTriangleDecorator(int, int, int, int);
         void setBorder();
+        void addConnectLine(int, int, int, int);
     protected:
         GUIPresentationModel* _pModel;
         GraphicComponentItem* _item;

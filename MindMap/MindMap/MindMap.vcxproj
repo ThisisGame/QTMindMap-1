@@ -185,6 +185,8 @@
     <ClCompile Include="MindMapGUIScene.cpp" />
     <ClCompile Include="MindMapGUIView.cpp" />
     <ClCompile Include="MindMapModel.cpp" />
+    <ClCompile Include="MindMapSceneAdapter.cpp" />
+    <ClCompile Include="MockMindMapScene.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PasteNodeCommand.cpp" />
@@ -216,6 +218,8 @@
     <ClInclude Include="DeleteComponentCommand.h" />
     <ClInclude Include="DisplayComponentVisitor.h" />
     <ClInclude Include="EditComponentCommand.h" />
+    <ClInclude Include="MindMapSceneAdapter.h" />
+    <ClInclude Include="MockMindMapScene.h" />
     <ClInclude Include="SaveComponentVisitor.h" />
     <ClInclude Include="SimpleExpendAndCollapseComponentVisitor.h" />
     <ClInclude Include="TriangleDecorator.h" />

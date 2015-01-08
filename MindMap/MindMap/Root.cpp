@@ -1,15 +1,17 @@
 #include "Root.h"
-#include "MindMapGUIScene.h"
+#include "MindMapSceneAdapter.h"
 
 Root::Root(int id) : Composite(id)
 {
     _type = ROOT_TYPE;
+    setPoint(0, 0);
 }
 
 Root::Root(int id, string description) : Composite(id)
 {
     _type = ROOT_TYPE;
     _description = description;
+    setPoint(0, 0);
 }
 
 Root::~Root()
@@ -46,7 +48,7 @@ Component* Root::clone()
     return NULL;
 }
 
-void Root::calculatePos(int& position, int level, MindMapGUIScene* scene, string side)  	//AutoLayout計算區塊
+void Root::calculatePos(int& position, int level, MindMapSceneAdapter* scene, string side)  	//AutoLayout計算區塊
 {
     int positionRight = 0;
     int positionLeft = 0;

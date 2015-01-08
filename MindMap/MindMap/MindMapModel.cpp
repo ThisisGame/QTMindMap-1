@@ -301,7 +301,7 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //¥ÑÅª
     }
 }
 
-void MindMapModel::draw(MindMapGUIScene* scene)  //Ã¸¥XMindMap
+void MindMapModel::draw(MindMapSceneAdapter* scene)  //Ã¸¥XMindMap
 {
     Component* root = findNodeByID(0)->getDecorator();
     if (root == NULL)

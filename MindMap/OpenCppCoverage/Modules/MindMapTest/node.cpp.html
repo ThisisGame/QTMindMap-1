@@ -9,17 +9,19 @@
 	<body onload="prettyPrint()">
 		<pre class="prettyprint lang-cpp linenums">#include "Node.h"
 #include "Decorator.h"
-
+#include "MindMapSceneAdapter.h"
 
 Node::Node(int id) : Composite(id)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _type = NODE_TYPE;</span>
+<span style = "background-color:#dfd">    setPoint(0, 0);</span>
 <span style = "background-color:#dfd">}</span>
 
 Node::Node(int id, string description) : Composite(id)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    _type = NODE_TYPE;</span>
 <span style = "background-color:#dfd">    _description = description;</span>
+<span style = "background-color:#dfd">    setPoint(0, 0);</span>
 <span style = "background-color:#dfd">}</span>
 
 Node::~Node()
@@ -74,6 +76,120 @@ Component* Node::clone()
 void Node::accept(ComponentVisitor* visitor)
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    visitor-&gt;visitor(this);</span>
+<span style = "background-color:#dfd">}</span>
+
+
+void Node::calculatePos(int&amp; position, int level, MindMapSceneAdapter* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    int NODE_DIST = 25;</span>
+<span style = "background-color:#dfd">    int x = level;</span>
+<span style = "background-color:#dfd">    int y = position;</span>
+<span style = "background-color:#dfd">    scene-&gt;createItem(_id, _description);</span>
+<span style = "background-color:#dfd">    setHeightAndWidth(scene-&gt;getHeight(), scene-&gt;getWidth());</span>
+<span style = "background-color:#dfd">    level = level + scene-&gt;getWidth() + NODE_DIST;</span>
+<span style = "background-color:#dfd">    scene-&gt;deleteItem();</span>
+<span style = "background-color:#dfd">    if (_expend == true)</span>
+    {
+<span style = "background-color:#dfd">        for (auto child : _nodelist)</span>
+        {
+<span style = "background-color:#dfd">            child-&gt;calculatePos(position, level, scene, side);</span>
+<span style = "background-color:#dfd">        }</span>
+    }
+<span style = "background-color:#dfd">    int height = position - y;</span>
+<span style = "background-color:#dfd">    if (height != 0)</span>
+    {
+<span style = "background-color:#dfd">        y = y + (height - NODE_DIST - _height) / 2;</span>
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        position += _height + NODE_DIST;</span>
+    }
+<span style = "background-color:#dfd">    _side = side;</span>
+<span style = "background-color:#dfd">    if (_side == RIGHT_SIDE)</span>
+    {
+<span style = "background-color:#dfd">        setPoint(x, y);</span>
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        setPoint(-x, y);</span>
+    }
+<span style = "background-color:#dfd">    if (height != 0 &amp;&amp; height &lt; _height)</span>
+    {
+<span style = "background-color:#dfd">        int changeHeightAmount = _height - height;</span>
+<span style = "background-color:#dfd">        setChildrenYPoint(changeHeightAmount / 2);</span>
+<span style = "background-color:#dfd">        position += changeHeightAmount;</span>
+    }
+<span style = "background-color:#dfd">}</span>
+
+void Node::setChildrenXPoint(int x, bool firstNode)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (firstNode == false)</span>
+    {
+<span style = "background-color:#dfd">        _point[0] += x;</span>
+    }
+<span style = "background-color:#dfd">    firstNode = false;</span>
+<span style = "background-color:#dfd">    for (auto child : _nodelist)</span>
+    {
+<span style = "background-color:#dfd">        child-&gt;setChildrenXPoint(x, firstNode);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::up(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*_nodelist.begin() == component)</span>
+    {
+<span style = "background-color:#dfd">        return;</span>
+    }
+<span style = "background-color:#dfd">    list&lt;Component*&gt;::iterator upComponent;</span>
+<span style = "background-color:#dfd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#dfd">        if (*i == component)</span>
+        {
+<span style = "background-color:#dfd">            Component*  newComponent = *upComponent;</span>
+<span style = "background-color:#dfd">            *upComponent = component;</span>
+<span style = "background-color:#dfd">            *i = newComponent;</span>
+<span style = "background-color:#dfd">            return;</span>
+        }
+<span style = "background-color:#dfd">        upComponent = i;</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+void Node::down(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*--_nodelist.end() == component)</span>
+    {
+<span style = "background-color:#dfd">        return;</span>
+    }
+<span style = "background-color:#dfd">    list&lt;Component*&gt;::iterator upComponent;</span>
+<span style = "background-color:#dfd">    for (list&lt;Component*&gt;::iterator i = _nodelist.begin(); i != _nodelist.end(); i++)</span>
+    {
+<span style = "background-color:#dfd">        if (*i == component)</span>
+        {
+<span style = "background-color:#dfd">            upComponent = i++;</span>
+<span style = "background-color:#dfd">            Component* newComponent = *i;</span>
+<span style = "background-color:#dfd">            *upComponent = newComponent;</span>
+<span style = "background-color:#dfd">            *i = component;</span>
+<span style = "background-color:#dfd">            return;</span>
+<span style = "background-color:#dfd">        }</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Node::isUpComonent(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*_nodelist.begin() == component)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Node::isUnderComonent(Component* component)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (*--_nodelist.end() == component)</span>
+    {
+<span style = "background-color:#dfd">        return true;</span>
+    }
+<span style = "background-color:#dfd">    return false;</span>
 <span style = "background-color:#dfd">}</span>
 </pre>
 	</body>

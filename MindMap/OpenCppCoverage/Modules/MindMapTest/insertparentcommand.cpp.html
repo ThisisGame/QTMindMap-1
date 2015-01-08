@@ -19,6 +19,10 @@ InsertParentCommand::InsertParentCommand(Component* component, Component* parent
 
 InsertParentCommand::~InsertParentCommand()
 <span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_newParent != NULL)</span>
+    {
+<span style = "background-color:#dfd">        _newParent-&gt;clearNodeList();</span>
+    }
 <span style = "background-color:#dfd">    delete _newParent;</span>
 <span style = "background-color:#dfd">}</span>
 

@@ -6,6 +6,7 @@ ClearDecoratorCommand::ClearDecoratorCommand(Component* component, MindMapModel*
     _decorator = component->getDecorator();
     _model = model;
     _parent = _decorator->getParent();
+    _componentParent = component->getParent();
     _oldNodeList = _model->getNodeList();
 }
 
@@ -34,6 +35,7 @@ void ClearDecoratorCommand::unexcute()
     {
         _parent->clearNodeList();
         _parent->addChilds(_oldParentList);
+        _component->setParent(_componentParent);
     }
     else
     {

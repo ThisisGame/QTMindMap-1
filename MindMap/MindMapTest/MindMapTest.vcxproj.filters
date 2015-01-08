@@ -95,18 +95,6 @@
     <ClCompile Include="Source.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GraphicComponentItem.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GraphicComponentItem.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MindMapGUIScene.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MindMapGUIScene.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="TextUIPresentationModelTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
@@ -185,13 +173,7 @@
     <ClCompile Include="..\MindMap\TriangleDecorator.cpp">
       <Filter>Source Files\Component\Decorator</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\GraphicComponentItem.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\MindMap\GUIPresentationModel.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MindMap\MindMapGUIScene.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp">
@@ -221,21 +203,23 @@
     <ClCompile Include="..\MindMap\Subject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\MindMap\GraphicComponentItem.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\MindMap\MindMapGUIScene.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\MindMap\Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MindMap\Root.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="DecoratorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\MindMapSceneAdapter.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\MockMindMapScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleDecoratorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleDecoratorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleDecoratorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

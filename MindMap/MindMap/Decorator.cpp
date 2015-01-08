@@ -1,10 +1,11 @@
 #include "Decorator.h"
-#include "MindMapGUIScene.h"
+#include "MindMapSceneAdapter.h"
 
 Decorator::Decorator(int id)
 {
     _id = id;
     _parent = NULL;
+    _child = NULL;
     _type = "Decorator";
 }
 
@@ -14,7 +15,6 @@ Decorator::Decorator()
 
 Decorator::~Decorator()
 {
-    delete _child;
 }
 
 void Decorator::changeNodeByNode(Component* component, Component* decorator)
@@ -34,7 +34,10 @@ void Decorator::addDecorator(Component* decorator)
 void Decorator::addChild(Component* child)
 {
     _child = child;
-    _child->setParent(this);
+    if (child != NULL)
+    {
+        _child->setParent(this);
+    }
 }
 
 void Decorator::addParent(Component* parent)
@@ -91,7 +94,7 @@ list<Component*> Decorator::getNodeList()
     return child;
 }
 
-void Decorator::calculatePos(int& position, int level, MindMapGUIScene* scene, string side)
+void Decorator::calculatePos(int& position, int level, MindMapSceneAdapter* scene, string side)
 {
     level += 5;
     position += 5;
@@ -144,10 +147,12 @@ bool Decorator::isDecorator()
 
 void Decorator::up(Component* component)
 {
+    _child->up(component);
 }
 
 void Decorator::down(Component* component)
 {
+    _child->down(component);
 }
 
 bool Decorator::isUpComonent(Component* component)

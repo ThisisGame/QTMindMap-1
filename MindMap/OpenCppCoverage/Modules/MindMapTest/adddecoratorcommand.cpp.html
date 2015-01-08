@@ -19,6 +19,7 @@ AddDecoratorCommand::AddDecoratorCommand(Component* component, Component* decora
 
 AddDecoratorCommand::~AddDecoratorCommand()
 <span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _decorator-&gt;addChild(NULL);</span>
 <span style = "background-color:#fdd">    delete _decorator;</span>
 <span style = "background-color:#fdd">}</span>
 
@@ -32,8 +33,7 @@ void AddDecoratorCommand::unexcute()
 <span style = "background-color:#fdd">{</span>
 <span style = "background-color:#fdd">    if (_oldParent != NULL)</span>
     {
-<span style = "background-color:#fdd">        _oldParent-&gt;deleteNodeByNode(_decorator);</span>
-<span style = "background-color:#fdd">        _oldParent-&gt;addChild(_component);</span>
+<span style = "background-color:#fdd">        _oldParent-&gt;changeNodeByNode(_decorator, _component);</span>
     }
 <span style = "background-color:#fdd">    else</span>
     {

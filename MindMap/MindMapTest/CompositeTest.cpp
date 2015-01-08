@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "Root.h"
 #include "Composite.h"
+#include "CircleDecorator.h"
 using namespace std;
 
 namespace MindMapTest
@@ -113,5 +114,106 @@ namespace MindMapTest
         _root->setPoint(60, 5);
         ASSERT_EQ(60, _root->getPoint()[0]);
         ASSERT_EQ(5, _root->getPoint()[1]);
+    }
+
+    TEST_F(CompositeTest, testAddDecorator)
+    {
+        Node* firstNode = new Node(0, "0");
+        Node* secondNode = new Node(1, "1");
+        CircleDecorator* firstDecorator = new CircleDecorator(2);
+        CircleDecorator* secondDecorator = new CircleDecorator(3);
+        firstNode->addChild(secondNode);
+        for (auto item : firstNode->getNodeList())
+        {
+            ASSERT_EQ(secondNode, item);
+        }
+        secondNode->addDecorator(secondDecorator);
+        for (auto item : firstNode->getNodeList())
+        {
+            ASSERT_EQ(secondDecorator, item);
+        }
+        for (auto item : secondDecorator->getNodeList())
+        {
+            ASSERT_EQ(secondNode, item);
+        }
+        firstNode->addDecorator(firstDecorator);
+        for (auto item : firstDecorator->getNodeList())
+        {
+            ASSERT_EQ(firstNode, item);
+        }
+    }
+
+    TEST_F(CompositeTest, testChangeNodeByNode)
+    {
+        Node firstNode(0, "0");
+        Node* secondNode = new Node(1, "1");
+        Node* thirdNode = new Node(2, "2");
+        Node notInListNode(3);
+        firstNode.addChild(secondNode);
+        for (auto item : firstNode.getNodeList())
+        {
+            ASSERT_EQ(secondNode, item);
+        }
+        firstNode.changeNodeByNode(secondNode, thirdNode);
+        for (auto item : firstNode.getNodeList())
+        {
+            ASSERT_EQ(thirdNode, item);
+        }
+        firstNode.changeNodeByNode(&notInListNode, secondNode);
+        for (auto item : firstNode.getNodeList())
+        {
+            ASSERT_EQ(thirdNode, item);
+        }
+        delete secondNode;
+    }
+
+    TEST_F(CompositeTest, testSetChildrenYPoint)
+    {
+        Node firstNode(0, "0");
+        Node* secondNode = new Node(1, "1");
+        firstNode.addChild(secondNode);
+        firstNode.setChildrenYPoint(3);
+        ASSERT_EQ(3, firstNode.getPoint()[1]);
+        ASSERT_EQ(3, secondNode->getPoint()[1]);
+        firstNode.setChildrenYPoint(8);
+        ASSERT_EQ(11, firstNode.getPoint()[1]);
+        ASSERT_EQ(11, secondNode->getPoint()[1]);
+    }
+
+    TEST_F(CompositeTest, testGetDecorator)
+    {
+        Node* firstNode = new Node(0, "0");
+        Node* secondNode = new Node(1, "1");
+        CircleDecorator* firstDecorator = new CircleDecorator(2);
+        firstNode->addChild(secondNode);
+        secondNode->addDecorator(firstDecorator);
+        ASSERT_EQ(firstNode, firstNode->getDecorator());
+        ASSERT_EQ(firstDecorator, secondNode->getDecorator());
+    }
+
+    TEST_F(CompositeTest, testIsDecorator)
+    {
+        Node firstNode(0, "0");
+        ASSERT_FALSE(firstNode.isDecorator());
+    }
+
+    TEST_F(CompositeTest, testGetSide)
+    {
+        Node firstNode(0, "0");
+        ASSERT_STREQ("None", firstNode.getSide().c_str());
+    }
+
+    TEST_F(CompositeTest, testIsExpend)
+    {
+        Node firstNode(0, "0");
+        ASSERT_TRUE(firstNode.isExpend());
+    }
+
+    TEST_F(CompositeTest, testSetExpend)
+    {
+        Node firstNode(0, "0");
+        ASSERT_TRUE(firstNode.isExpend());
+        firstNode.setExpend(false);
+        ASSERT_FALSE(firstNode.isExpend());
     }
 }

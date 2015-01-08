@@ -5,6 +5,7 @@ RectangleDecorator::RectangleDecorator(int id)
 {
     _id = id;
     _parent = NULL;
+    _child = NULL;
     _type = RECTANGLE_TYPE;
 }
 

@@ -18,6 +18,7 @@ namespace MindMapTest
                 string data = "0 \"Computer\"  \"Root\" 2 7 \n1 \"windows\"  \"Node\" 5 6 \n2 \"OS\"  \"Node\" 1 3 4 \n3 \"IOS\"  \"Node\" \n4 \"Linux\"  \"Node\" \n5 \"DirectX\"  \"Node\" \n6 \"Microsoft Office\"  \"Node\" \n7 \"Network\"  \"Node\" 8 9 \n8 \"Wireless\"  \"Node\" \n9 \"Cable\"  \"Node\" \n";
                 outFile << data;
                 outFile.close();
+                Sleep(10);
                 _model = new MindMapModel();
                 _pModel = new TextUIPresentationModel(_model);
             }

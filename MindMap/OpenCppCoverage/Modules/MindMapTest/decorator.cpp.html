@@ -11,15 +11,12 @@
 #include "MindMapSceneAdapter.h"
 
 Decorator::Decorator(int id)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _id = id;</span>
-<span style = "background-color:#fdd">    _parent = NULL;</span>
-<span style = "background-color:#fdd">    _child = NULL;</span>
-<span style = "background-color:#fdd">    _type = "Decorator";</span>
-<span style = "background-color:#fdd">}</span>
-
-Decorator::Decorator()
 <span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _id = id;</span>
+<span style = "background-color:#dfd">    _parent = NULL;</span>
+<span style = "background-color:#dfd">    _child = NULL;</span>
+<span style = "background-color:#dfd">    setPoint(0, 0);</span>
+<span style = "background-color:#dfd">    _type = "Decorator";</span>
 <span style = "background-color:#dfd">}</span>
 
 Decorator::~Decorator()
@@ -27,18 +24,18 @@ Decorator::~Decorator()
 <span style = "background-color:#dfd">}</span>
 
 void Decorator::changeNodeByNode(Component* component, Component* decorator)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _parent-&gt;changeNodeByNode(this, decorator);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;changeNodeByNode(this, decorator);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::addDecorator(Component* decorator)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (_parent != NULL)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_parent != NULL)</span>
     {
-<span style = "background-color:#fdd">        _parent-&gt;changeNodeByNode(this, decorator);</span>
+<span style = "background-color:#dfd">        _parent-&gt;changeNodeByNode(this, decorator);</span>
     }
-<span style = "background-color:#fdd">    decorator-&gt;addChild(this);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">    decorator-&gt;addChild(this);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::addChild(Component* child)
 <span style = "background-color:#dfd">{</span>
@@ -50,31 +47,31 @@ void Decorator::addChild(Component* child)
 <span style = "background-color:#dfd">}</span>
 
 void Decorator::addParent(Component* parent)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _parent-&gt;deleteNodeByNode(this);</span>
-<span style = "background-color:#fdd">    _parent-&gt;addChild(parent);</span>
-<span style = "background-color:#fdd">    parent-&gt;addChild(this);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(this);</span>
+<span style = "background-color:#dfd">    _parent-&gt;addChild(parent);</span>
+<span style = "background-color:#dfd">    parent-&gt;addChild(this);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::addSibling(Component* sibling)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _parent-&gt;addChild(sibling);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;addChild(sibling);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::clearNodeList()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _child-&gt;clearNodeList();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _child-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::deleteNodeByNode(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _parent-&gt;deleteNodeByNode(this);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _parent-&gt;deleteNodeByNode(this);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::display(stringstream&amp; outputStream, string levelString, bool last)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _child-&gt;display(outputStream, levelString, last);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _child-&gt;display(outputStream, levelString, last);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::setParent(Component* parent)
 <span style = "background-color:#dfd">{</span>
@@ -82,14 +79,14 @@ void Decorator::setParent(Component* parent)
 <span style = "background-color:#dfd">}</span>
 
 bool Decorator::isParent(Component* parent)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _parent-&gt;isParent(parent);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _parent-&gt;isParent(_parent);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::addChilds(list&lt;Component*&gt; childs)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _child-&gt;addChilds(childs);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _child-&gt;addChilds(childs);</span>
+<span style = "background-color:#dfd">}</span>
 
 Component* Decorator::getParent()
 <span style = "background-color:#dfd">{</span>
@@ -104,44 +101,46 @@ list&lt;Component*&gt; Decorator::getNodeList()
 <span style = "background-color:#dfd">}</span>
 
 void Decorator::calculatePos(int&amp; position, int level, MindMapSceneAdapter* scene, string side)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    level += 5;</span>
-<span style = "background-color:#fdd">    position += 5;</span>
-<span style = "background-color:#fdd">    _child-&gt;calculatePos(position, level, scene, side);</span>
-<span style = "background-color:#fdd">    position += 5;</span>
-<span style = "background-color:#fdd">    if (side == "Left")</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    int CHANGE_AMOUNT = 5;</span>
+<span style = "background-color:#dfd">    int ADD_AMOUNT = 10;</span>
+<span style = "background-color:#dfd">    level += CHANGE_AMOUNT;</span>
+<span style = "background-color:#dfd">    position += CHANGE_AMOUNT;</span>
+<span style = "background-color:#dfd">    _child-&gt;calculatePos(position, level, scene, side);</span>
+<span style = "background-color:#dfd">    position += CHANGE_AMOUNT;</span>
+<span style = "background-color:#dfd">    if (side == "Left")</span>
     {
-<span style = "background-color:#fdd">        setChildrenXPoint(-5, true);</span>
+<span style = "background-color:#dfd">        setChildrenXPoint(-CHANGE_AMOUNT, true);</span>
     }
-<span style = "background-color:#fdd">    else</span>
+<span style = "background-color:#dfd">    else</span>
     {
-<span style = "background-color:#fdd">        setChildrenXPoint(5, true);</span>
+<span style = "background-color:#dfd">        setChildrenXPoint(CHANGE_AMOUNT, true);</span>
     }
-<span style = "background-color:#fdd">    setPoint(_child-&gt;getPoint()[0] - 5, _child-&gt;getPoint()[1] - 5);</span>
-<span style = "background-color:#fdd">    _height = _child-&gt;getHeight() + 10;</span>
-<span style = "background-color:#fdd">    _width = _child-&gt;getWidth() + 10;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">    setPoint(_child-&gt;getPoint()[0] - CHANGE_AMOUNT, _child-&gt;getPoint()[1] - CHANGE_AMOUNT);</span>
+<span style = "background-color:#dfd">    _height = _child-&gt;getHeight() + ADD_AMOUNT;</span>
+<span style = "background-color:#dfd">    _width = _child-&gt;getWidth() + ADD_AMOUNT;</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::setChildrenYPoint(int height)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _point[1] += height;</span>
-<span style = "background-color:#fdd">    _child-&gt;setChildrenYPoint(height);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _point[1] += height;</span>
+<span style = "background-color:#dfd">    _child-&gt;setChildrenYPoint(height);</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::setChildrenXPoint(int x, bool firstNode)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (firstNode == false)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (firstNode == false)</span>
     {
-<span style = "background-color:#fdd">        _point[0] += x;</span>
+<span style = "background-color:#dfd">        _point[0] += x;</span>
     }
-<span style = "background-color:#fdd">    _child-&gt;setChildrenXPoint(x, firstNode);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">    _child-&gt;setChildrenXPoint(x, firstNode);</span>
+<span style = "background-color:#dfd">}</span>
 
 Component* Decorator::getDecorator()
 <span style = "background-color:#dfd">{</span>
 <span style = "background-color:#dfd">    if (_parent != NULL &amp;&amp; _parent-&gt;isDecorator())</span>
     {
-<span style = "background-color:#fdd">        return _parent-&gt;getDecorator();</span>
+<span style = "background-color:#dfd">        return _parent-&gt;getDecorator();</span>
     }
 <span style = "background-color:#fdd">    else</span>
     {
@@ -155,29 +154,27 @@ bool Decorator::isDecorator()
 <span style = "background-color:#dfd">}</span>
 
 void Decorator::up(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _child-&gt;up(component);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
 
 void Decorator::down(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _child-&gt;down(component);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
 
 bool Decorator::isUpComonent(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return false;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
 
 bool Decorator::isUnderComonent(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return false;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return false;</span>
+<span style = "background-color:#dfd">}</span>
 
 string Decorator::getSide()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _child-&gt;getSide();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _child-&gt;getSide();</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

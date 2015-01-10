@@ -52,8 +52,11 @@
     <ClCompile Include="..\MindMap\Subject.cpp" />
     <ClCompile Include="..\MindMap\TextUIPresentationModel.cpp" />
     <ClCompile Include="..\MindMap\TriangleDecorator.cpp" />
+    <ClCompile Include="AddDecoratorCommandTest.cpp" />
+    <ClCompile Include="AllExpendAndCollapseComponentVisitorTest.cpp" />
     <ClCompile Include="ChangeParentCommandTest.cpp" />
     <ClCompile Include="CircleDecoratorTest.cpp" />
+    <ClCompile Include="ClearDecoratorCommandTest.cpp" />
     <ClCompile Include="CommandManagerTest.cpp" />
     <ClCompile Include="ComponentFactoryTest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
@@ -61,6 +64,7 @@
     <ClCompile Include="CutNodeCommandTest.cpp" />
     <ClCompile Include="DecoratorTest.cpp" />
     <ClCompile Include="DeleteComponentCommandTest.cpp" />
+    <ClCompile Include="DisplayComponentVisitorTest.cpp" />
     <ClCompile Include="EditComponentCommandTest.cpp" />
     <ClCompile Include="GUIPresentationModelTest.cpp" />
     <ClCompile Include="InsertChildCommandTest.cpp" />
@@ -68,9 +72,12 @@
     <ClCompile Include="InsertSiblingCommandTest.cpp" />
     <ClCompile Include="IntegrationTest.cpp" />
     <ClCompile Include="MindMapModelTest.cpp" />
+    <ClCompile Include="MockMindMapSceneTest.cpp" />
     <ClCompile Include="NodeTest.cpp" />
     <ClCompile Include="PasteNodeCommandTest.cpp" />
     <ClCompile Include="RectangleDecoratorTest.cpp" />
+    <ClCompile Include="SaveComponentVisitorTest.cpp" />
+    <ClCompile Include="SimpleExpendAndCollapseComponentVisitorTest.cpp" />
     <ClCompile Include="SubjectTest.cpp" />
     <ClCompile Include="TextUIPresentationModelTest.cpp" />
     <ClCompile Include="RootTest.cpp" />
@@ -164,8 +171,7 @@
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;C:\gtest\lib\gtestd.lib;Qt5Testd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

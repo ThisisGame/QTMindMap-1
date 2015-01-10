@@ -50,7 +50,7 @@ void DisplayComponentVisitor::visitor(Root* root)  //ROOT畫圖
     int i = 0;
     for (auto child : root->getNodeList())  //接線
     {
-        if (i % 2 != 0)
+        if (i % 2 != 0) //判斷左右兩邊
         {
             _scene->addConnectLine(x, y + root->getHeight() / 2, child->getPoint()[0] + child->getWidth(), child->getPoint()[1] + child->getHeight() / 2);
         }

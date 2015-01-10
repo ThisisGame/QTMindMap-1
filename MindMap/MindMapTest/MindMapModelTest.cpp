@@ -4,6 +4,8 @@
 #include "Node.h"
 #include "MindMapModel.h"
 #include <windows.h>
+#include "CircleDecorator.h"
+#include "MockMindMapScene.h"
 
 namespace MindMapTest
 {
@@ -23,6 +25,7 @@ namespace MindMapTest
                 _nodeWin7 = new Node(6, "Win7");
                 _nodeWin8 = new Node(7, "Win8");
                 _nodeOSX = new Node(8, "OSX");
+                _circleDecorator = new CircleDecorator(9);
                 _rootComputer->addChild(_nodeNetwork);
                 _rootComputer->addChild(_nodeOS);
                 _nodeNetwork->addChild(_nodeIPV4);
@@ -67,6 +70,7 @@ namespace MindMapTest
             Node* _nodeWin7;
             Node* _nodeWin8;
             Node* _nodeOSX;
+            CircleDecorator* _circleDecorator;
             list<Component*> _components;
             MindMapModel* _model;
     };
@@ -258,6 +262,8 @@ namespace MindMapTest
         ASSERT_THROW(_model->saveMindMap("testData\\test_file1.mm"), char*);
         _model->doAddNodes(_components);
         ASSERT_THROW(_model->saveMindMap(""), char*);
+        _model->selectComponent(5);
+        _model->addCircleDecorator();
         _model->saveMindMap("testData\\test_file1.mm");
         ASSERT_THROW(model.loadMindMap("testData\\file_not_find.mm"), char*);
         model.loadMindMap("testData\\test_file1.mm");
@@ -354,5 +360,150 @@ namespace MindMapTest
         _model->selectComponent(0);
         _model->changeDescription("ComputerScience");
         ASSERT_TRUE(_model->isCanUndo());
+    }
+
+    TEST_F(MindMapModelTest, testAddRectangleDecorator)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(0);
+        _model->addRectangleDecorator();
+        ASSERT_EQ(10, _model->getNodeList().size());
+    }
+
+    TEST_F(MindMapModelTest, testAddCircleDecorator)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(5);
+        _model->addCircleDecorator();
+        ASSERT_EQ(10, _model->getNodeList().size());
+    }
+
+    TEST_F(MindMapModelTest, testAddTriangleDecorator)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_EQ(9, _model->getNodeList().size());
+        _model->selectComponent(2);
+        _model->addTriangleDecorator();
+        ASSERT_EQ(10, _model->getNodeList().size());
+    }
+
+    TEST_F(MindMapModelTest, testClearAllDecorator)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(3);
+        _model->addTriangleDecorator();
+        _model->addTriangleDecorator();
+        _model->addTriangleDecorator();
+        ASSERT_EQ(12, _model->getNodeList().size());
+        _model->selectComponent(3);
+        _model->clearAllDecorator();
+        ASSERT_EQ(9, _model->getNodeList().size());
+    }
+
+    TEST_F(MindMapModelTest, testIsHaveDecorator)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(8);
+        _model->addTriangleDecorator();
+        _model->addTriangleDecorator();
+        _model->addTriangleDecorator();
+        ASSERT_TRUE(_model->isHaveDecorator());
+        _model->selectComponent(0);
+        ASSERT_FALSE(_model->isHaveDecorator());
+        _model->selectComponent(5);
+        ASSERT_FALSE(_model->isHaveDecorator());
+    }
+
+    TEST_F(MindMapModelTest, testSimpleExpend)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        _model->selectComponent(0);
+        _model->simpleExpend();
+        ASSERT_FALSE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        _model->simpleExpend();
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+    }
+
+    TEST_F(MindMapModelTest, testAllExpend)
+    {
+        _model->doAddNodes(_components);
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        ASSERT_TRUE(_nodeOSX->isExpend());
+        _model->selectComponent(0);
+        _model->allExpend();
+        ASSERT_FALSE(_rootComputer->isExpend());
+        ASSERT_FALSE(_nodeNetwork->isExpend());
+        ASSERT_FALSE(_nodeOS->isExpend());
+        ASSERT_FALSE(_nodeOSX->isExpend());
+        _model->allExpend();
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        ASSERT_TRUE(_nodeOSX->isExpend());
+    }
+
+    TEST_F(MindMapModelTest, testDown)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(6);
+        _model->down();
+        for (auto item : _nodeMicrosoft->getNodeList())
+        {
+            ASSERT_EQ(_nodeWin8, item);
+            break;
+        }
+    }
+
+    TEST_F(MindMapModelTest, testUp)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(7);
+        _model->up();
+        for (auto item : _nodeMicrosoft->getNodeList())
+        {
+            ASSERT_EQ(_nodeWin8, item);
+            break;
+        }
+    }
+
+    TEST_F(MindMapModelTest, testIsCanUp)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(0);
+        ASSERT_FALSE(_model->isCanUp());
+        _model->selectComponent(6);
+        ASSERT_FALSE(_model->isCanUp());
+        _model->selectComponent(7);
+        ASSERT_TRUE(_model->isCanUp());
+    }
+
+    TEST_F(MindMapModelTest, testIsCanDown)
+    {
+        _model->doAddNodes(_components);
+        _model->selectComponent(0);
+        ASSERT_FALSE(_model->isCanDown());
+        _model->selectComponent(7);
+        ASSERT_FALSE(_model->isCanDown());
+        _model->selectComponent(6);
+        ASSERT_TRUE(_model->isCanDown());
+    }
+
+    TEST_F(MindMapModelTest, testDraw)
+    {
+        MockMindMapScene scene;
+        _model->draw(&scene);
+        _model->doAddNodes(_components);
+        _model->draw(&scene);
     }
 }

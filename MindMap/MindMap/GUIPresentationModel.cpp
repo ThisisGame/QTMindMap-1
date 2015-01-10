@@ -119,24 +119,28 @@ void GUIPresentationModel::down()
 void GUIPresentationModel::addCircleDecorator()
 {
     _model->addCircleDecorator();
+    _clearAllDecoratorActionEnable = true;
     notifyUpdateView();
 }
 
 void GUIPresentationModel::addRectangleDecorator()
 {
     _model->addRectangleDecorator();
+    _clearAllDecoratorActionEnable = true;
     notifyUpdateView();
 }
 
 void GUIPresentationModel::addTriangleDecorator()
 {
     _model->addTriangleDecorator();
+    _clearAllDecoratorActionEnable = true;
     notifyUpdateView();
 }
 
 void GUIPresentationModel::clearAllDecorator()
 {
     _model->clearAllDecorator();
+    _clearAllDecoratorActionEnable = false;
     notifyUpdateView();
 }
 

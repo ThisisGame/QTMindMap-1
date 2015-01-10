@@ -6,11 +6,8 @@ Decorator::Decorator(int id)
     _id = id;
     _parent = NULL;
     _child = NULL;
+    setPoint(0, 0);
     _type = "Decorator";
-}
-
-Decorator::Decorator()
-{
 }
 
 Decorator::~Decorator()
@@ -74,7 +71,7 @@ void Decorator::setParent(Component* parent)
 
 bool Decorator::isParent(Component* parent)
 {
-    return _parent->isParent(parent);
+    return _parent->isParent(_parent);
 }
 
 void Decorator::addChilds(list<Component*> childs)
@@ -96,21 +93,23 @@ list<Component*> Decorator::getNodeList()
 
 void Decorator::calculatePos(int& position, int level, MindMapSceneAdapter* scene, string side)
 {
-    level += 5;
-    position += 5;
+    int CHANGE_AMOUNT = 5;
+    int ADD_AMOUNT = 10;
+    level += CHANGE_AMOUNT;
+    position += CHANGE_AMOUNT;
     _child->calculatePos(position, level, scene, side);
-    position += 5;
+    position += CHANGE_AMOUNT;
     if (side == "Left")
     {
-        setChildrenXPoint(-5, true);
+        setChildrenXPoint(-CHANGE_AMOUNT, true);
     }
     else
     {
-        setChildrenXPoint(5, true);
+        setChildrenXPoint(CHANGE_AMOUNT, true);
     }
-    setPoint(_child->getPoint()[0] - 5, _child->getPoint()[1] - 5);
-    _height = _child->getHeight() + 10;
-    _width = _child->getWidth() + 10;
+    setPoint(_child->getPoint()[0] - CHANGE_AMOUNT, _child->getPoint()[1] - CHANGE_AMOUNT);
+    _height = _child->getHeight() + ADD_AMOUNT;
+    _width = _child->getWidth() + ADD_AMOUNT;
 }
 
 void Decorator::setChildrenYPoint(int height)
@@ -147,12 +146,10 @@ bool Decorator::isDecorator()
 
 void Decorator::up(Component* component)
 {
-    _child->up(component);
 }
 
 void Decorator::down(Component* component)
 {
-    _child->down(component);
 }
 
 bool Decorator::isUpComonent(Component* component)

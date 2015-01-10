@@ -1,11 +1,8 @@
 #include "CircleDecorator.h"
 #include "MindMapGUIScene.h"
 
-CircleDecorator::CircleDecorator(int id)
+CircleDecorator::CircleDecorator(int id) : Decorator(id)
 {
-    _id = id;
-    _parent = NULL;
-    _child = NULL;
     _type = CIRCLE_TYPE;
 }
 

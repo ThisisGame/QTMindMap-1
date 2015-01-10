@@ -68,14 +68,14 @@ bool GUIPresentationModel::getPasteActionEnable()
 <span style = "background-color:#dfd">}</span>
 
 bool GUIPresentationModel::getClearAllDecoratorActionEnable()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _clearAllDecoratorActionEnable;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _clearAllDecoratorActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
 
 bool GUIPresentationModel::getAddDecoratorActionEnable()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _addDecoratorActionEnable;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _addDecoratorActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
 
 bool GUIPresentationModel::getRedoActionEnable()
 <span style = "background-color:#dfd">{</span>
@@ -88,66 +88,70 @@ bool GUIPresentationModel::getUndoActionEnable()
 <span style = "background-color:#dfd">}</span>
 
 bool GUIPresentationModel::getUpActionEnable()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _upActionEnable;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _upActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
 
 bool GUIPresentationModel::getDownActionEnable()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return _downActionEnable;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return _downActionEnable;</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::allExpend()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;allExpend();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;allExpend();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::simpleExpend()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;simpleExpend();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;simpleExpend();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::up()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;up();</span>
-<span style = "background-color:#fdd">    _upActionEnable = _model-&gt;isCanUp();</span>
-<span style = "background-color:#fdd">    _downActionEnable = _model-&gt;isCanDown();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;up();</span>
+<span style = "background-color:#dfd">    _upActionEnable = _model-&gt;isCanUp();</span>
+<span style = "background-color:#dfd">    _downActionEnable = _model-&gt;isCanDown();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::down()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;down();</span>
-<span style = "background-color:#fdd">    _upActionEnable = _model-&gt;isCanUp();</span>
-<span style = "background-color:#fdd">    _downActionEnable = _model-&gt;isCanDown();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;down();</span>
+<span style = "background-color:#dfd">    _upActionEnable = _model-&gt;isCanUp();</span>
+<span style = "background-color:#dfd">    _downActionEnable = _model-&gt;isCanDown();</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::addCircleDecorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;addCircleDecorator();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;addCircleDecorator();</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = true;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::addRectangleDecorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;addRectangleDecorator();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;addRectangleDecorator();</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = true;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::addTriangleDecorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;addTriangleDecorator();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;addTriangleDecorator();</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = true;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::clearAllDecorator()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;clearAllDecorator();</span>
-<span style = "background-color:#fdd">    notifyUpdateView();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;clearAllDecorator();</span>
+<span style = "background-color:#dfd">    _clearAllDecoratorActionEnable = false;</span>
+<span style = "background-color:#dfd">    notifyUpdateView();</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::loadMindMap(string filename)  //Åª¨úMindmap
 <span style = "background-color:#dfd">{</span>
@@ -195,9 +199,9 @@ string GUIPresentationModel::getMessage() //¨ú±o¦r¦ê°T®§
 <span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::draw(MindMapSceneAdapter* scene)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _model-&gt;draw(scene);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _model-&gt;draw(scene);</span>
+<span style = "background-color:#dfd">}</span>
 
 void GUIPresentationModel::selectComponent(int id)
 <span style = "background-color:#dfd">{</span>

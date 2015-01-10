@@ -10,11 +10,8 @@
 		<pre class="prettyprint lang-cpp linenums">#include "CircleDecorator.h"
 #include "MindMapGUIScene.h"
 
-CircleDecorator::CircleDecorator(int id)
+CircleDecorator::CircleDecorator(int id) : Decorator(id)
 <span style = "background-color:#dfd">{</span>
-<span style = "background-color:#dfd">    _id = id;</span>
-<span style = "background-color:#dfd">    _parent = NULL;</span>
-<span style = "background-color:#dfd">    _child = NULL;</span>
 <span style = "background-color:#dfd">    _type = CIRCLE_TYPE;</span>
 <span style = "background-color:#dfd">}</span>
 

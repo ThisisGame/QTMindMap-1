@@ -10,48 +10,48 @@
 		<pre class="prettyprint lang-cpp linenums">#include "ClearDecoratorCommand.h"
 
 ClearDecoratorCommand::ClearDecoratorCommand(Component* component, MindMapModel* model)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _component = component;</span>
-<span style = "background-color:#fdd">    _decorator = component-&gt;getDecorator();</span>
-<span style = "background-color:#fdd">    _model = model;</span>
-<span style = "background-color:#fdd">    _parent = _decorator-&gt;getParent();</span>
-<span style = "background-color:#fdd">    _componentParent = component-&gt;getParent();</span>
-<span style = "background-color:#fdd">    _oldNodeList = _model-&gt;getNodeList();</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _component = component;</span>
+<span style = "background-color:#dfd">    _decorator = component-&gt;getDecorator();</span>
+<span style = "background-color:#dfd">    _model = model;</span>
+<span style = "background-color:#dfd">    _parent = _decorator-&gt;getParent();</span>
+<span style = "background-color:#dfd">    _componentParent = component-&gt;getParent();</span>
+<span style = "background-color:#dfd">    _oldNodeList = _model-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">}</span>
 
 ClearDecoratorCommand::~ClearDecoratorCommand()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
 
 void ClearDecoratorCommand::execute()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (_parent != NULL)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_parent != NULL)</span>
     {
-<span style = "background-color:#fdd">        _oldParentList = _parent-&gt;getNodeList();</span>
-<span style = "background-color:#fdd">        _parent-&gt;changeNodeByNode(_decorator, _component);</span>
+<span style = "background-color:#dfd">        _oldParentList = _parent-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">        _parent-&gt;changeNodeByNode(_decorator, _component);</span>
     }
-<span style = "background-color:#fdd">    else</span>
+<span style = "background-color:#dfd">    else</span>
     {
-<span style = "background-color:#fdd">        _componentParent = _component-&gt;getParent();</span>
-<span style = "background-color:#fdd">        _component-&gt;setParent(NULL);</span>
+<span style = "background-color:#dfd">        _componentParent = _component-&gt;getParent();</span>
+<span style = "background-color:#dfd">        _component-&gt;setParent(NULL);</span>
     }
-<span style = "background-color:#fdd">    _model-&gt;doClearDecorator(_decorator, _component);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">    _model-&gt;doClearDecorator(_decorator, _component);</span>
+<span style = "background-color:#dfd">}</span>
 
 void ClearDecoratorCommand::unexcute()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (_parent != NULL)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_parent != NULL)</span>
     {
-<span style = "background-color:#fdd">        _parent-&gt;clearNodeList();</span>
-<span style = "background-color:#fdd">        _parent-&gt;addChilds(_oldParentList);</span>
-<span style = "background-color:#fdd">        _component-&gt;setParent(_componentParent);</span>
+<span style = "background-color:#dfd">        _parent-&gt;clearNodeList();</span>
+<span style = "background-color:#dfd">        _parent-&gt;addChilds(_oldParentList);</span>
+<span style = "background-color:#dfd">        _component-&gt;setParent(_componentParent);</span>
     }
-<span style = "background-color:#fdd">    else</span>
+<span style = "background-color:#dfd">    else</span>
     {
-<span style = "background-color:#fdd">        _componentParent-&gt;addChild(_component);</span>
+<span style = "background-color:#dfd">        _componentParent-&gt;addChild(_component);</span>
     }
-<span style = "background-color:#fdd">    _model-&gt;doAddNodes(_oldNodeList);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">    _model-&gt;doAddNodes(_oldNodeList);</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

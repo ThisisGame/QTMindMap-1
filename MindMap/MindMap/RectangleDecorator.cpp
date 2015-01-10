@@ -1,11 +1,8 @@
 #include "RectangleDecorator.h"
 #include "MindMapGUIScene.h"
 
-RectangleDecorator::RectangleDecorator(int id)
+RectangleDecorator::RectangleDecorator(int id) : Decorator(id)
 {
-    _id = id;
-    _parent = NULL;
-    _child = NULL;
     _type = RECTANGLE_TYPE;
 }
 

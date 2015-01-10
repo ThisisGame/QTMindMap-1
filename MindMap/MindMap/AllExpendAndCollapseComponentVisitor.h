@@ -2,8 +2,14 @@
 #include "ComponentVisitor.h"
 class Component;
 
+namespace MindMapTest
+{
+    class AllExpendAndCollapseComponentVisitorTest;
+}
+
 class AllExpendAndCollapseComponentVisitor : public ComponentVisitor
 {
+        friend class MindMapTest::AllExpendAndCollapseComponentVisitorTest;
     public:
         AllExpendAndCollapseComponentVisitor();
         ~AllExpendAndCollapseComponentVisitor();

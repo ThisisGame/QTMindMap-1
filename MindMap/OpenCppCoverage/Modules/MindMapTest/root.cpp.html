@@ -59,6 +59,9 @@ Component* Root::clone()
 
 void Root::calculatePos(int&amp; position, int level, MindMapSceneAdapter* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
 <span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    int NODE_DIST = 25;</span>
+<span style = "background-color:#dfd">    int LEFT_MODE = 1;</span>
+<span style = "background-color:#dfd">    int RIGHT_MODE = 2;</span>
 <span style = "background-color:#dfd">    int positionRight = 0;</span>
 <span style = "background-color:#dfd">    int positionLeft = 0;</span>
 <span style = "background-color:#dfd">    int i = 0;</span>
@@ -70,11 +73,11 @@ void Root::calculatePos(int&amp; position, int level, MindMapSceneAdapter* scene
     {
 <span style = "background-color:#dfd">        if (i % 2 == 0)</span>
         {
-<span style = "background-color:#dfd">            child-&gt;calculatePos(positionRight, getWidth() + 25, scene, RIGHT_SIDE);</span>
+<span style = "background-color:#dfd">            child-&gt;calculatePos(positionRight, getWidth() + NODE_DIST, scene, RIGHT_SIDE);</span>
         }
 <span style = "background-color:#dfd">        else</span>
         {
-<span style = "background-color:#dfd">            child-&gt;calculatePos(positionLeft, getWidth() + 25, scene, LEFT_SIDE);</span>
+<span style = "background-color:#dfd">            child-&gt;calculatePos(positionLeft, getWidth() + NODE_DIST, scene, LEFT_SIDE);</span>
         }
 <span style = "background-color:#dfd">        i++;</span>
 <span style = "background-color:#dfd">    }</span>
@@ -84,24 +87,24 @@ void Root::calculatePos(int&amp; position, int level, MindMapSceneAdapter* scene
 <span style = "background-color:#dfd">    i = 0;</span>
 <span style = "background-color:#dfd">    if (positionLeft &gt; positionRight)</span>
     {
-<span style = "background-color:#dfd">        mode = 1;</span>
-<span style = "background-color:#dfd">        y = (positionLeft - getHeight() - 25) / 2;</span>
-<span style = "background-color:#dfd">        test = y - (positionRight - getHeight() - 25) / 2;</span>
+<span style = "background-color:#dfd">        mode = LEFT_MODE;</span>
+<span style = "background-color:#dfd">        y = (positionLeft - getHeight() - NODE_DIST) / 2;</span>
+<span style = "background-color:#dfd">        test = y - (positionRight - getHeight() - NODE_DIST) / 2;</span>
     }
 <span style = "background-color:#dfd">    else</span>
     {
-<span style = "background-color:#dfd">        mode = 2;</span>
-<span style = "background-color:#dfd">        y = (positionRight - getHeight() - 25) / 2;</span>
-<span style = "background-color:#dfd">        test = y - (positionLeft - getHeight() - 25) / 2;</span>
+<span style = "background-color:#dfd">        mode = RIGHT_MODE;</span>
+<span style = "background-color:#dfd">        y = (positionRight - getHeight() - NODE_DIST) / 2;</span>
+<span style = "background-color:#dfd">        test = y - (positionLeft - getHeight() - NODE_DIST) / 2;</span>
     }
 <span style = "background-color:#dfd">    setPoint(0, y);</span>
 <span style = "background-color:#dfd">    for (auto child : _nodelist)</span>
     {
-<span style = "background-color:#dfd">        if (i % 2 == 0 &amp;&amp; mode == 1)</span>
+<span style = "background-color:#dfd">        if (i % 2 == 0 &amp;&amp; mode == LEFT_MODE)</span>
         {
 <span style = "background-color:#dfd">            child-&gt;setChildrenYPoint(test);</span>
         }
-<span style = "background-color:#dfd">        else if (i % 2 == 1 &amp;&amp; mode == 2)</span>
+<span style = "background-color:#dfd">        else if (i % 2 == 1 &amp;&amp; mode == RIGHT_MODE)</span>
         {
 <span style = "background-color:#dfd">            child-&gt;setChildrenYPoint(test);</span>
         }

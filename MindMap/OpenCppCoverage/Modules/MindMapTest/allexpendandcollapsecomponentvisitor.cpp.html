@@ -15,64 +15,64 @@
 #include "RectangleDecorator.h"
 
 AllExpendAndCollapseComponentVisitor::AllExpendAndCollapseComponentVisitor()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    _expend = NULL;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    _expend = NULL;</span>
+<span style = "background-color:#dfd">}</span>
 
 AllExpendAndCollapseComponentVisitor::~AllExpendAndCollapseComponentVisitor()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    delete _expend;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    delete _expend;</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitor(Node* node)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    setExpend(node-&gt;isExpend());</span>
-<span style = "background-color:#fdd">    node-&gt;setExpend(isExpend());</span>
-<span style = "background-color:#fdd">    visitChildren(node);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    setExpend(node-&gt;isExpend());</span>
+<span style = "background-color:#dfd">    node-&gt;setExpend(isExpend());</span>
+<span style = "background-color:#dfd">    visitChildren(node);</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitor(Root* root)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    setExpend(root-&gt;isExpend());</span>
-<span style = "background-color:#fdd">    root-&gt;setExpend(isExpend());</span>
-<span style = "background-color:#fdd">    visitChildren(root);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    setExpend(root-&gt;isExpend());</span>
+<span style = "background-color:#dfd">    root-&gt;setExpend(isExpend());</span>
+<span style = "background-color:#dfd">    visitChildren(root);</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitor(TriangleDecorator* triangle)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    visitChildren(triangle);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitChildren(triangle);</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitor(CircleDecorator* circle)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    visitChildren(circle);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitChildren(circle);</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitor(RectangleDecorator* rectangle)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    visitChildren(rectangle);</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    visitChildren(rectangle);</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::visitChildren(Component* component)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    for (auto child : component-&gt;getNodeList())</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    for (auto child : component-&gt;getNodeList())</span>
     {
-<span style = "background-color:#fdd">        child-&gt;accept(this);</span>
-<span style = "background-color:#fdd">    }</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">        child-&gt;accept(this);</span>
+<span style = "background-color:#dfd">    }</span>
+<span style = "background-color:#dfd">}</span>
 
 void AllExpendAndCollapseComponentVisitor::setExpend(bool expend)
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    if (_expend == NULL)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    if (_expend == NULL)</span>
     {
-<span style = "background-color:#fdd">        _expend = new bool(!expend);</span>
+<span style = "background-color:#dfd">        _expend = new bool(!expend);</span>
     }
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">}</span>
 
 bool AllExpendAndCollapseComponentVisitor::isExpend()
-<span style = "background-color:#fdd">{</span>
-<span style = "background-color:#fdd">    return *_expend;</span>
-<span style = "background-color:#fdd">}</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">    return *_expend;</span>
+<span style = "background-color:#dfd">}</span>
 </pre>
 	</body>
 </html>

@@ -6,6 +6,7 @@
 #include "Root.h"
 #include "Node.h"
 #include "ConstVariables.h"
+#include "MockMindMapScene.h"
 
 namespace MindMapTest
 {
@@ -211,6 +212,10 @@ namespace MindMapTest
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
         ASSERT_FALSE(_pModel->getCutActionEnbale());
         ASSERT_FALSE(_pModel->getCopyActionEnbale());
+        ASSERT_FALSE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getAddDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getUpActionEnable());
+        ASSERT_FALSE(_pModel->getDownActionEnable());
     }
 
     TEST_F(GUIPresentationModelTest, testCopyComponent)
@@ -272,6 +277,10 @@ namespace MindMapTest
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
         ASSERT_FALSE(_pModel->getCutActionEnbale());
         ASSERT_FALSE(_pModel->getCopyActionEnbale());
+        ASSERT_FALSE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getAddDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getUpActionEnable());
+        ASSERT_FALSE(_pModel->getDownActionEnable());
     }
 
     TEST_F(GUIPresentationModelTest, testRedo)
@@ -289,5 +298,100 @@ namespace MindMapTest
         ASSERT_FALSE(_pModel->getInsertParentActionEnable());
         ASSERT_FALSE(_pModel->getCutActionEnbale());
         ASSERT_FALSE(_pModel->getCopyActionEnbale());
+        ASSERT_FALSE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getAddDecoratorActionEnable());
+        ASSERT_FALSE(_pModel->getUpActionEnable());
+        ASSERT_FALSE(_pModel->getDownActionEnable());
+    }
+
+    TEST_F(GUIPresentationModelTest, testAllExpend)
+    {
+        _pModel->selectComponent(0);
+        _pModel->allExpend();
+        ASSERT_FALSE(_rootComputer->isExpend());
+        ASSERT_FALSE(_nodeNetwork->isExpend());
+        ASSERT_FALSE(_nodeOS->isExpend());
+        ASSERT_FALSE(_nodeOSX->isExpend());
+        _pModel->allExpend();
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        ASSERT_TRUE(_nodeOSX->isExpend());
+    }
+
+    TEST_F(GUIPresentationModelTest, testSimpleExpend)
+    {
+        _pModel->selectComponent(0);
+        _pModel->simpleExpend();
+        ASSERT_FALSE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+        _pModel->simpleExpend();
+        ASSERT_TRUE(_rootComputer->isExpend());
+        ASSERT_TRUE(_nodeNetwork->isExpend());
+        ASSERT_TRUE(_nodeOS->isExpend());
+    }
+
+    TEST_F(GUIPresentationModelTest, testDown)
+    {
+        _pModel->selectComponent(6);
+        _pModel->down();
+        for (auto item : _nodeMicrosoft->getNodeList())
+        {
+            ASSERT_EQ(_nodeWin8, item);
+            break;
+        }
+    }
+
+    TEST_F(GUIPresentationModelTest, testUp)
+    {
+        _pModel->selectComponent(7);
+        _pModel->up();
+        for (auto item : _nodeMicrosoft->getNodeList())
+        {
+            ASSERT_EQ(_nodeWin8, item);
+            break;
+        }
+    }
+
+    TEST_F(GUIPresentationModelTest, testAddCircleDecorator)
+    {
+        _pModel->selectComponent(5);
+        _pModel->addCircleDecorator();
+        ASSERT_TRUE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_STREQ("Circle", _nodeMicrosoft->getDecorator()->getType().c_str());
+    }
+
+    TEST_F(GUIPresentationModelTest, testAddRectangleDecorator)
+    {
+        _pModel->selectComponent(4);
+        _pModel->addRectangleDecorator();
+        ASSERT_TRUE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_STREQ("Rectangle", _nodeOS->getDecorator()->getType().c_str());
+    }
+
+    TEST_F(GUIPresentationModelTest, testAddTriangleDecorator)
+    {
+        _pModel->selectComponent(3);
+        _pModel->addTriangleDecorator();
+        ASSERT_TRUE(_pModel->getClearAllDecoratorActionEnable());
+        ASSERT_STREQ("Triangle", _nodeIPV6->getDecorator()->getType().c_str());
+    }
+
+    TEST_F(GUIPresentationModelTest, testClearAllDecorator)
+    {
+        _pModel->selectComponent(4);
+        _pModel->addTriangleDecorator();
+        _pModel->addTriangleDecorator();
+        _pModel->addTriangleDecorator();
+        _pModel->addTriangleDecorator();
+        _pModel->clearAllDecorator();
+        ASSERT_FALSE(_pModel->getClearAllDecoratorActionEnable());
+    }
+
+    TEST_F(GUIPresentationModelTest, testDraw)
+    {
+        MockMindMapScene scene;
+        _pModel->draw(&scene);
     }
 }

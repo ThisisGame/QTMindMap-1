@@ -221,5 +221,26 @@
     <ClCompile Include="TriangleDecoratorTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
+    <ClCompile Include="AddDecoratorCommandTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearDecoratorCommandTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="AllExpendAndCollapseComponentVisitorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleExpendAndCollapseComponentVisitorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveComponentVisitorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayComponentVisitorTest.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MockMindMapSceneTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

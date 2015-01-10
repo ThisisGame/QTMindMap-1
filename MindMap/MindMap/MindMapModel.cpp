@@ -265,12 +265,14 @@ void MindMapModel::loadMindMap(string filename)  //讀檔
 
 void MindMapModel::createNodesConnectionByList(vector<vector<string>> components)  //建立Node之間的關係
 {
+    //components: id, description, type, connection
     for (unsigned int i = 0; i < components.size(); i++)
     {
         Component* parnet = findNodeByID(i);
-        for (unsigned int j = 4; j < components[i].size(); j++)
+        int NODE_CONNECTION_LIST_LOCATION = 4;
+        for (unsigned int j = NODE_CONNECTION_LIST_LOCATION; j < components[i].size(); j++)
         {
-            stringstream childrenString(components[i][4]);
+            stringstream childrenString(components[i][NODE_CONNECTION_LIST_LOCATION]);
             string child;
             while (childrenString >> child)
             {
@@ -283,6 +285,7 @@ void MindMapModel::createNodesConnectionByList(vector<vector<string>> components
 
 void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀檔後List來加入Node
 {
+    //components: id, description, type, connection
     createMindMap(components[0][1]);
     for (unsigned int i = 1; i < components.size(); i++)
     {
@@ -303,11 +306,12 @@ void MindMapModel::createMindMapByList(vector<vector<string>> components) //由讀
 
 void MindMapModel::draw(MindMapSceneAdapter* scene)  //繪出MindMap
 {
-    Component* root = findNodeByID(0)->getDecorator();
+    Component* root = findNodeByID(0);
     if (root == NULL)
     {
         return;
     }
+    root = root->getDecorator();
     int position = 0;
     root->calculatePos(position, 0, scene, NONE_SIDE);
     DisplayComponentVisitor visitor(scene);

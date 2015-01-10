@@ -1,11 +1,8 @@
 #include "TriangleDecorator.h"
 #include "MindMapGUIScene.h"
 
-TriangleDecorator::TriangleDecorator(int id)
+TriangleDecorator::TriangleDecorator(int id) : Decorator(id)
 {
-    _id = id;
-    _parent = NULL;
-    _child = NULL;
     _type = TRIANGLE_TYPE;
 }
 

@@ -5,8 +5,14 @@ using namespace std;
 
 class Component;
 
+namespace MindMapTest
+{
+    class SaveComponentVisitorTest;
+}
+
 class SaveComponentVisitor : public ComponentVisitor
 {
+        friend class MindMapTest::SaveComponentVisitorTest;
     public:
         SaveComponentVisitor();
         ~SaveComponentVisitor();

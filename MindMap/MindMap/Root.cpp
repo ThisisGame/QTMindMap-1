@@ -50,6 +50,9 @@ Component* Root::clone()
 
 void Root::calculatePos(int& position, int level, MindMapSceneAdapter* scene, string side)  	//AutoLayout­pºâ°Ï¶ô
 {
+    int NODE_DIST = 25;
+    int LEFT_MODE = 1;
+    int RIGHT_MODE = 2;
     int positionRight = 0;
     int positionLeft = 0;
     int i = 0;
@@ -61,11 +64,11 @@ void Root::calculatePos(int& position, int level, MindMapSceneAdapter* scene, st
     {
         if (i % 2 == 0)
         {
-            child->calculatePos(positionRight, getWidth() + 25, scene, RIGHT_SIDE);
+            child->calculatePos(positionRight, getWidth() + NODE_DIST, scene, RIGHT_SIDE);
         }
         else
         {
-            child->calculatePos(positionLeft, getWidth() + 25, scene, LEFT_SIDE);
+            child->calculatePos(positionLeft, getWidth() + NODE_DIST, scene, LEFT_SIDE);
         }
         i++;
     }
@@ -75,24 +78,24 @@ void Root::calculatePos(int& position, int level, MindMapSceneAdapter* scene, st
     i = 0;
     if (positionLeft > positionRight)
     {
-        mode = 1;
-        y = (positionLeft - getHeight() - 25) / 2;
-        test = y - (positionRight - getHeight() - 25) / 2;
+        mode = LEFT_MODE;
+        y = (positionLeft - getHeight() - NODE_DIST) / 2;
+        test = y - (positionRight - getHeight() - NODE_DIST) / 2;
     }
     else
     {
-        mode = 2;
-        y = (positionRight - getHeight() - 25) / 2;
-        test = y - (positionLeft - getHeight() - 25) / 2;
+        mode = RIGHT_MODE;
+        y = (positionRight - getHeight() - NODE_DIST) / 2;
+        test = y - (positionLeft - getHeight() - NODE_DIST) / 2;
     }
     setPoint(0, y);
     for (auto child : _nodelist)
     {
-        if (i % 2 == 0 && mode == 1)
+        if (i % 2 == 0 && mode == LEFT_MODE)
         {
             child->setChildrenYPoint(test);
         }
-        else if (i % 2 == 1 && mode == 2)
+        else if (i % 2 == 1 && mode == RIGHT_MODE)
         {
             child->setChildrenYPoint(test);
         }

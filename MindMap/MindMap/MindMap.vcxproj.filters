@@ -197,7 +197,7 @@
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="MockMindMapScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,10 +304,10 @@
       <Filter>Header Files\Visitor</Filter>
     </ClInclude>
     <ClInclude Include="MindMapSceneAdapter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="MockMindMapScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

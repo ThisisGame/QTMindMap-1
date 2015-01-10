@@ -209,9 +209,6 @@
     <ClCompile Include="..\MindMap\MindMapSceneAdapter.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\MockMindMapScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CircleDecoratorTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
@@ -236,11 +233,14 @@
     <ClCompile Include="SaveComponentVisitorTest.cpp">
       <Filter>UnitTests</Filter>
     </ClCompile>
-    <ClCompile Include="DisplayComponentVisitorTest.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="MockMindMapSceneTest.cpp">
       <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayComponentVisitorTest.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\MockMindMapScene.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
